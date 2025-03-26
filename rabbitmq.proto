@@ -14,109 +14,105 @@ message RabbitMQMessage
     Game     game     = 4;
     string   userID   = 5;
 
-    AlignGetBookRequest                    alignGetBookRequest                   = 100;
-    AlignGetBookAnswer                     alignGetBookAnswer                    = 101;
-    AlignGetUserRequest                    alignGetUserRequest                   = 102;
-    AlignGetUserAnswer                     alignGetUserAnswer                    = 103;
-    AlignSetRequest                        alignSetRequest                       = 104;
-    AlignSetAnswer                         alignSetAnswer                        = 105;
+    AlignGetBookRequest                alignGetBookRequest                = 100;
+    AlignGetBookAnswer                 alignGetBookAnswer                 = 101;
+    AlignGetUserRequest                alignGetUserRequest                = 102;
+    AlignGetUserAnswer                 alignGetUserAnswer                 = 103;
+    AlignSetRequest                    alignSetRequest                    = 104;
+    AlignSetAnswer                     alignSetAnswer                     = 105;
 
-    CompetitionMapRequest                  competitionMapRequest                 = 200;
-    CompetitionMapAnswer                   competitionMapAnswer                  = 201;
+    CompetitionMapRequest              competitionMapRequest              = 200;
+    CompetitionMapAnswer               competitionMapAnswer               = 201;
     
-    ConfigurationGetRequest                configurationGetRequest               = 300;
-    ConfigurationGetAnswer                 configurationGetAnswer                = 301;
-    ConfigurationSetServerRequest          configurationSetServerRequest         = 302;
-    ConfigurationSetAlmanaxWebhookRequest  configurationSetAlmanaxWebhookRequest = 303;
-    ConfigurationSetRssWebhookRequest      configurationSetRssWebhookRequest     = 304;
-    ConfigurationSetTwitchWebhookRequest   configurationSetTwitchWebhookRequest  = 305;
-    ConfigurationSetTwitterWebhookRequest  configurationSetTwitterWebhookRequest = 306;
-    ConfigurationSetYoutubeWebhookRequest  configurationSetYoutubeWebhookRequest = 307;
-    ConfigurationSetAnswer                 configurationSetAnswer                = 350;
+    ConfigurationGetRequest            configurationGetRequest            = 300;
+    ConfigurationGetAnswer             configurationGetAnswer             = 301;
+    ConfigurationSetServerRequest      configurationSetServerRequest      = 302;
+    ConfigurationSetAlmanaxRequest     configurationSetAlmanaxRequest     = 303;
+    ConfigurationSetRssRequest         configurationSetRssRequest         = 304;
+    ConfigurationSetTwitterRequest     configurationSetTwitterRequest     = 305;
+    ConfigurationSetAnswer             configurationSetAnswer             = 350;
 
-    EncyclopediaAlmanaxRequest             encyclopediaAlmanaxRequest            = 400;
-    EncyclopediaAlmanaxAnswer              encyclopediaAlmanaxAnswer             = 401;
-    EncyclopediaAlmanaxResourceRequest     encyclopediaAlmanaxResourceRequest    = 402;
-    EncyclopediaAlmanaxResourceAnswer      encyclopediaAlmanaxResourceAnswer     = 403;
-    EncyclopediaAlmanaxEffectRequest       encyclopediaAlmanaxEffectRequest      = 404;
-    EncyclopediaAlmanaxEffectAnswer        encyclopediaAlmanaxEffectAnswer       = 405;
-    EncyclopediaListRequest                encyclopediaListRequest               = 406;
-    EncyclopediaListAnswer                 encyclopediaListAnswer                = 407;
-    EncyclopediaItemRequest                encyclopediaItemRequest               = 408;
-    EncyclopediaItemAnswer                 encyclopediaItemAnswer                = 409;
+    EncyclopediaAlmanaxRequest         encyclopediaAlmanaxRequest         = 400;
+    EncyclopediaAlmanaxAnswer          encyclopediaAlmanaxAnswer          = 401;
+    EncyclopediaAlmanaxResourceRequest encyclopediaAlmanaxResourceRequest = 402;
+    EncyclopediaAlmanaxResourceAnswer  encyclopediaAlmanaxResourceAnswer  = 403;
+    EncyclopediaAlmanaxEffectRequest   encyclopediaAlmanaxEffectRequest   = 404;
+    EncyclopediaAlmanaxEffectAnswer    encyclopediaAlmanaxEffectAnswer    = 405;
+    EncyclopediaListRequest            encyclopediaListRequest            = 406;
+    EncyclopediaListAnswer             encyclopediaListAnswer             = 407;
+    EncyclopediaItemRequest            encyclopediaItemRequest            = 408;
+    EncyclopediaItemAnswer             encyclopediaItemAnswer             = 409;
 
-    JobGetBookRequest                      jobGetBookRequest                     = 500;
-    JobGetBookAnswer                       jobGetBookAnswer                      = 501;
-    JobGetUserRequest                      jobGetUserRequest                     = 502;
-    JobGetUserAnswer                       jobGetUserAnswer                      = 503;
-    JobSetRequest                          jobSetRequest                         = 504;
-    JobSetAnswer                           jobSetAnswer                          = 505;
+    JobGetBookRequest                  jobGetBookRequest                  = 500;
+    JobGetBookAnswer                   jobGetBookAnswer                   = 501;
+    JobGetUserRequest                  jobGetUserRequest                  = 502;
+    JobGetUserAnswer                   jobGetUserAnswer                   = 503;
+    JobSetRequest                      jobSetRequest                      = 504;
+    JobSetAnswer                       jobSetAnswer                       = 505;
 
-    NewsAlmanaxMessage                     newsAlmanaxMessage                    = 600;
-    NewsGameMessage                        newsGameMessage                       = 601;
-    NewsGuildMessage                       newsGuildMessage                      = 602;
-    NewsRSSMessage                         newsRSSMessage                        = 603;
-    NewsSetMessage                         newsSetMessage                        = 604;
-    NewsTwitterMessage                     newsTwitterMessage                    = 605;
+    NewsAlmanaxMessage                 newsAlmanaxMessage                 = 600;
+    NewsGameMessage                    newsGameMessage                    = 601;
+    NewsGuildMessage                   newsGuildMessage                   = 602;
+    NewsRSSMessage                     newsRSSMessage                     = 603;
+    NewsSetMessage                     newsSetMessage                     = 604;
+    NewsTwitterMessage                 newsTwitterMessage                 = 605;
  
-    PortalPositionRequest                  portalPositionRequest                 = 700;
-    PortalPositionAnswer                   portalPositionAnswer                  = 701;
+    PortalPositionRequest              portalPositionRequest              = 700;
+    PortalPositionAnswer               portalPositionAnswer               = 701;
 
     enum Type
     {
-        UNKNOWN                                   =   0;
+        UNKNOWN                               =   0;
 
-        ABOUT_REQUEST                             = 100;
+        ABOUT_REQUEST                         = 100;
 
-        ALIGN_GET_BOOK_REQUEST                    = 200;
-        ALIGN_GET_BOOK_ANSWER                     = 201;
-        ALIGN_GET_USER_REQUEST                    = 202;
-        ALIGN_GET_USER_ANSWER                     = 203;
-        ALIGN_SET_REQUEST                         = 204;
-        ALIGN_SET_ANSWER                          = 205;
+        ALIGN_GET_BOOK_REQUEST                = 200;
+        ALIGN_GET_BOOK_ANSWER                 = 201;
+        ALIGN_GET_USER_REQUEST                = 202;
+        ALIGN_GET_USER_ANSWER                 = 203;
+        ALIGN_SET_REQUEST                     = 204;
+        ALIGN_SET_ANSWER                      = 205;
 
-        COMPETITION_MAP_REQUEST                   = 300;
-        COMPETITION_MAP_ANSWER                    = 301;
+        COMPETITION_MAP_REQUEST               = 300;
+        COMPETITION_MAP_ANSWER                = 301;
 
-        CONFIGURATION_GET_REQUEST                 = 400;
-        CONFIGURATION_GET_ANSWER                  = 401;
-        CONFIGURATION_SET_SERVER_REQUEST          = 402;
-        CONFIGURATION_SET_ALMANAX_WEBHOOK_REQUEST = 403;
-        CONFIGURATION_SET_RSS_WEBHOOK_REQUEST     = 404;
-        CONFIGURATION_SET_TWITCH_WEBHOOK_REQUEST  = 405;
-        CONFIGURATION_SET_TWITTER_WEBHOOK_REQUEST = 406;
-        CONFIGURATION_SET_YOUTUBE_WEBHOOK_REQUEST = 407;
-        CONFIGURATION_SET_ANSWER                  = 450;
+        CONFIGURATION_GET_REQUEST             = 400;
+        CONFIGURATION_GET_ANSWER              = 401;
+        CONFIGURATION_SET_SERVER_REQUEST      = 402;
+        CONFIGURATION_SET_ALMANAX_REQUEST     = 403;
+        CONFIGURATION_SET_RSS_REQUEST         = 404;
+        CONFIGURATION_SET_TWITTER_REQUEST     = 405;
+        CONFIGURATION_SET_ANSWER              = 450;
 
-        ENCYCLOPEDIA_ALMANAX_REQUEST              = 500;
-        ENCYCLOPEDIA_ALMANAX_ANSWER               = 501;
-        ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST     = 502;
-        ENCYCLOPEDIA_ALMANAX_RESOURCE_ANSWER      = 503;
-        ENCYCLOPEDIA_ALMANAX_EFFECT_REQUEST       = 504;
-        ENCYCLOPEDIA_ALMANAX_EFFECT_ANSWER        = 505;
-        ENCYCLOPEDIA_LIST_REQUEST                 = 506;
-        ENCYCLOPEDIA_LIST_ANSWER                  = 507;
-        ENCYCLOPEDIA_ITEM_REQUEST                 = 508;
-        ENCYCLOPEDIA_ITEM_ANSWER                  = 509;
+        ENCYCLOPEDIA_ALMANAX_REQUEST          = 500;
+        ENCYCLOPEDIA_ALMANAX_ANSWER           = 501;
+        ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST = 502;
+        ENCYCLOPEDIA_ALMANAX_RESOURCE_ANSWER  = 503;
+        ENCYCLOPEDIA_ALMANAX_EFFECT_REQUEST   = 504;
+        ENCYCLOPEDIA_ALMANAX_EFFECT_ANSWER    = 505;
+        ENCYCLOPEDIA_LIST_REQUEST             = 506;
+        ENCYCLOPEDIA_LIST_ANSWER              = 507;
+        ENCYCLOPEDIA_ITEM_REQUEST             = 508;
+        ENCYCLOPEDIA_ITEM_ANSWER              = 509;
 
-        HELP_REQUEST                              = 600;
+        HELP_REQUEST                          = 600;
         
-        JOB_GET_BOOK_REQUEST                      = 700;
-        JOB_GET_BOOK_ANSWER                       = 701;
-        JOB_GET_USER_REQUEST                      = 702;
-        JOB_GET_USER_ANSWER                       = 703;
-        JOB_SET_REQUEST                           = 704;
-        JOB_SET_ANSWER                            = 705;
+        JOB_GET_BOOK_REQUEST                  = 700;
+        JOB_GET_BOOK_ANSWER                   = 701;
+        JOB_GET_USER_REQUEST                  = 702;
+        JOB_GET_USER_ANSWER                   = 703;
+        JOB_SET_REQUEST                       = 704;
+        JOB_SET_ANSWER                        = 705;
 
-        NEWS_ALMANAX                              = 800;     
-        NEWS_GAME                                 = 801;
-        NEWS_GUILD                                = 802;
-        NEWS_RSS                                  = 803;
-        NEWS_SET                                  = 804;
-        NEWS_TWITTER                              = 805;
+        NEWS_ALMANAX                          = 800;     
+        NEWS_GAME                             = 801;
+        NEWS_GUILD                            = 802;
+        NEWS_RSS                              = 803;
+        NEWS_SET                              = 804;
+        NEWS_TWITTER                          = 805;
 
-        PORTAL_POSITION_REQUEST                   = 900;
-        PORTAL_POSITION_ANSWER                    = 901;
+        PORTAL_POSITION_REQUEST               = 900;
+        PORTAL_POSITION_ANSWER                = 901;
     }
 
     enum Status 
@@ -308,47 +304,26 @@ message ConfigurationGetRequest
 
 message ConfigurationGetAnswer
 {
-    string                  guildId         = 1;
-    string                  serverId        = 2;
-    repeated ChannelServer  channelServers  = 3;
-    repeated AlmanaxWebhook almanaxWebhooks = 4;
-    repeated RssWebhook     rssWebhooks     = 5;
-    repeated TwitchWebhook  twitchWebhooks  = 6;
-    repeated TwitterWebhook twitterWebhooks = 7;
-    repeated YoutubeWebhook youtubeWebhooks = 8;
+    string                   guildId          = 1;
+    string                   serverId         = 2;
+    repeated ServerChannel   serverChannels   = 3;
+    repeated NotifiedChannel notifiedChannels = 4;
 
-    message ChannelServer {
+    message ServerChannel {
         string channelId = 1;
         string serverId  = 2;
     }
 
-    message AlmanaxWebhook {
-        string   channelId = 1;
-        string   webhookId = 2;
-    }
+    message NotifiedChannel {
+        string           channelId        = 1;
+        NotificationType notificationType = 2;
 
-    message RssWebhook {
-        string   channelId = 1;
-        string   feedId    = 2;
-        string   webhookId = 3;
-    }
-
-    message TwitchWebhook {
-        string channelId  = 1;
-        string streamerId = 2;
-        string webhookId  = 3;
-    }
-
-    message TwitterWebhook {
-        string   channelId = 1;
-        string   twitterId = 2;
-        string   webhookId = 3;
-    }
-
-    message YoutubeWebhook {
-        string channelId = 1;
-        string videastId = 2;
-        string webhookId = 3;
+        enum NotificationType {
+            UNKNOWN = 0;
+            ALMANAX = 1;
+            RSS     = 2;
+            TWITTER = 3;
+        }
     }
 }
 
@@ -359,59 +334,33 @@ message ConfigurationSetServerRequest
     string       serverId     = 3;
 }
 
-message ConfigurationSetAlmanaxWebhookRequest
+message ConfigurationSetAlmanaxRequest
 {
     string   guildId      = 1;
     string   channelId    = 2;
-    string   webhookId    = 3;
-    string   webhookToken = 4;
-    bool     enabled      = 5;
+    bool     enabled      = 3;
 }
 
-message ConfigurationSetRssWebhookRequest
+message ConfigurationSetRssRequest
 {
     string   guildId      = 1;
     string   channelId    = 2;
     string   feedId       = 3;
-    string   webhookId    = 4;
-    string   webhookToken = 5;
-    bool     enabled      = 6;
+    bool     enabled      = 46;
 }
 
-message ConfigurationSetTwitchWebhookRequest
-{
-    string   guildId      = 1;
-    string   channelId    = 2;
-    string   streamerId   = 3;
-    string   webhookId    = 4;
-    string   webhookToken = 5;
-    bool     enabled      = 6;
-}
-
-message ConfigurationSetTwitterWebhookRequest
+message ConfigurationSetTwitterRequest
 {
     string   guildId      = 1;
     string   channelId    = 2;
     string   twitterId    = 3;
-    string   webhookId    = 4;
-    string   webhookToken = 5;
-    bool     enabled      = 6;
-}
-
-message ConfigurationSetYoutubeWebhookRequest
-{
-    string   guildId      = 1;
-    string   channelId    = 2;
-    string   videastId    = 3;
-    string   webhookId    = 4;
-    string   webhookToken = 5;
-    bool     enabled      = 6;
+    bool     enabled      = 4;
 }
 
 message ConfigurationSetAnswer
 {
-    string webhookId     = 1;
-    bool   removeWebhook = 2;
+    string newsChannelId   = 1;
+    string targetChannelId = 2;
 }
 
 message EncyclopediaAlmanaxRequest
