@@ -421,12 +421,17 @@ func (broker *messageBroker) listenToMessages(eventChan chan connectionEvent,
 	for {
 		select {
 		case event := <-eventChan:
-			if event == shutdown {
+			switch event {
+			case shutdown:
 				log.Info().Msgf("Application shutdown has been requested. Stopping to consume")
 				return exit
-			} else if event == issue {
+			case issue:
 				log.Debug().Err(ErrCannotBeConnected).Msgf("Retrying to consume...")
 				return reconnect
+			case connected:
+				fallthrough
+			default:
+				log.Debug().Msgf("Event received: %v", event)
 			}
 		case delivery, ok := <-consumerGoChannel:
 			if !ok {
