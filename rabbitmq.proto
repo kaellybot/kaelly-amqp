@@ -316,7 +316,9 @@ message ConfigurationGetAnswer
 
     message NotifiedChannel {
         string           channelId        = 1;
-        NotificationType notificationType = 2;
+        string           webhookId        = 2;
+        string           label            = 3;
+        NotificationType notificationType = 4;
 
         enum NotificationType {
             UNKNOWN = 0;
@@ -338,29 +340,34 @@ message ConfigurationSetAlmanaxRequest
 {
     string   guildId      = 1;
     string   channelId    = 2;
-    bool     enabled      = 3;
+    string   webhookId    = 3;
+    bool     enabled      = 4;
 }
 
 message ConfigurationSetRssRequest
 {
     string   guildId      = 1;
     string   channelId    = 2;
-    string   feedId       = 3;
-    bool     enabled      = 46;
+    string   webhookId    = 3;
+    string   feedId       = 4;
+    bool     enabled      = 5;
 }
 
 message ConfigurationSetTwitterRequest
 {
     string   guildId      = 1;
     string   channelId    = 2;
-    string   twitterId    = 3;
-    bool     enabled      = 4;
+    string   webhookId    = 3;
+    string   twitterId    = 4;
+    bool     enabled      = 5;
 }
 
 message ConfigurationSetAnswer
 {
     string newsChannelId   = 1;
     string targetChannelId = 2;
+    string webhookId       = 3;
+    bool   removeWebhook   = 4;
 }
 
 message EncyclopediaAlmanaxRequest

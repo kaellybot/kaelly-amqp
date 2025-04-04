@@ -1995,7 +1995,8 @@ type ConfigurationSetAlmanaxRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GuildId       string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
 	ChannelId     string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	Enabled       bool                   `protobuf:"varint,3,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	WebhookId     string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	Enabled       bool                   `protobuf:"varint,4,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2044,6 +2045,13 @@ func (x *ConfigurationSetAlmanaxRequest) GetChannelId() string {
 	return ""
 }
 
+func (x *ConfigurationSetAlmanaxRequest) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
+}
+
 func (x *ConfigurationSetAlmanaxRequest) GetEnabled() bool {
 	if x != nil {
 		return x.Enabled
@@ -2055,8 +2063,9 @@ type ConfigurationSetRssRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GuildId       string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
 	ChannelId     string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	FeedId        string                 `protobuf:"bytes,3,opt,name=feedId,proto3" json:"feedId,omitempty"`
-	Enabled       bool                   `protobuf:"varint,46,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	WebhookId     string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	FeedId        string                 `protobuf:"bytes,4,opt,name=feedId,proto3" json:"feedId,omitempty"`
+	Enabled       bool                   `protobuf:"varint,5,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2105,6 +2114,13 @@ func (x *ConfigurationSetRssRequest) GetChannelId() string {
 	return ""
 }
 
+func (x *ConfigurationSetRssRequest) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
+}
+
 func (x *ConfigurationSetRssRequest) GetFeedId() string {
 	if x != nil {
 		return x.FeedId
@@ -2123,8 +2139,9 @@ type ConfigurationSetTwitterRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	GuildId       string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
 	ChannelId     string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	TwitterId     string                 `protobuf:"bytes,3,opt,name=twitterId,proto3" json:"twitterId,omitempty"`
-	Enabled       bool                   `protobuf:"varint,4,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	WebhookId     string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	TwitterId     string                 `protobuf:"bytes,4,opt,name=twitterId,proto3" json:"twitterId,omitempty"`
+	Enabled       bool                   `protobuf:"varint,5,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2173,6 +2190,13 @@ func (x *ConfigurationSetTwitterRequest) GetChannelId() string {
 	return ""
 }
 
+func (x *ConfigurationSetTwitterRequest) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
+}
+
 func (x *ConfigurationSetTwitterRequest) GetTwitterId() string {
 	if x != nil {
 		return x.TwitterId
@@ -2191,6 +2215,8 @@ type ConfigurationSetAnswer struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
 	NewsChannelId   string                 `protobuf:"bytes,1,opt,name=newsChannelId,proto3" json:"newsChannelId,omitempty"`
 	TargetChannelId string                 `protobuf:"bytes,2,opt,name=targetChannelId,proto3" json:"targetChannelId,omitempty"`
+	WebhookId       string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	RemoveWebhook   bool                   `protobuf:"varint,4,opt,name=removeWebhook,proto3" json:"removeWebhook,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -2237,6 +2263,20 @@ func (x *ConfigurationSetAnswer) GetTargetChannelId() string {
 		return x.TargetChannelId
 	}
 	return ""
+}
+
+func (x *ConfigurationSetAnswer) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
+}
+
+func (x *ConfigurationSetAnswer) GetRemoveWebhook() bool {
+	if x != nil {
+		return x.RemoveWebhook
+	}
+	return false
 }
 
 type EncyclopediaAlmanaxRequest struct {
@@ -3966,7 +4006,9 @@ func (x *ConfigurationGetAnswer_ServerChannel) GetServerId() string {
 type ConfigurationGetAnswer_NotifiedChannel struct {
 	state            protoimpl.MessageState                                  `protogen:"open.v1"`
 	ChannelId        string                                                  `protobuf:"bytes,1,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	NotificationType ConfigurationGetAnswer_NotifiedChannel_NotificationType `protobuf:"varint,2,opt,name=notificationType,proto3,enum=amqp.ConfigurationGetAnswer_NotifiedChannel_NotificationType" json:"notificationType,omitempty"`
+	WebhookId        string                                                  `protobuf:"bytes,2,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	Label            string                                                  `protobuf:"bytes,3,opt,name=label,proto3" json:"label,omitempty"`
+	NotificationType ConfigurationGetAnswer_NotifiedChannel_NotificationType `protobuf:"varint,4,opt,name=notificationType,proto3,enum=amqp.ConfigurationGetAnswer_NotifiedChannel_NotificationType" json:"notificationType,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -4004,6 +4046,20 @@ func (*ConfigurationGetAnswer_NotifiedChannel) Descriptor() ([]byte, []int) {
 func (x *ConfigurationGetAnswer_NotifiedChannel) GetChannelId() string {
 	if x != nil {
 		return x.ChannelId
+	}
+	return ""
+}
+
+func (x *ConfigurationGetAnswer_NotifiedChannel) GetWebhookId() string {
+	if x != nil {
+		return x.WebhookId
+	}
+	return ""
+}
+
+func (x *ConfigurationGetAnswer_NotifiedChannel) GetLabel() string {
+	if x != nil {
+		return x.Label
 	}
 	return ""
 }
@@ -5595,7 +5651,7 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x0emapTacticalURL\x18\x03 \x01(\tR\x0emapTacticalURL\x12$\n" +
 	"\x06source\x18\x04 \x01(\v2\f.amqp.SourceR\x06source\"3\n" +
 	"\x17ConfigurationGetRequest\x12\x18\n" +
-	"\aguildId\x18\x01 \x01(\tR\aguildId\"\xa8\x04\n" +
+	"\aguildId\x18\x01 \x01(\tR\aguildId\"\xdc\x04\n" +
 	"\x16ConfigurationGetAnswer\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1a\n" +
 	"\bserverId\x18\x02 \x01(\tR\bserverId\x12R\n" +
@@ -5603,10 +5659,12 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x10notifiedChannels\x18\x04 \x03(\v2,.amqp.ConfigurationGetAnswer.NotifiedChannelR\x10notifiedChannels\x1aI\n" +
 	"\rServerChannel\x12\x1c\n" +
 	"\tchannelId\x18\x01 \x01(\tR\tchannelId\x12\x1a\n" +
-	"\bserverId\x18\x02 \x01(\tR\bserverId\x1a\xde\x01\n" +
+	"\bserverId\x18\x02 \x01(\tR\bserverId\x1a\x92\x02\n" +
 	"\x0fNotifiedChannel\x12\x1c\n" +
-	"\tchannelId\x18\x01 \x01(\tR\tchannelId\x12i\n" +
-	"\x10notificationType\x18\x02 \x01(\x0e2=.amqp.ConfigurationGetAnswer.NotifiedChannel.NotificationTypeR\x10notificationType\"B\n" +
+	"\tchannelId\x18\x01 \x01(\tR\tchannelId\x12\x1c\n" +
+	"\twebhookId\x18\x02 \x01(\tR\twebhookId\x12\x14\n" +
+	"\x05label\x18\x03 \x01(\tR\x05label\x12i\n" +
+	"\x10notificationType\x18\x04 \x01(\x0e2=.amqp.ConfigurationGetAnswer.NotifiedChannel.NotificationTypeR\x10notificationType\"B\n" +
 	"\x10NotificationType\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\v\n" +
 	"\aALMANAX\x10\x01\x12\a\n" +
@@ -5615,24 +5673,29 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x1dConfigurationSetServerRequest\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
 	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1a\n" +
-	"\bserverId\x18\x03 \x01(\tR\bserverId\"r\n" +
+	"\bserverId\x18\x03 \x01(\tR\bserverId\"\x90\x01\n" +
 	"\x1eConfigurationSetAlmanaxRequest\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
-	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x18\n" +
-	"\aenabled\x18\x03 \x01(\bR\aenabled\"\x86\x01\n" +
+	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1c\n" +
+	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x18\n" +
+	"\aenabled\x18\x04 \x01(\bR\aenabled\"\xa4\x01\n" +
 	"\x1aConfigurationSetRssRequest\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
-	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x16\n" +
-	"\x06feedId\x18\x03 \x01(\tR\x06feedId\x12\x18\n" +
-	"\aenabled\x18. \x01(\bR\aenabled\"\x90\x01\n" +
+	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1c\n" +
+	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x16\n" +
+	"\x06feedId\x18\x04 \x01(\tR\x06feedId\x12\x18\n" +
+	"\aenabled\x18\x05 \x01(\bR\aenabled\"\xae\x01\n" +
 	"\x1eConfigurationSetTwitterRequest\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
 	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1c\n" +
-	"\ttwitterId\x18\x03 \x01(\tR\ttwitterId\x12\x18\n" +
-	"\aenabled\x18\x04 \x01(\bR\aenabled\"h\n" +
+	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x1c\n" +
+	"\ttwitterId\x18\x04 \x01(\tR\ttwitterId\x12\x18\n" +
+	"\aenabled\x18\x05 \x01(\bR\aenabled\"\xac\x01\n" +
 	"\x16ConfigurationSetAnswer\x12$\n" +
 	"\rnewsChannelId\x18\x01 \x01(\tR\rnewsChannelId\x12(\n" +
-	"\x0ftargetChannelId\x18\x02 \x01(\tR\x0ftargetChannelId\"L\n" +
+	"\x0ftargetChannelId\x18\x02 \x01(\tR\x0ftargetChannelId\x12\x1c\n" +
+	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12$\n" +
+	"\rremoveWebhook\x18\x04 \x01(\bR\rremoveWebhook\"L\n" +
 	"\x1aEncyclopediaAlmanaxRequest\x12.\n" +
 	"\x04date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x04date\"j\n" +
 	"\x19EncyclopediaAlmanaxAnswer\x12'\n" +
