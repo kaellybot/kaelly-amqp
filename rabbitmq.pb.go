@@ -337,51 +337,102 @@ func (ItemType) EnumDescriptor() ([]byte, []int) {
 	return file_rabbitmq_proto_rawDescGZIP(), []int{3}
 }
 
+type NotificationType int32
+
+const (
+	NotificationType_UNKNOWN NotificationType = 0
+	NotificationType_ALMANAX NotificationType = 1
+	NotificationType_RSS     NotificationType = 2
+	NotificationType_TWITTER NotificationType = 3
+)
+
+// Enum value maps for NotificationType.
+var (
+	NotificationType_name = map[int32]string{
+		0: "UNKNOWN",
+		1: "ALMANAX",
+		2: "RSS",
+		3: "TWITTER",
+	}
+	NotificationType_value = map[string]int32{
+		"UNKNOWN": 0,
+		"ALMANAX": 1,
+		"RSS":     2,
+		"TWITTER": 3,
+	}
+)
+
+func (x NotificationType) Enum() *NotificationType {
+	p := new(NotificationType)
+	*p = x
+	return p
+}
+
+func (x NotificationType) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (NotificationType) Descriptor() protoreflect.EnumDescriptor {
+	return file_rabbitmq_proto_enumTypes[4].Descriptor()
+}
+
+func (NotificationType) Type() protoreflect.EnumType {
+	return &file_rabbitmq_proto_enumTypes[4]
+}
+
+func (x NotificationType) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use NotificationType.Descriptor instead.
+func (NotificationType) EnumDescriptor() ([]byte, []int) {
+	return file_rabbitmq_proto_rawDescGZIP(), []int{4}
+}
+
 type RabbitMQMessage_Type int32
 
 const (
-	RabbitMQMessage_UNKNOWN                               RabbitMQMessage_Type = 0
-	RabbitMQMessage_ABOUT_REQUEST                         RabbitMQMessage_Type = 100
-	RabbitMQMessage_ALIGN_GET_BOOK_REQUEST                RabbitMQMessage_Type = 200
-	RabbitMQMessage_ALIGN_GET_BOOK_ANSWER                 RabbitMQMessage_Type = 201
-	RabbitMQMessage_ALIGN_GET_USER_REQUEST                RabbitMQMessage_Type = 202
-	RabbitMQMessage_ALIGN_GET_USER_ANSWER                 RabbitMQMessage_Type = 203
-	RabbitMQMessage_ALIGN_SET_REQUEST                     RabbitMQMessage_Type = 204
-	RabbitMQMessage_ALIGN_SET_ANSWER                      RabbitMQMessage_Type = 205
-	RabbitMQMessage_COMPETITION_MAP_REQUEST               RabbitMQMessage_Type = 300
-	RabbitMQMessage_COMPETITION_MAP_ANSWER                RabbitMQMessage_Type = 301
-	RabbitMQMessage_CONFIGURATION_GET_REQUEST             RabbitMQMessage_Type = 400
-	RabbitMQMessage_CONFIGURATION_GET_ANSWER              RabbitMQMessage_Type = 401
-	RabbitMQMessage_CONFIGURATION_SET_SERVER_REQUEST      RabbitMQMessage_Type = 402
-	RabbitMQMessage_CONFIGURATION_SET_ALMANAX_REQUEST     RabbitMQMessage_Type = 403
-	RabbitMQMessage_CONFIGURATION_SET_RSS_REQUEST         RabbitMQMessage_Type = 404
-	RabbitMQMessage_CONFIGURATION_SET_TWITTER_REQUEST     RabbitMQMessage_Type = 405
-	RabbitMQMessage_CONFIGURATION_SET_ANSWER              RabbitMQMessage_Type = 450
-	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_REQUEST          RabbitMQMessage_Type = 500
-	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_ANSWER           RabbitMQMessage_Type = 501
-	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST RabbitMQMessage_Type = 502
-	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_RESOURCE_ANSWER  RabbitMQMessage_Type = 503
-	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_EFFECT_REQUEST   RabbitMQMessage_Type = 504
-	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_EFFECT_ANSWER    RabbitMQMessage_Type = 505
-	RabbitMQMessage_ENCYCLOPEDIA_LIST_REQUEST             RabbitMQMessage_Type = 506
-	RabbitMQMessage_ENCYCLOPEDIA_LIST_ANSWER              RabbitMQMessage_Type = 507
-	RabbitMQMessage_ENCYCLOPEDIA_ITEM_REQUEST             RabbitMQMessage_Type = 508
-	RabbitMQMessage_ENCYCLOPEDIA_ITEM_ANSWER              RabbitMQMessage_Type = 509
-	RabbitMQMessage_HELP_REQUEST                          RabbitMQMessage_Type = 600
-	RabbitMQMessage_JOB_GET_BOOK_REQUEST                  RabbitMQMessage_Type = 700
-	RabbitMQMessage_JOB_GET_BOOK_ANSWER                   RabbitMQMessage_Type = 701
-	RabbitMQMessage_JOB_GET_USER_REQUEST                  RabbitMQMessage_Type = 702
-	RabbitMQMessage_JOB_GET_USER_ANSWER                   RabbitMQMessage_Type = 703
-	RabbitMQMessage_JOB_SET_REQUEST                       RabbitMQMessage_Type = 704
-	RabbitMQMessage_JOB_SET_ANSWER                        RabbitMQMessage_Type = 705
-	RabbitMQMessage_NEWS_ALMANAX                          RabbitMQMessage_Type = 800
-	RabbitMQMessage_NEWS_GAME                             RabbitMQMessage_Type = 801
-	RabbitMQMessage_NEWS_GUILD                            RabbitMQMessage_Type = 802
-	RabbitMQMessage_NEWS_RSS                              RabbitMQMessage_Type = 803
-	RabbitMQMessage_NEWS_SET                              RabbitMQMessage_Type = 804
-	RabbitMQMessage_NEWS_TWITTER                          RabbitMQMessage_Type = 805
-	RabbitMQMessage_PORTAL_POSITION_REQUEST               RabbitMQMessage_Type = 900
-	RabbitMQMessage_PORTAL_POSITION_ANSWER                RabbitMQMessage_Type = 901
+	RabbitMQMessage_UNKNOWN                                RabbitMQMessage_Type = 0
+	RabbitMQMessage_ABOUT_REQUEST                          RabbitMQMessage_Type = 100
+	RabbitMQMessage_ALIGN_GET_BOOK_REQUEST                 RabbitMQMessage_Type = 200
+	RabbitMQMessage_ALIGN_GET_BOOK_ANSWER                  RabbitMQMessage_Type = 201
+	RabbitMQMessage_ALIGN_GET_USER_REQUEST                 RabbitMQMessage_Type = 202
+	RabbitMQMessage_ALIGN_GET_USER_ANSWER                  RabbitMQMessage_Type = 203
+	RabbitMQMessage_ALIGN_SET_REQUEST                      RabbitMQMessage_Type = 204
+	RabbitMQMessage_ALIGN_SET_ANSWER                       RabbitMQMessage_Type = 205
+	RabbitMQMessage_COMPETITION_MAP_REQUEST                RabbitMQMessage_Type = 300
+	RabbitMQMessage_COMPETITION_MAP_ANSWER                 RabbitMQMessage_Type = 301
+	RabbitMQMessage_CONFIGURATION_GET_REQUEST              RabbitMQMessage_Type = 400
+	RabbitMQMessage_CONFIGURATION_GET_ANSWER               RabbitMQMessage_Type = 401
+	RabbitMQMessage_CONFIGURATION_SET_SERVER_REQUEST       RabbitMQMessage_Type = 402
+	RabbitMQMessage_CONFIGURATION_SET_SERVER_ANSWER        RabbitMQMessage_Type = 403
+	RabbitMQMessage_CONFIGURATION_SET_NOTIFICATION_REQUEST RabbitMQMessage_Type = 404
+	RabbitMQMessage_CONFIGURATION_SET_NOTIFICATION_ANSWER  RabbitMQMessage_Type = 405
+	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_REQUEST           RabbitMQMessage_Type = 500
+	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_ANSWER            RabbitMQMessage_Type = 501
+	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST  RabbitMQMessage_Type = 502
+	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_RESOURCE_ANSWER   RabbitMQMessage_Type = 503
+	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_EFFECT_REQUEST    RabbitMQMessage_Type = 504
+	RabbitMQMessage_ENCYCLOPEDIA_ALMANAX_EFFECT_ANSWER     RabbitMQMessage_Type = 505
+	RabbitMQMessage_ENCYCLOPEDIA_LIST_REQUEST              RabbitMQMessage_Type = 506
+	RabbitMQMessage_ENCYCLOPEDIA_LIST_ANSWER               RabbitMQMessage_Type = 507
+	RabbitMQMessage_ENCYCLOPEDIA_ITEM_REQUEST              RabbitMQMessage_Type = 508
+	RabbitMQMessage_ENCYCLOPEDIA_ITEM_ANSWER               RabbitMQMessage_Type = 509
+	RabbitMQMessage_HELP_REQUEST                           RabbitMQMessage_Type = 600
+	RabbitMQMessage_JOB_GET_BOOK_REQUEST                   RabbitMQMessage_Type = 700
+	RabbitMQMessage_JOB_GET_BOOK_ANSWER                    RabbitMQMessage_Type = 701
+	RabbitMQMessage_JOB_GET_USER_REQUEST                   RabbitMQMessage_Type = 702
+	RabbitMQMessage_JOB_GET_USER_ANSWER                    RabbitMQMessage_Type = 703
+	RabbitMQMessage_JOB_SET_REQUEST                        RabbitMQMessage_Type = 704
+	RabbitMQMessage_JOB_SET_ANSWER                         RabbitMQMessage_Type = 705
+	RabbitMQMessage_NEWS_ALMANAX                           RabbitMQMessage_Type = 800
+	RabbitMQMessage_NEWS_GAME                              RabbitMQMessage_Type = 801
+	RabbitMQMessage_NEWS_GUILD                             RabbitMQMessage_Type = 802
+	RabbitMQMessage_NEWS_RSS                               RabbitMQMessage_Type = 803
+	RabbitMQMessage_NEWS_SET                               RabbitMQMessage_Type = 804
+	RabbitMQMessage_NEWS_TWITTER                           RabbitMQMessage_Type = 805
+	RabbitMQMessage_PORTAL_POSITION_REQUEST                RabbitMQMessage_Type = 900
+	RabbitMQMessage_PORTAL_POSITION_ANSWER                 RabbitMQMessage_Type = 901
 )
 
 // Enum value maps for RabbitMQMessage_Type.
@@ -400,10 +451,9 @@ var (
 		400: "CONFIGURATION_GET_REQUEST",
 		401: "CONFIGURATION_GET_ANSWER",
 		402: "CONFIGURATION_SET_SERVER_REQUEST",
-		403: "CONFIGURATION_SET_ALMANAX_REQUEST",
-		404: "CONFIGURATION_SET_RSS_REQUEST",
-		405: "CONFIGURATION_SET_TWITTER_REQUEST",
-		450: "CONFIGURATION_SET_ANSWER",
+		403: "CONFIGURATION_SET_SERVER_ANSWER",
+		404: "CONFIGURATION_SET_NOTIFICATION_REQUEST",
+		405: "CONFIGURATION_SET_NOTIFICATION_ANSWER",
 		500: "ENCYCLOPEDIA_ALMANAX_REQUEST",
 		501: "ENCYCLOPEDIA_ALMANAX_ANSWER",
 		502: "ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST",
@@ -431,48 +481,47 @@ var (
 		901: "PORTAL_POSITION_ANSWER",
 	}
 	RabbitMQMessage_Type_value = map[string]int32{
-		"UNKNOWN":                               0,
-		"ABOUT_REQUEST":                         100,
-		"ALIGN_GET_BOOK_REQUEST":                200,
-		"ALIGN_GET_BOOK_ANSWER":                 201,
-		"ALIGN_GET_USER_REQUEST":                202,
-		"ALIGN_GET_USER_ANSWER":                 203,
-		"ALIGN_SET_REQUEST":                     204,
-		"ALIGN_SET_ANSWER":                      205,
-		"COMPETITION_MAP_REQUEST":               300,
-		"COMPETITION_MAP_ANSWER":                301,
-		"CONFIGURATION_GET_REQUEST":             400,
-		"CONFIGURATION_GET_ANSWER":              401,
-		"CONFIGURATION_SET_SERVER_REQUEST":      402,
-		"CONFIGURATION_SET_ALMANAX_REQUEST":     403,
-		"CONFIGURATION_SET_RSS_REQUEST":         404,
-		"CONFIGURATION_SET_TWITTER_REQUEST":     405,
-		"CONFIGURATION_SET_ANSWER":              450,
-		"ENCYCLOPEDIA_ALMANAX_REQUEST":          500,
-		"ENCYCLOPEDIA_ALMANAX_ANSWER":           501,
-		"ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST": 502,
-		"ENCYCLOPEDIA_ALMANAX_RESOURCE_ANSWER":  503,
-		"ENCYCLOPEDIA_ALMANAX_EFFECT_REQUEST":   504,
-		"ENCYCLOPEDIA_ALMANAX_EFFECT_ANSWER":    505,
-		"ENCYCLOPEDIA_LIST_REQUEST":             506,
-		"ENCYCLOPEDIA_LIST_ANSWER":              507,
-		"ENCYCLOPEDIA_ITEM_REQUEST":             508,
-		"ENCYCLOPEDIA_ITEM_ANSWER":              509,
-		"HELP_REQUEST":                          600,
-		"JOB_GET_BOOK_REQUEST":                  700,
-		"JOB_GET_BOOK_ANSWER":                   701,
-		"JOB_GET_USER_REQUEST":                  702,
-		"JOB_GET_USER_ANSWER":                   703,
-		"JOB_SET_REQUEST":                       704,
-		"JOB_SET_ANSWER":                        705,
-		"NEWS_ALMANAX":                          800,
-		"NEWS_GAME":                             801,
-		"NEWS_GUILD":                            802,
-		"NEWS_RSS":                              803,
-		"NEWS_SET":                              804,
-		"NEWS_TWITTER":                          805,
-		"PORTAL_POSITION_REQUEST":               900,
-		"PORTAL_POSITION_ANSWER":                901,
+		"UNKNOWN":                                0,
+		"ABOUT_REQUEST":                          100,
+		"ALIGN_GET_BOOK_REQUEST":                 200,
+		"ALIGN_GET_BOOK_ANSWER":                  201,
+		"ALIGN_GET_USER_REQUEST":                 202,
+		"ALIGN_GET_USER_ANSWER":                  203,
+		"ALIGN_SET_REQUEST":                      204,
+		"ALIGN_SET_ANSWER":                       205,
+		"COMPETITION_MAP_REQUEST":                300,
+		"COMPETITION_MAP_ANSWER":                 301,
+		"CONFIGURATION_GET_REQUEST":              400,
+		"CONFIGURATION_GET_ANSWER":               401,
+		"CONFIGURATION_SET_SERVER_REQUEST":       402,
+		"CONFIGURATION_SET_SERVER_ANSWER":        403,
+		"CONFIGURATION_SET_NOTIFICATION_REQUEST": 404,
+		"CONFIGURATION_SET_NOTIFICATION_ANSWER":  405,
+		"ENCYCLOPEDIA_ALMANAX_REQUEST":           500,
+		"ENCYCLOPEDIA_ALMANAX_ANSWER":            501,
+		"ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST":  502,
+		"ENCYCLOPEDIA_ALMANAX_RESOURCE_ANSWER":   503,
+		"ENCYCLOPEDIA_ALMANAX_EFFECT_REQUEST":    504,
+		"ENCYCLOPEDIA_ALMANAX_EFFECT_ANSWER":     505,
+		"ENCYCLOPEDIA_LIST_REQUEST":              506,
+		"ENCYCLOPEDIA_LIST_ANSWER":               507,
+		"ENCYCLOPEDIA_ITEM_REQUEST":              508,
+		"ENCYCLOPEDIA_ITEM_ANSWER":               509,
+		"HELP_REQUEST":                           600,
+		"JOB_GET_BOOK_REQUEST":                   700,
+		"JOB_GET_BOOK_ANSWER":                    701,
+		"JOB_GET_USER_REQUEST":                   702,
+		"JOB_GET_USER_ANSWER":                    703,
+		"JOB_SET_REQUEST":                        704,
+		"JOB_SET_ANSWER":                         705,
+		"NEWS_ALMANAX":                           800,
+		"NEWS_GAME":                              801,
+		"NEWS_GUILD":                             802,
+		"NEWS_RSS":                               803,
+		"NEWS_SET":                               804,
+		"NEWS_TWITTER":                           805,
+		"PORTAL_POSITION_REQUEST":                900,
+		"PORTAL_POSITION_ANSWER":                 901,
 	}
 )
 
@@ -487,11 +536,11 @@ func (x RabbitMQMessage_Type) String() string {
 }
 
 func (RabbitMQMessage_Type) Descriptor() protoreflect.EnumDescriptor {
-	return file_rabbitmq_proto_enumTypes[4].Descriptor()
+	return file_rabbitmq_proto_enumTypes[5].Descriptor()
 }
 
 func (RabbitMQMessage_Type) Type() protoreflect.EnumType {
-	return &file_rabbitmq_proto_enumTypes[4]
+	return &file_rabbitmq_proto_enumTypes[5]
 }
 
 func (x RabbitMQMessage_Type) Number() protoreflect.EnumNumber {
@@ -533,11 +582,11 @@ func (x RabbitMQMessage_Status) String() string {
 }
 
 func (RabbitMQMessage_Status) Descriptor() protoreflect.EnumDescriptor {
-	return file_rabbitmq_proto_enumTypes[5].Descriptor()
+	return file_rabbitmq_proto_enumTypes[6].Descriptor()
 }
 
 func (RabbitMQMessage_Status) Type() protoreflect.EnumType {
-	return &file_rabbitmq_proto_enumTypes[5]
+	return &file_rabbitmq_proto_enumTypes[6]
 }
 
 func (x RabbitMQMessage_Status) Number() protoreflect.EnumNumber {
@@ -547,58 +596,6 @@ func (x RabbitMQMessage_Status) Number() protoreflect.EnumNumber {
 // Deprecated: Use RabbitMQMessage_Status.Descriptor instead.
 func (RabbitMQMessage_Status) EnumDescriptor() ([]byte, []int) {
 	return file_rabbitmq_proto_rawDescGZIP(), []int{0, 1}
-}
-
-type ConfigurationGetAnswer_NotifiedChannel_NotificationType int32
-
-const (
-	ConfigurationGetAnswer_NotifiedChannel_UNKNOWN ConfigurationGetAnswer_NotifiedChannel_NotificationType = 0
-	ConfigurationGetAnswer_NotifiedChannel_ALMANAX ConfigurationGetAnswer_NotifiedChannel_NotificationType = 1
-	ConfigurationGetAnswer_NotifiedChannel_RSS     ConfigurationGetAnswer_NotifiedChannel_NotificationType = 2
-	ConfigurationGetAnswer_NotifiedChannel_TWITTER ConfigurationGetAnswer_NotifiedChannel_NotificationType = 3
-)
-
-// Enum value maps for ConfigurationGetAnswer_NotifiedChannel_NotificationType.
-var (
-	ConfigurationGetAnswer_NotifiedChannel_NotificationType_name = map[int32]string{
-		0: "UNKNOWN",
-		1: "ALMANAX",
-		2: "RSS",
-		3: "TWITTER",
-	}
-	ConfigurationGetAnswer_NotifiedChannel_NotificationType_value = map[string]int32{
-		"UNKNOWN": 0,
-		"ALMANAX": 1,
-		"RSS":     2,
-		"TWITTER": 3,
-	}
-)
-
-func (x ConfigurationGetAnswer_NotifiedChannel_NotificationType) Enum() *ConfigurationGetAnswer_NotifiedChannel_NotificationType {
-	p := new(ConfigurationGetAnswer_NotifiedChannel_NotificationType)
-	*p = x
-	return p
-}
-
-func (x ConfigurationGetAnswer_NotifiedChannel_NotificationType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ConfigurationGetAnswer_NotifiedChannel_NotificationType) Descriptor() protoreflect.EnumDescriptor {
-	return file_rabbitmq_proto_enumTypes[6].Descriptor()
-}
-
-func (ConfigurationGetAnswer_NotifiedChannel_NotificationType) Type() protoreflect.EnumType {
-	return &file_rabbitmq_proto_enumTypes[6]
-}
-
-func (x ConfigurationGetAnswer_NotifiedChannel_NotificationType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ConfigurationGetAnswer_NotifiedChannel_NotificationType.Descriptor instead.
-func (ConfigurationGetAnswer_NotifiedChannel_NotificationType) EnumDescriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{12, 1, 0}
 }
 
 type EncyclopediaAlmanaxEffectRequest_RequestType int32
@@ -644,7 +641,7 @@ func (x EncyclopediaAlmanaxEffectRequest_RequestType) Number() protoreflect.Enum
 
 // Deprecated: Use EncyclopediaAlmanaxEffectRequest_RequestType.Descriptor instead.
 func (EncyclopediaAlmanaxEffectRequest_RequestType) EnumDescriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{20, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{19, 0}
 }
 
 type EncyclopediaListRequest_Type int32
@@ -696,7 +693,7 @@ func (x EncyclopediaListRequest_Type) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use EncyclopediaListRequest_Type.Descriptor instead.
 func (EncyclopediaListRequest_Type) EnumDescriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{24, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{23, 0}
 }
 
 type EncyclopediaItemAnswer_Conditions_Relation int32
@@ -745,7 +742,7 @@ func (x EncyclopediaItemAnswer_Conditions_Relation) Number() protoreflect.EnumNu
 
 // Deprecated: Use EncyclopediaItemAnswer_Conditions_Relation.Descriptor instead.
 func (EncyclopediaItemAnswer_Conditions_Relation) EnumDescriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 3, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 3, 0}
 }
 
 type NewsGuildMessage_Event int32
@@ -794,57 +791,56 @@ func (x NewsGuildMessage_Event) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use NewsGuildMessage_Event.Descriptor instead.
 func (NewsGuildMessage_Event) EnumDescriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{38, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{37, 0}
 }
 
 type RabbitMQMessage struct {
-	state                              protoimpl.MessageState              `protogen:"open.v1"`
-	Type                               RabbitMQMessage_Type                `protobuf:"varint,1,opt,name=type,proto3,enum=amqp.RabbitMQMessage_Type" json:"type,omitempty"`
-	Language                           Language                            `protobuf:"varint,2,opt,name=language,proto3,enum=amqp.Language" json:"language,omitempty"`
-	Status                             RabbitMQMessage_Status              `protobuf:"varint,3,opt,name=status,proto3,enum=amqp.RabbitMQMessage_Status" json:"status,omitempty"`
-	Game                               Game                                `protobuf:"varint,4,opt,name=game,proto3,enum=amqp.Game" json:"game,omitempty"`
-	UserID                             string                              `protobuf:"bytes,5,opt,name=userID,proto3" json:"userID,omitempty"`
-	AlignGetBookRequest                *AlignGetBookRequest                `protobuf:"bytes,100,opt,name=alignGetBookRequest,proto3" json:"alignGetBookRequest,omitempty"`
-	AlignGetBookAnswer                 *AlignGetBookAnswer                 `protobuf:"bytes,101,opt,name=alignGetBookAnswer,proto3" json:"alignGetBookAnswer,omitempty"`
-	AlignGetUserRequest                *AlignGetUserRequest                `protobuf:"bytes,102,opt,name=alignGetUserRequest,proto3" json:"alignGetUserRequest,omitempty"`
-	AlignGetUserAnswer                 *AlignGetUserAnswer                 `protobuf:"bytes,103,opt,name=alignGetUserAnswer,proto3" json:"alignGetUserAnswer,omitempty"`
-	AlignSetRequest                    *AlignSetRequest                    `protobuf:"bytes,104,opt,name=alignSetRequest,proto3" json:"alignSetRequest,omitempty"`
-	AlignSetAnswer                     *AlignSetAnswer                     `protobuf:"bytes,105,opt,name=alignSetAnswer,proto3" json:"alignSetAnswer,omitempty"`
-	CompetitionMapRequest              *CompetitionMapRequest              `protobuf:"bytes,200,opt,name=competitionMapRequest,proto3" json:"competitionMapRequest,omitempty"`
-	CompetitionMapAnswer               *CompetitionMapAnswer               `protobuf:"bytes,201,opt,name=competitionMapAnswer,proto3" json:"competitionMapAnswer,omitempty"`
-	ConfigurationGetRequest            *ConfigurationGetRequest            `protobuf:"bytes,300,opt,name=configurationGetRequest,proto3" json:"configurationGetRequest,omitempty"`
-	ConfigurationGetAnswer             *ConfigurationGetAnswer             `protobuf:"bytes,301,opt,name=configurationGetAnswer,proto3" json:"configurationGetAnswer,omitempty"`
-	ConfigurationSetServerRequest      *ConfigurationSetServerRequest      `protobuf:"bytes,302,opt,name=configurationSetServerRequest,proto3" json:"configurationSetServerRequest,omitempty"`
-	ConfigurationSetAlmanaxRequest     *ConfigurationSetAlmanaxRequest     `protobuf:"bytes,303,opt,name=configurationSetAlmanaxRequest,proto3" json:"configurationSetAlmanaxRequest,omitempty"`
-	ConfigurationSetRssRequest         *ConfigurationSetRssRequest         `protobuf:"bytes,304,opt,name=configurationSetRssRequest,proto3" json:"configurationSetRssRequest,omitempty"`
-	ConfigurationSetTwitterRequest     *ConfigurationSetTwitterRequest     `protobuf:"bytes,305,opt,name=configurationSetTwitterRequest,proto3" json:"configurationSetTwitterRequest,omitempty"`
-	ConfigurationSetAnswer             *ConfigurationSetAnswer             `protobuf:"bytes,350,opt,name=configurationSetAnswer,proto3" json:"configurationSetAnswer,omitempty"`
-	EncyclopediaAlmanaxRequest         *EncyclopediaAlmanaxRequest         `protobuf:"bytes,400,opt,name=encyclopediaAlmanaxRequest,proto3" json:"encyclopediaAlmanaxRequest,omitempty"`
-	EncyclopediaAlmanaxAnswer          *EncyclopediaAlmanaxAnswer          `protobuf:"bytes,401,opt,name=encyclopediaAlmanaxAnswer,proto3" json:"encyclopediaAlmanaxAnswer,omitempty"`
-	EncyclopediaAlmanaxResourceRequest *EncyclopediaAlmanaxResourceRequest `protobuf:"bytes,402,opt,name=encyclopediaAlmanaxResourceRequest,proto3" json:"encyclopediaAlmanaxResourceRequest,omitempty"`
-	EncyclopediaAlmanaxResourceAnswer  *EncyclopediaAlmanaxResourceAnswer  `protobuf:"bytes,403,opt,name=encyclopediaAlmanaxResourceAnswer,proto3" json:"encyclopediaAlmanaxResourceAnswer,omitempty"`
-	EncyclopediaAlmanaxEffectRequest   *EncyclopediaAlmanaxEffectRequest   `protobuf:"bytes,404,opt,name=encyclopediaAlmanaxEffectRequest,proto3" json:"encyclopediaAlmanaxEffectRequest,omitempty"`
-	EncyclopediaAlmanaxEffectAnswer    *EncyclopediaAlmanaxEffectAnswer    `protobuf:"bytes,405,opt,name=encyclopediaAlmanaxEffectAnswer,proto3" json:"encyclopediaAlmanaxEffectAnswer,omitempty"`
-	EncyclopediaListRequest            *EncyclopediaListRequest            `protobuf:"bytes,406,opt,name=encyclopediaListRequest,proto3" json:"encyclopediaListRequest,omitempty"`
-	EncyclopediaListAnswer             *EncyclopediaListAnswer             `protobuf:"bytes,407,opt,name=encyclopediaListAnswer,proto3" json:"encyclopediaListAnswer,omitempty"`
-	EncyclopediaItemRequest            *EncyclopediaItemRequest            `protobuf:"bytes,408,opt,name=encyclopediaItemRequest,proto3" json:"encyclopediaItemRequest,omitempty"`
-	EncyclopediaItemAnswer             *EncyclopediaItemAnswer             `protobuf:"bytes,409,opt,name=encyclopediaItemAnswer,proto3" json:"encyclopediaItemAnswer,omitempty"`
-	JobGetBookRequest                  *JobGetBookRequest                  `protobuf:"bytes,500,opt,name=jobGetBookRequest,proto3" json:"jobGetBookRequest,omitempty"`
-	JobGetBookAnswer                   *JobGetBookAnswer                   `protobuf:"bytes,501,opt,name=jobGetBookAnswer,proto3" json:"jobGetBookAnswer,omitempty"`
-	JobGetUserRequest                  *JobGetUserRequest                  `protobuf:"bytes,502,opt,name=jobGetUserRequest,proto3" json:"jobGetUserRequest,omitempty"`
-	JobGetUserAnswer                   *JobGetUserAnswer                   `protobuf:"bytes,503,opt,name=jobGetUserAnswer,proto3" json:"jobGetUserAnswer,omitempty"`
-	JobSetRequest                      *JobSetRequest                      `protobuf:"bytes,504,opt,name=jobSetRequest,proto3" json:"jobSetRequest,omitempty"`
-	JobSetAnswer                       *JobSetAnswer                       `protobuf:"bytes,505,opt,name=jobSetAnswer,proto3" json:"jobSetAnswer,omitempty"`
-	NewsAlmanaxMessage                 *NewsAlmanaxMessage                 `protobuf:"bytes,600,opt,name=newsAlmanaxMessage,proto3" json:"newsAlmanaxMessage,omitempty"`
-	NewsGameMessage                    *NewsGameMessage                    `protobuf:"bytes,601,opt,name=newsGameMessage,proto3" json:"newsGameMessage,omitempty"`
-	NewsGuildMessage                   *NewsGuildMessage                   `protobuf:"bytes,602,opt,name=newsGuildMessage,proto3" json:"newsGuildMessage,omitempty"`
-	NewsRSSMessage                     *NewsRSSMessage                     `protobuf:"bytes,603,opt,name=newsRSSMessage,proto3" json:"newsRSSMessage,omitempty"`
-	NewsSetMessage                     *NewsSetMessage                     `protobuf:"bytes,604,opt,name=newsSetMessage,proto3" json:"newsSetMessage,omitempty"`
-	NewsTwitterMessage                 *NewsTwitterMessage                 `protobuf:"bytes,605,opt,name=newsTwitterMessage,proto3" json:"newsTwitterMessage,omitempty"`
-	PortalPositionRequest              *PortalPositionRequest              `protobuf:"bytes,700,opt,name=portalPositionRequest,proto3" json:"portalPositionRequest,omitempty"`
-	PortalPositionAnswer               *PortalPositionAnswer               `protobuf:"bytes,701,opt,name=portalPositionAnswer,proto3" json:"portalPositionAnswer,omitempty"`
-	unknownFields                      protoimpl.UnknownFields
-	sizeCache                          protoimpl.SizeCache
+	state                               protoimpl.MessageState               `protogen:"open.v1"`
+	Type                                RabbitMQMessage_Type                 `protobuf:"varint,1,opt,name=type,proto3,enum=amqp.RabbitMQMessage_Type" json:"type,omitempty"`
+	Language                            Language                             `protobuf:"varint,2,opt,name=language,proto3,enum=amqp.Language" json:"language,omitempty"`
+	Status                              RabbitMQMessage_Status               `protobuf:"varint,3,opt,name=status,proto3,enum=amqp.RabbitMQMessage_Status" json:"status,omitempty"`
+	Game                                Game                                 `protobuf:"varint,4,opt,name=game,proto3,enum=amqp.Game" json:"game,omitempty"`
+	UserID                              string                               `protobuf:"bytes,5,opt,name=userID,proto3" json:"userID,omitempty"`
+	AlignGetBookRequest                 *AlignGetBookRequest                 `protobuf:"bytes,100,opt,name=alignGetBookRequest,proto3" json:"alignGetBookRequest,omitempty"`
+	AlignGetBookAnswer                  *AlignGetBookAnswer                  `protobuf:"bytes,101,opt,name=alignGetBookAnswer,proto3" json:"alignGetBookAnswer,omitempty"`
+	AlignGetUserRequest                 *AlignGetUserRequest                 `protobuf:"bytes,102,opt,name=alignGetUserRequest,proto3" json:"alignGetUserRequest,omitempty"`
+	AlignGetUserAnswer                  *AlignGetUserAnswer                  `protobuf:"bytes,103,opt,name=alignGetUserAnswer,proto3" json:"alignGetUserAnswer,omitempty"`
+	AlignSetRequest                     *AlignSetRequest                     `protobuf:"bytes,104,opt,name=alignSetRequest,proto3" json:"alignSetRequest,omitempty"`
+	AlignSetAnswer                      *AlignSetAnswer                      `protobuf:"bytes,105,opt,name=alignSetAnswer,proto3" json:"alignSetAnswer,omitempty"`
+	CompetitionMapRequest               *CompetitionMapRequest               `protobuf:"bytes,200,opt,name=competitionMapRequest,proto3" json:"competitionMapRequest,omitempty"`
+	CompetitionMapAnswer                *CompetitionMapAnswer                `protobuf:"bytes,201,opt,name=competitionMapAnswer,proto3" json:"competitionMapAnswer,omitempty"`
+	ConfigurationGetRequest             *ConfigurationGetRequest             `protobuf:"bytes,300,opt,name=configurationGetRequest,proto3" json:"configurationGetRequest,omitempty"`
+	ConfigurationGetAnswer              *ConfigurationGetAnswer              `protobuf:"bytes,301,opt,name=configurationGetAnswer,proto3" json:"configurationGetAnswer,omitempty"`
+	ConfigurationSetServerRequest       *ConfigurationSetServerRequest       `protobuf:"bytes,302,opt,name=configurationSetServerRequest,proto3" json:"configurationSetServerRequest,omitempty"`
+	ConfigurationSetServerAnswer        *ConfigurationSetServerAnswer        `protobuf:"bytes,303,opt,name=configurationSetServerAnswer,proto3" json:"configurationSetServerAnswer,omitempty"`
+	ConfigurationSetNotificationRequest *ConfigurationSetNotificationRequest `protobuf:"bytes,304,opt,name=configurationSetNotificationRequest,proto3" json:"configurationSetNotificationRequest,omitempty"`
+	ConfigurationSetNotificationAnswer  *ConfigurationSetNotificationAnswer  `protobuf:"bytes,305,opt,name=configurationSetNotificationAnswer,proto3" json:"configurationSetNotificationAnswer,omitempty"`
+	EncyclopediaAlmanaxRequest          *EncyclopediaAlmanaxRequest          `protobuf:"bytes,400,opt,name=encyclopediaAlmanaxRequest,proto3" json:"encyclopediaAlmanaxRequest,omitempty"`
+	EncyclopediaAlmanaxAnswer           *EncyclopediaAlmanaxAnswer           `protobuf:"bytes,401,opt,name=encyclopediaAlmanaxAnswer,proto3" json:"encyclopediaAlmanaxAnswer,omitempty"`
+	EncyclopediaAlmanaxResourceRequest  *EncyclopediaAlmanaxResourceRequest  `protobuf:"bytes,402,opt,name=encyclopediaAlmanaxResourceRequest,proto3" json:"encyclopediaAlmanaxResourceRequest,omitempty"`
+	EncyclopediaAlmanaxResourceAnswer   *EncyclopediaAlmanaxResourceAnswer   `protobuf:"bytes,403,opt,name=encyclopediaAlmanaxResourceAnswer,proto3" json:"encyclopediaAlmanaxResourceAnswer,omitempty"`
+	EncyclopediaAlmanaxEffectRequest    *EncyclopediaAlmanaxEffectRequest    `protobuf:"bytes,404,opt,name=encyclopediaAlmanaxEffectRequest,proto3" json:"encyclopediaAlmanaxEffectRequest,omitempty"`
+	EncyclopediaAlmanaxEffectAnswer     *EncyclopediaAlmanaxEffectAnswer     `protobuf:"bytes,405,opt,name=encyclopediaAlmanaxEffectAnswer,proto3" json:"encyclopediaAlmanaxEffectAnswer,omitempty"`
+	EncyclopediaListRequest             *EncyclopediaListRequest             `protobuf:"bytes,406,opt,name=encyclopediaListRequest,proto3" json:"encyclopediaListRequest,omitempty"`
+	EncyclopediaListAnswer              *EncyclopediaListAnswer              `protobuf:"bytes,407,opt,name=encyclopediaListAnswer,proto3" json:"encyclopediaListAnswer,omitempty"`
+	EncyclopediaItemRequest             *EncyclopediaItemRequest             `protobuf:"bytes,408,opt,name=encyclopediaItemRequest,proto3" json:"encyclopediaItemRequest,omitempty"`
+	EncyclopediaItemAnswer              *EncyclopediaItemAnswer              `protobuf:"bytes,409,opt,name=encyclopediaItemAnswer,proto3" json:"encyclopediaItemAnswer,omitempty"`
+	JobGetBookRequest                   *JobGetBookRequest                   `protobuf:"bytes,500,opt,name=jobGetBookRequest,proto3" json:"jobGetBookRequest,omitempty"`
+	JobGetBookAnswer                    *JobGetBookAnswer                    `protobuf:"bytes,501,opt,name=jobGetBookAnswer,proto3" json:"jobGetBookAnswer,omitempty"`
+	JobGetUserRequest                   *JobGetUserRequest                   `protobuf:"bytes,502,opt,name=jobGetUserRequest,proto3" json:"jobGetUserRequest,omitempty"`
+	JobGetUserAnswer                    *JobGetUserAnswer                    `protobuf:"bytes,503,opt,name=jobGetUserAnswer,proto3" json:"jobGetUserAnswer,omitempty"`
+	JobSetRequest                       *JobSetRequest                       `protobuf:"bytes,504,opt,name=jobSetRequest,proto3" json:"jobSetRequest,omitempty"`
+	JobSetAnswer                        *JobSetAnswer                        `protobuf:"bytes,505,opt,name=jobSetAnswer,proto3" json:"jobSetAnswer,omitempty"`
+	NewsAlmanaxMessage                  *NewsAlmanaxMessage                  `protobuf:"bytes,600,opt,name=newsAlmanaxMessage,proto3" json:"newsAlmanaxMessage,omitempty"`
+	NewsGameMessage                     *NewsGameMessage                     `protobuf:"bytes,601,opt,name=newsGameMessage,proto3" json:"newsGameMessage,omitempty"`
+	NewsGuildMessage                    *NewsGuildMessage                    `protobuf:"bytes,602,opt,name=newsGuildMessage,proto3" json:"newsGuildMessage,omitempty"`
+	NewsRSSMessage                      *NewsRSSMessage                      `protobuf:"bytes,603,opt,name=newsRSSMessage,proto3" json:"newsRSSMessage,omitempty"`
+	NewsSetMessage                      *NewsSetMessage                      `protobuf:"bytes,604,opt,name=newsSetMessage,proto3" json:"newsSetMessage,omitempty"`
+	NewsTwitterMessage                  *NewsTwitterMessage                  `protobuf:"bytes,605,opt,name=newsTwitterMessage,proto3" json:"newsTwitterMessage,omitempty"`
+	PortalPositionRequest               *PortalPositionRequest               `protobuf:"bytes,700,opt,name=portalPositionRequest,proto3" json:"portalPositionRequest,omitempty"`
+	PortalPositionAnswer                *PortalPositionAnswer                `protobuf:"bytes,701,opt,name=portalPositionAnswer,proto3" json:"portalPositionAnswer,omitempty"`
+	unknownFields                       protoimpl.UnknownFields
+	sizeCache                           protoimpl.SizeCache
 }
 
 func (x *RabbitMQMessage) Reset() {
@@ -989,30 +985,23 @@ func (x *RabbitMQMessage) GetConfigurationSetServerRequest() *ConfigurationSetSe
 	return nil
 }
 
-func (x *RabbitMQMessage) GetConfigurationSetAlmanaxRequest() *ConfigurationSetAlmanaxRequest {
+func (x *RabbitMQMessage) GetConfigurationSetServerAnswer() *ConfigurationSetServerAnswer {
 	if x != nil {
-		return x.ConfigurationSetAlmanaxRequest
+		return x.ConfigurationSetServerAnswer
 	}
 	return nil
 }
 
-func (x *RabbitMQMessage) GetConfigurationSetRssRequest() *ConfigurationSetRssRequest {
+func (x *RabbitMQMessage) GetConfigurationSetNotificationRequest() *ConfigurationSetNotificationRequest {
 	if x != nil {
-		return x.ConfigurationSetRssRequest
+		return x.ConfigurationSetNotificationRequest
 	}
 	return nil
 }
 
-func (x *RabbitMQMessage) GetConfigurationSetTwitterRequest() *ConfigurationSetTwitterRequest {
+func (x *RabbitMQMessage) GetConfigurationSetNotificationAnswer() *ConfigurationSetNotificationAnswer {
 	if x != nil {
-		return x.ConfigurationSetTwitterRequest
-	}
-	return nil
-}
-
-func (x *RabbitMQMessage) GetConfigurationSetAnswer() *ConfigurationSetAnswer {
-	if x != nil {
-		return x.ConfigurationSetAnswer
+		return x.ConfigurationSetNotificationAnswer
 	}
 	return nil
 }
@@ -1991,30 +1980,26 @@ func (x *ConfigurationSetServerRequest) GetServerId() string {
 	return ""
 }
 
-type ConfigurationSetAlmanaxRequest struct {
+type ConfigurationSetServerAnswer struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GuildId       string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
-	ChannelId     string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	WebhookId     string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
-	Enabled       bool                   `protobuf:"varint,4,opt,name=enabled,proto3" json:"enabled,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ConfigurationSetAlmanaxRequest) Reset() {
-	*x = ConfigurationSetAlmanaxRequest{}
+func (x *ConfigurationSetServerAnswer) Reset() {
+	*x = ConfigurationSetServerAnswer{}
 	mi := &file_rabbitmq_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ConfigurationSetAlmanaxRequest) String() string {
+func (x *ConfigurationSetServerAnswer) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConfigurationSetAlmanaxRequest) ProtoMessage() {}
+func (*ConfigurationSetServerAnswer) ProtoMessage() {}
 
-func (x *ConfigurationSetAlmanaxRequest) ProtoReflect() protoreflect.Message {
+func (x *ConfigurationSetServerAnswer) ProtoReflect() protoreflect.Message {
 	mi := &file_rabbitmq_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2026,64 +2011,37 @@ func (x *ConfigurationSetAlmanaxRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConfigurationSetAlmanaxRequest.ProtoReflect.Descriptor instead.
-func (*ConfigurationSetAlmanaxRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ConfigurationSetServerAnswer.ProtoReflect.Descriptor instead.
+func (*ConfigurationSetServerAnswer) Descriptor() ([]byte, []int) {
 	return file_rabbitmq_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *ConfigurationSetAlmanaxRequest) GetGuildId() string {
-	if x != nil {
-		return x.GuildId
-	}
-	return ""
+type ConfigurationSetNotificationRequest struct {
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	GuildId          string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
+	ChannelId        string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
+	WebhookId        string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	Label            string                 `protobuf:"bytes,4,opt,name=label,proto3" json:"label,omitempty"`
+	NotificationType NotificationType       `protobuf:"varint,5,opt,name=notificationType,proto3,enum=amqp.NotificationType" json:"notificationType,omitempty"`
+	Enabled          bool                   `protobuf:"varint,6,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
-func (x *ConfigurationSetAlmanaxRequest) GetChannelId() string {
-	if x != nil {
-		return x.ChannelId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetAlmanaxRequest) GetWebhookId() string {
-	if x != nil {
-		return x.WebhookId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetAlmanaxRequest) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
-	}
-	return false
-}
-
-type ConfigurationSetRssRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	GuildId       string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
-	ChannelId     string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	WebhookId     string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
-	FeedId        string                 `protobuf:"bytes,4,opt,name=feedId,proto3" json:"feedId,omitempty"`
-	Enabled       bool                   `protobuf:"varint,5,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ConfigurationSetRssRequest) Reset() {
-	*x = ConfigurationSetRssRequest{}
+func (x *ConfigurationSetNotificationRequest) Reset() {
+	*x = ConfigurationSetNotificationRequest{}
 	mi := &file_rabbitmq_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ConfigurationSetRssRequest) String() string {
+func (x *ConfigurationSetNotificationRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConfigurationSetRssRequest) ProtoMessage() {}
+func (*ConfigurationSetNotificationRequest) ProtoMessage() {}
 
-func (x *ConfigurationSetRssRequest) ProtoReflect() protoreflect.Message {
+func (x *ConfigurationSetNotificationRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_rabbitmq_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2095,71 +2053,75 @@ func (x *ConfigurationSetRssRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConfigurationSetRssRequest.ProtoReflect.Descriptor instead.
-func (*ConfigurationSetRssRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ConfigurationSetNotificationRequest.ProtoReflect.Descriptor instead.
+func (*ConfigurationSetNotificationRequest) Descriptor() ([]byte, []int) {
 	return file_rabbitmq_proto_rawDescGZIP(), []int{15}
 }
 
-func (x *ConfigurationSetRssRequest) GetGuildId() string {
+func (x *ConfigurationSetNotificationRequest) GetGuildId() string {
 	if x != nil {
 		return x.GuildId
 	}
 	return ""
 }
 
-func (x *ConfigurationSetRssRequest) GetChannelId() string {
+func (x *ConfigurationSetNotificationRequest) GetChannelId() string {
 	if x != nil {
 		return x.ChannelId
 	}
 	return ""
 }
 
-func (x *ConfigurationSetRssRequest) GetWebhookId() string {
+func (x *ConfigurationSetNotificationRequest) GetWebhookId() string {
 	if x != nil {
 		return x.WebhookId
 	}
 	return ""
 }
 
-func (x *ConfigurationSetRssRequest) GetFeedId() string {
+func (x *ConfigurationSetNotificationRequest) GetLabel() string {
 	if x != nil {
-		return x.FeedId
+		return x.Label
 	}
 	return ""
 }
 
-func (x *ConfigurationSetRssRequest) GetEnabled() bool {
+func (x *ConfigurationSetNotificationRequest) GetNotificationType() NotificationType {
+	if x != nil {
+		return x.NotificationType
+	}
+	return NotificationType_UNKNOWN
+}
+
+func (x *ConfigurationSetNotificationRequest) GetEnabled() bool {
 	if x != nil {
 		return x.Enabled
 	}
 	return false
 }
 
-type ConfigurationSetTwitterRequest struct {
+type ConfigurationSetNotificationAnswer struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	GuildId       string                 `protobuf:"bytes,1,opt,name=guildId,proto3" json:"guildId,omitempty"`
-	ChannelId     string                 `protobuf:"bytes,2,opt,name=channelId,proto3" json:"channelId,omitempty"`
 	WebhookId     string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
-	TwitterId     string                 `protobuf:"bytes,4,opt,name=twitterId,proto3" json:"twitterId,omitempty"`
-	Enabled       bool                   `protobuf:"varint,5,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	RemoveWebhook bool                   `protobuf:"varint,4,opt,name=removeWebhook,proto3" json:"removeWebhook,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ConfigurationSetTwitterRequest) Reset() {
-	*x = ConfigurationSetTwitterRequest{}
+func (x *ConfigurationSetNotificationAnswer) Reset() {
+	*x = ConfigurationSetNotificationAnswer{}
 	mi := &file_rabbitmq_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ConfigurationSetTwitterRequest) String() string {
+func (x *ConfigurationSetNotificationAnswer) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ConfigurationSetTwitterRequest) ProtoMessage() {}
+func (*ConfigurationSetNotificationAnswer) ProtoMessage() {}
 
-func (x *ConfigurationSetTwitterRequest) ProtoReflect() protoreflect.Message {
+func (x *ConfigurationSetNotificationAnswer) ProtoReflect() protoreflect.Message {
 	mi := &file_rabbitmq_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -2171,108 +2133,19 @@ func (x *ConfigurationSetTwitterRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ConfigurationSetTwitterRequest.ProtoReflect.Descriptor instead.
-func (*ConfigurationSetTwitterRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use ConfigurationSetNotificationAnswer.ProtoReflect.Descriptor instead.
+func (*ConfigurationSetNotificationAnswer) Descriptor() ([]byte, []int) {
 	return file_rabbitmq_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *ConfigurationSetTwitterRequest) GetGuildId() string {
-	if x != nil {
-		return x.GuildId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetTwitterRequest) GetChannelId() string {
-	if x != nil {
-		return x.ChannelId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetTwitterRequest) GetWebhookId() string {
+func (x *ConfigurationSetNotificationAnswer) GetWebhookId() string {
 	if x != nil {
 		return x.WebhookId
 	}
 	return ""
 }
 
-func (x *ConfigurationSetTwitterRequest) GetTwitterId() string {
-	if x != nil {
-		return x.TwitterId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetTwitterRequest) GetEnabled() bool {
-	if x != nil {
-		return x.Enabled
-	}
-	return false
-}
-
-type ConfigurationSetAnswer struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	NewsChannelId   string                 `protobuf:"bytes,1,opt,name=newsChannelId,proto3" json:"newsChannelId,omitempty"`
-	TargetChannelId string                 `protobuf:"bytes,2,opt,name=targetChannelId,proto3" json:"targetChannelId,omitempty"`
-	WebhookId       string                 `protobuf:"bytes,3,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
-	RemoveWebhook   bool                   `protobuf:"varint,4,opt,name=removeWebhook,proto3" json:"removeWebhook,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *ConfigurationSetAnswer) Reset() {
-	*x = ConfigurationSetAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[17]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ConfigurationSetAnswer) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ConfigurationSetAnswer) ProtoMessage() {}
-
-func (x *ConfigurationSetAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[17]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ConfigurationSetAnswer.ProtoReflect.Descriptor instead.
-func (*ConfigurationSetAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{17}
-}
-
-func (x *ConfigurationSetAnswer) GetNewsChannelId() string {
-	if x != nil {
-		return x.NewsChannelId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetAnswer) GetTargetChannelId() string {
-	if x != nil {
-		return x.TargetChannelId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetAnswer) GetWebhookId() string {
-	if x != nil {
-		return x.WebhookId
-	}
-	return ""
-}
-
-func (x *ConfigurationSetAnswer) GetRemoveWebhook() bool {
+func (x *ConfigurationSetNotificationAnswer) GetRemoveWebhook() bool {
 	if x != nil {
 		return x.RemoveWebhook
 	}
@@ -2288,7 +2161,7 @@ type EncyclopediaAlmanaxRequest struct {
 
 func (x *EncyclopediaAlmanaxRequest) Reset() {
 	*x = EncyclopediaAlmanaxRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[18]
+	mi := &file_rabbitmq_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2300,7 +2173,7 @@ func (x *EncyclopediaAlmanaxRequest) String() string {
 func (*EncyclopediaAlmanaxRequest) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[18]
+	mi := &file_rabbitmq_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2313,7 +2186,7 @@ func (x *EncyclopediaAlmanaxRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaAlmanaxRequest.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{18}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *EncyclopediaAlmanaxRequest) GetDate() *timestamp.Timestamp {
@@ -2333,7 +2206,7 @@ type EncyclopediaAlmanaxAnswer struct {
 
 func (x *EncyclopediaAlmanaxAnswer) Reset() {
 	*x = EncyclopediaAlmanaxAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[19]
+	mi := &file_rabbitmq_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2345,7 +2218,7 @@ func (x *EncyclopediaAlmanaxAnswer) String() string {
 func (*EncyclopediaAlmanaxAnswer) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[19]
+	mi := &file_rabbitmq_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2358,7 +2231,7 @@ func (x *EncyclopediaAlmanaxAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaAlmanaxAnswer.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{19}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *EncyclopediaAlmanaxAnswer) GetAlmanax() *Almanax {
@@ -2388,7 +2261,7 @@ type EncyclopediaAlmanaxEffectRequest struct {
 
 func (x *EncyclopediaAlmanaxEffectRequest) Reset() {
 	*x = EncyclopediaAlmanaxEffectRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[20]
+	mi := &file_rabbitmq_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2400,7 +2273,7 @@ func (x *EncyclopediaAlmanaxEffectRequest) String() string {
 func (*EncyclopediaAlmanaxEffectRequest) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxEffectRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[20]
+	mi := &file_rabbitmq_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2413,7 +2286,7 @@ func (x *EncyclopediaAlmanaxEffectRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaAlmanaxEffectRequest.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxEffectRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{20}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *EncyclopediaAlmanaxEffectRequest) GetQuery() string {
@@ -2465,7 +2338,7 @@ type EncyclopediaAlmanaxEffectAnswer struct {
 
 func (x *EncyclopediaAlmanaxEffectAnswer) Reset() {
 	*x = EncyclopediaAlmanaxEffectAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[21]
+	mi := &file_rabbitmq_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2477,7 +2350,7 @@ func (x *EncyclopediaAlmanaxEffectAnswer) String() string {
 func (*EncyclopediaAlmanaxEffectAnswer) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxEffectAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[21]
+	mi := &file_rabbitmq_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2490,7 +2363,7 @@ func (x *EncyclopediaAlmanaxEffectAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaAlmanaxEffectAnswer.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxEffectAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{21}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *EncyclopediaAlmanaxEffectAnswer) GetQuery() string {
@@ -2544,7 +2417,7 @@ type EncyclopediaAlmanaxResourceRequest struct {
 
 func (x *EncyclopediaAlmanaxResourceRequest) Reset() {
 	*x = EncyclopediaAlmanaxResourceRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[22]
+	mi := &file_rabbitmq_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2556,7 +2429,7 @@ func (x *EncyclopediaAlmanaxResourceRequest) String() string {
 func (*EncyclopediaAlmanaxResourceRequest) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxResourceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[22]
+	mi := &file_rabbitmq_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2569,7 +2442,7 @@ func (x *EncyclopediaAlmanaxResourceRequest) ProtoReflect() protoreflect.Message
 
 // Deprecated: Use EncyclopediaAlmanaxResourceRequest.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxResourceRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{22}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *EncyclopediaAlmanaxResourceRequest) GetDuration() int64 {
@@ -2590,7 +2463,7 @@ type EncyclopediaAlmanaxResourceAnswer struct {
 
 func (x *EncyclopediaAlmanaxResourceAnswer) Reset() {
 	*x = EncyclopediaAlmanaxResourceAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[23]
+	mi := &file_rabbitmq_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2602,7 +2475,7 @@ func (x *EncyclopediaAlmanaxResourceAnswer) String() string {
 func (*EncyclopediaAlmanaxResourceAnswer) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxResourceAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[23]
+	mi := &file_rabbitmq_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2615,7 +2488,7 @@ func (x *EncyclopediaAlmanaxResourceAnswer) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use EncyclopediaAlmanaxResourceAnswer.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxResourceAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{23}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *EncyclopediaAlmanaxResourceAnswer) GetTributes() []*EncyclopediaAlmanaxResourceAnswer_Tribute {
@@ -2649,7 +2522,7 @@ type EncyclopediaListRequest struct {
 
 func (x *EncyclopediaListRequest) Reset() {
 	*x = EncyclopediaListRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[24]
+	mi := &file_rabbitmq_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2661,7 +2534,7 @@ func (x *EncyclopediaListRequest) String() string {
 func (*EncyclopediaListRequest) ProtoMessage() {}
 
 func (x *EncyclopediaListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[24]
+	mi := &file_rabbitmq_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2674,7 +2547,7 @@ func (x *EncyclopediaListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaListRequest.ProtoReflect.Descriptor instead.
 func (*EncyclopediaListRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{24}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *EncyclopediaListRequest) GetQuery() string {
@@ -2700,7 +2573,7 @@ type EncyclopediaListAnswer struct {
 
 func (x *EncyclopediaListAnswer) Reset() {
 	*x = EncyclopediaListAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[25]
+	mi := &file_rabbitmq_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2712,7 +2585,7 @@ func (x *EncyclopediaListAnswer) String() string {
 func (*EncyclopediaListAnswer) ProtoMessage() {}
 
 func (x *EncyclopediaListAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[25]
+	mi := &file_rabbitmq_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2725,7 +2598,7 @@ func (x *EncyclopediaListAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaListAnswer.ProtoReflect.Descriptor instead.
 func (*EncyclopediaListAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{25}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *EncyclopediaListAnswer) GetItems() []*EncyclopediaListAnswer_Item {
@@ -2746,7 +2619,7 @@ type EncyclopediaItemRequest struct {
 
 func (x *EncyclopediaItemRequest) Reset() {
 	*x = EncyclopediaItemRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[26]
+	mi := &file_rabbitmq_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2758,7 +2631,7 @@ func (x *EncyclopediaItemRequest) String() string {
 func (*EncyclopediaItemRequest) ProtoMessage() {}
 
 func (x *EncyclopediaItemRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[26]
+	mi := &file_rabbitmq_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2771,7 +2644,7 @@ func (x *EncyclopediaItemRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemRequest.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{26}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *EncyclopediaItemRequest) GetQuery() string {
@@ -2807,7 +2680,7 @@ type EncyclopediaItemAnswer struct {
 
 func (x *EncyclopediaItemAnswer) Reset() {
 	*x = EncyclopediaItemAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[27]
+	mi := &file_rabbitmq_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2819,7 +2692,7 @@ func (x *EncyclopediaItemAnswer) String() string {
 func (*EncyclopediaItemAnswer) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[27]
+	mi := &file_rabbitmq_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2832,7 +2705,7 @@ func (x *EncyclopediaItemAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemAnswer.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *EncyclopediaItemAnswer) GetType() ItemType {
@@ -2876,7 +2749,7 @@ type JobGetBookRequest struct {
 
 func (x *JobGetBookRequest) Reset() {
 	*x = JobGetBookRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[28]
+	mi := &file_rabbitmq_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2888,7 +2761,7 @@ func (x *JobGetBookRequest) String() string {
 func (*JobGetBookRequest) ProtoMessage() {}
 
 func (x *JobGetBookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[28]
+	mi := &file_rabbitmq_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2901,7 +2774,7 @@ func (x *JobGetBookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobGetBookRequest.ProtoReflect.Descriptor instead.
 func (*JobGetBookRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{28}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *JobGetBookRequest) GetUserIds() []string {
@@ -2953,7 +2826,7 @@ type JobGetBookAnswer struct {
 
 func (x *JobGetBookAnswer) Reset() {
 	*x = JobGetBookAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[29]
+	mi := &file_rabbitmq_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2965,7 +2838,7 @@ func (x *JobGetBookAnswer) String() string {
 func (*JobGetBookAnswer) ProtoMessage() {}
 
 func (x *JobGetBookAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[29]
+	mi := &file_rabbitmq_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2978,7 +2851,7 @@ func (x *JobGetBookAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobGetBookAnswer.ProtoReflect.Descriptor instead.
 func (*JobGetBookAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{29}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *JobGetBookAnswer) GetJobId() string {
@@ -3033,7 +2906,7 @@ type JobGetUserRequest struct {
 
 func (x *JobGetUserRequest) Reset() {
 	*x = JobGetUserRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[30]
+	mi := &file_rabbitmq_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3045,7 +2918,7 @@ func (x *JobGetUserRequest) String() string {
 func (*JobGetUserRequest) ProtoMessage() {}
 
 func (x *JobGetUserRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[30]
+	mi := &file_rabbitmq_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3058,7 +2931,7 @@ func (x *JobGetUserRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobGetUserRequest.ProtoReflect.Descriptor instead.
 func (*JobGetUserRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{30}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *JobGetUserRequest) GetUserId() string {
@@ -3085,7 +2958,7 @@ type JobGetUserAnswer struct {
 
 func (x *JobGetUserAnswer) Reset() {
 	*x = JobGetUserAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[31]
+	mi := &file_rabbitmq_proto_msgTypes[30]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3097,7 +2970,7 @@ func (x *JobGetUserAnswer) String() string {
 func (*JobGetUserAnswer) ProtoMessage() {}
 
 func (x *JobGetUserAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[31]
+	mi := &file_rabbitmq_proto_msgTypes[30]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3110,7 +2983,7 @@ func (x *JobGetUserAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobGetUserAnswer.ProtoReflect.Descriptor instead.
 func (*JobGetUserAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{31}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *JobGetUserAnswer) GetServerId() string {
@@ -3139,7 +3012,7 @@ type JobSetRequest struct {
 
 func (x *JobSetRequest) Reset() {
 	*x = JobSetRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[32]
+	mi := &file_rabbitmq_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3151,7 +3024,7 @@ func (x *JobSetRequest) String() string {
 func (*JobSetRequest) ProtoMessage() {}
 
 func (x *JobSetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[32]
+	mi := &file_rabbitmq_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3164,7 +3037,7 @@ func (x *JobSetRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobSetRequest.ProtoReflect.Descriptor instead.
 func (*JobSetRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{32}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *JobSetRequest) GetUserId() string {
@@ -3203,7 +3076,7 @@ type JobSetAnswer struct {
 
 func (x *JobSetAnswer) Reset() {
 	*x = JobSetAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[33]
+	mi := &file_rabbitmq_proto_msgTypes[32]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3215,7 +3088,7 @@ func (x *JobSetAnswer) String() string {
 func (*JobSetAnswer) ProtoMessage() {}
 
 func (x *JobSetAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[33]
+	mi := &file_rabbitmq_proto_msgTypes[32]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3228,7 +3101,7 @@ func (x *JobSetAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobSetAnswer.ProtoReflect.Descriptor instead.
 func (*JobSetAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{33}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{32}
 }
 
 type NewsAlmanaxMessage struct {
@@ -3241,7 +3114,7 @@ type NewsAlmanaxMessage struct {
 
 func (x *NewsAlmanaxMessage) Reset() {
 	*x = NewsAlmanaxMessage{}
-	mi := &file_rabbitmq_proto_msgTypes[34]
+	mi := &file_rabbitmq_proto_msgTypes[33]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3253,7 +3126,7 @@ func (x *NewsAlmanaxMessage) String() string {
 func (*NewsAlmanaxMessage) ProtoMessage() {}
 
 func (x *NewsAlmanaxMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[34]
+	mi := &file_rabbitmq_proto_msgTypes[33]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3266,7 +3139,7 @@ func (x *NewsAlmanaxMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsAlmanaxMessage.ProtoReflect.Descriptor instead.
 func (*NewsAlmanaxMessage) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{34}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{33}
 }
 
 func (x *NewsAlmanaxMessage) GetAlmanaxes() []*NewsAlmanaxMessage_I18NAlmanax {
@@ -3297,7 +3170,7 @@ type NewsTwitterMessage struct {
 
 func (x *NewsTwitterMessage) Reset() {
 	*x = NewsTwitterMessage{}
-	mi := &file_rabbitmq_proto_msgTypes[35]
+	mi := &file_rabbitmq_proto_msgTypes[34]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3309,7 +3182,7 @@ func (x *NewsTwitterMessage) String() string {
 func (*NewsTwitterMessage) ProtoMessage() {}
 
 func (x *NewsTwitterMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[35]
+	mi := &file_rabbitmq_proto_msgTypes[34]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3322,7 +3195,7 @@ func (x *NewsTwitterMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsTwitterMessage.ProtoReflect.Descriptor instead.
 func (*NewsTwitterMessage) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{35}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *NewsTwitterMessage) GetTwitterId() string {
@@ -3382,7 +3255,7 @@ type NewsRSSMessage struct {
 
 func (x *NewsRSSMessage) Reset() {
 	*x = NewsRSSMessage{}
-	mi := &file_rabbitmq_proto_msgTypes[36]
+	mi := &file_rabbitmq_proto_msgTypes[35]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3394,7 +3267,7 @@ func (x *NewsRSSMessage) String() string {
 func (*NewsRSSMessage) ProtoMessage() {}
 
 func (x *NewsRSSMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[36]
+	mi := &file_rabbitmq_proto_msgTypes[35]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3407,7 +3280,7 @@ func (x *NewsRSSMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsRSSMessage.ProtoReflect.Descriptor instead.
 func (*NewsRSSMessage) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{36}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *NewsRSSMessage) GetTitle() string {
@@ -3468,7 +3341,7 @@ type NewsGameMessage struct {
 
 func (x *NewsGameMessage) Reset() {
 	*x = NewsGameMessage{}
-	mi := &file_rabbitmq_proto_msgTypes[37]
+	mi := &file_rabbitmq_proto_msgTypes[36]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3480,7 +3353,7 @@ func (x *NewsGameMessage) String() string {
 func (*NewsGameMessage) ProtoMessage() {}
 
 func (x *NewsGameMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[37]
+	mi := &file_rabbitmq_proto_msgTypes[36]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3493,7 +3366,7 @@ func (x *NewsGameMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsGameMessage.ProtoReflect.Descriptor instead.
 func (*NewsGameMessage) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{37}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *NewsGameMessage) GetVersion() string {
@@ -3515,7 +3388,7 @@ type NewsGuildMessage struct {
 
 func (x *NewsGuildMessage) Reset() {
 	*x = NewsGuildMessage{}
-	mi := &file_rabbitmq_proto_msgTypes[38]
+	mi := &file_rabbitmq_proto_msgTypes[37]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3527,7 +3400,7 @@ func (x *NewsGuildMessage) String() string {
 func (*NewsGuildMessage) ProtoMessage() {}
 
 func (x *NewsGuildMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[38]
+	mi := &file_rabbitmq_proto_msgTypes[37]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3540,7 +3413,7 @@ func (x *NewsGuildMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsGuildMessage.ProtoReflect.Descriptor instead.
 func (*NewsGuildMessage) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{38}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *NewsGuildMessage) GetId() string {
@@ -3580,7 +3453,7 @@ type NewsSetMessage struct {
 
 func (x *NewsSetMessage) Reset() {
 	*x = NewsSetMessage{}
-	mi := &file_rabbitmq_proto_msgTypes[39]
+	mi := &file_rabbitmq_proto_msgTypes[38]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3592,7 +3465,7 @@ func (x *NewsSetMessage) String() string {
 func (*NewsSetMessage) ProtoMessage() {}
 
 func (x *NewsSetMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[39]
+	mi := &file_rabbitmq_proto_msgTypes[38]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3605,7 +3478,7 @@ func (x *NewsSetMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsSetMessage.ProtoReflect.Descriptor instead.
 func (*NewsSetMessage) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{39}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *NewsSetMessage) GetSetIds() []string {
@@ -3625,7 +3498,7 @@ type PortalPositionRequest struct {
 
 func (x *PortalPositionRequest) Reset() {
 	*x = PortalPositionRequest{}
-	mi := &file_rabbitmq_proto_msgTypes[40]
+	mi := &file_rabbitmq_proto_msgTypes[39]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3637,7 +3510,7 @@ func (x *PortalPositionRequest) String() string {
 func (*PortalPositionRequest) ProtoMessage() {}
 
 func (x *PortalPositionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[40]
+	mi := &file_rabbitmq_proto_msgTypes[39]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3650,7 +3523,7 @@ func (x *PortalPositionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PortalPositionRequest.ProtoReflect.Descriptor instead.
 func (*PortalPositionRequest) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{40}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *PortalPositionRequest) GetServerId() string {
@@ -3676,7 +3549,7 @@ type PortalPositionAnswer struct {
 
 func (x *PortalPositionAnswer) Reset() {
 	*x = PortalPositionAnswer{}
-	mi := &file_rabbitmq_proto_msgTypes[41]
+	mi := &file_rabbitmq_proto_msgTypes[40]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3688,7 +3561,7 @@ func (x *PortalPositionAnswer) String() string {
 func (*PortalPositionAnswer) ProtoMessage() {}
 
 func (x *PortalPositionAnswer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[41]
+	mi := &file_rabbitmq_proto_msgTypes[40]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3701,7 +3574,7 @@ func (x *PortalPositionAnswer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PortalPositionAnswer.ProtoReflect.Descriptor instead.
 func (*PortalPositionAnswer) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{41}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *PortalPositionAnswer) GetPositions() []*PortalPositionAnswer_PortalPosition {
@@ -3721,7 +3594,7 @@ type Almanax_Tribute struct {
 
 func (x *Almanax_Tribute) Reset() {
 	*x = Almanax_Tribute{}
-	mi := &file_rabbitmq_proto_msgTypes[42]
+	mi := &file_rabbitmq_proto_msgTypes[41]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3733,7 +3606,7 @@ func (x *Almanax_Tribute) String() string {
 func (*Almanax_Tribute) ProtoMessage() {}
 
 func (x *Almanax_Tribute) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[42]
+	mi := &file_rabbitmq_proto_msgTypes[41]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3774,7 +3647,7 @@ type Almanax_Tribute_Item struct {
 
 func (x *Almanax_Tribute_Item) Reset() {
 	*x = Almanax_Tribute_Item{}
-	mi := &file_rabbitmq_proto_msgTypes[43]
+	mi := &file_rabbitmq_proto_msgTypes[42]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3786,7 +3659,7 @@ func (x *Almanax_Tribute_Item) String() string {
 func (*Almanax_Tribute_Item) ProtoMessage() {}
 
 func (x *Almanax_Tribute_Item) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[43]
+	mi := &file_rabbitmq_proto_msgTypes[42]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3835,7 +3708,7 @@ type AlignGetBookAnswer_Believer struct {
 
 func (x *AlignGetBookAnswer_Believer) Reset() {
 	*x = AlignGetBookAnswer_Believer{}
-	mi := &file_rabbitmq_proto_msgTypes[44]
+	mi := &file_rabbitmq_proto_msgTypes[43]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3847,7 +3720,7 @@ func (x *AlignGetBookAnswer_Believer) String() string {
 func (*AlignGetBookAnswer_Believer) ProtoMessage() {}
 
 func (x *AlignGetBookAnswer_Believer) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[44]
+	mi := &file_rabbitmq_proto_msgTypes[43]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3902,7 +3775,7 @@ type AlignGetUserAnswer_AlignExperience struct {
 
 func (x *AlignGetUserAnswer_AlignExperience) Reset() {
 	*x = AlignGetUserAnswer_AlignExperience{}
-	mi := &file_rabbitmq_proto_msgTypes[45]
+	mi := &file_rabbitmq_proto_msgTypes[44]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3914,7 +3787,7 @@ func (x *AlignGetUserAnswer_AlignExperience) String() string {
 func (*AlignGetUserAnswer_AlignExperience) ProtoMessage() {}
 
 func (x *AlignGetUserAnswer_AlignExperience) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[45]
+	mi := &file_rabbitmq_proto_msgTypes[44]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3961,7 +3834,7 @@ type ConfigurationGetAnswer_ServerChannel struct {
 
 func (x *ConfigurationGetAnswer_ServerChannel) Reset() {
 	*x = ConfigurationGetAnswer_ServerChannel{}
-	mi := &file_rabbitmq_proto_msgTypes[46]
+	mi := &file_rabbitmq_proto_msgTypes[45]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3973,7 +3846,7 @@ func (x *ConfigurationGetAnswer_ServerChannel) String() string {
 func (*ConfigurationGetAnswer_ServerChannel) ProtoMessage() {}
 
 func (x *ConfigurationGetAnswer_ServerChannel) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[46]
+	mi := &file_rabbitmq_proto_msgTypes[45]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4004,18 +3877,18 @@ func (x *ConfigurationGetAnswer_ServerChannel) GetServerId() string {
 }
 
 type ConfigurationGetAnswer_NotifiedChannel struct {
-	state            protoimpl.MessageState                                  `protogen:"open.v1"`
-	ChannelId        string                                                  `protobuf:"bytes,1,opt,name=channelId,proto3" json:"channelId,omitempty"`
-	WebhookId        string                                                  `protobuf:"bytes,2,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
-	Label            string                                                  `protobuf:"bytes,3,opt,name=label,proto3" json:"label,omitempty"`
-	NotificationType ConfigurationGetAnswer_NotifiedChannel_NotificationType `protobuf:"varint,4,opt,name=notificationType,proto3,enum=amqp.ConfigurationGetAnswer_NotifiedChannel_NotificationType" json:"notificationType,omitempty"`
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	ChannelId        string                 `protobuf:"bytes,1,opt,name=channelId,proto3" json:"channelId,omitempty"`
+	WebhookId        string                 `protobuf:"bytes,2,opt,name=webhookId,proto3" json:"webhookId,omitempty"`
+	Label            string                 `protobuf:"bytes,3,opt,name=label,proto3" json:"label,omitempty"`
+	NotificationType NotificationType       `protobuf:"varint,4,opt,name=notificationType,proto3,enum=amqp.NotificationType" json:"notificationType,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
 
 func (x *ConfigurationGetAnswer_NotifiedChannel) Reset() {
 	*x = ConfigurationGetAnswer_NotifiedChannel{}
-	mi := &file_rabbitmq_proto_msgTypes[47]
+	mi := &file_rabbitmq_proto_msgTypes[46]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4027,7 +3900,7 @@ func (x *ConfigurationGetAnswer_NotifiedChannel) String() string {
 func (*ConfigurationGetAnswer_NotifiedChannel) ProtoMessage() {}
 
 func (x *ConfigurationGetAnswer_NotifiedChannel) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[47]
+	mi := &file_rabbitmq_proto_msgTypes[46]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4064,11 +3937,11 @@ func (x *ConfigurationGetAnswer_NotifiedChannel) GetLabel() string {
 	return ""
 }
 
-func (x *ConfigurationGetAnswer_NotifiedChannel) GetNotificationType() ConfigurationGetAnswer_NotifiedChannel_NotificationType {
+func (x *ConfigurationGetAnswer_NotifiedChannel) GetNotificationType() NotificationType {
 	if x != nil {
 		return x.NotificationType
 	}
-	return ConfigurationGetAnswer_NotifiedChannel_UNKNOWN
+	return NotificationType_UNKNOWN
 }
 
 type EncyclopediaAlmanaxResourceAnswer_Tribute struct {
@@ -4082,7 +3955,7 @@ type EncyclopediaAlmanaxResourceAnswer_Tribute struct {
 
 func (x *EncyclopediaAlmanaxResourceAnswer_Tribute) Reset() {
 	*x = EncyclopediaAlmanaxResourceAnswer_Tribute{}
-	mi := &file_rabbitmq_proto_msgTypes[48]
+	mi := &file_rabbitmq_proto_msgTypes[47]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4094,7 +3967,7 @@ func (x *EncyclopediaAlmanaxResourceAnswer_Tribute) String() string {
 func (*EncyclopediaAlmanaxResourceAnswer_Tribute) ProtoMessage() {}
 
 func (x *EncyclopediaAlmanaxResourceAnswer_Tribute) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[48]
+	mi := &file_rabbitmq_proto_msgTypes[47]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4107,7 +3980,7 @@ func (x *EncyclopediaAlmanaxResourceAnswer_Tribute) ProtoReflect() protoreflect.
 
 // Deprecated: Use EncyclopediaAlmanaxResourceAnswer_Tribute.ProtoReflect.Descriptor instead.
 func (*EncyclopediaAlmanaxResourceAnswer_Tribute) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{23, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{22, 0}
 }
 
 func (x *EncyclopediaAlmanaxResourceAnswer_Tribute) GetItemName() string {
@@ -4141,7 +4014,7 @@ type EncyclopediaListAnswer_Item struct {
 
 func (x *EncyclopediaListAnswer_Item) Reset() {
 	*x = EncyclopediaListAnswer_Item{}
-	mi := &file_rabbitmq_proto_msgTypes[49]
+	mi := &file_rabbitmq_proto_msgTypes[48]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4153,7 +4026,7 @@ func (x *EncyclopediaListAnswer_Item) String() string {
 func (*EncyclopediaListAnswer_Item) ProtoMessage() {}
 
 func (x *EncyclopediaListAnswer_Item) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[49]
+	mi := &file_rabbitmq_proto_msgTypes[48]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4166,7 +4039,7 @@ func (x *EncyclopediaListAnswer_Item) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaListAnswer_Item.ProtoReflect.Descriptor instead.
 func (*EncyclopediaListAnswer_Item) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{25, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{24, 0}
 }
 
 func (x *EncyclopediaListAnswer_Item) GetId() string {
@@ -4204,7 +4077,7 @@ type EncyclopediaItemAnswer_Equipment struct {
 
 func (x *EncyclopediaItemAnswer_Equipment) Reset() {
 	*x = EncyclopediaItemAnswer_Equipment{}
-	mi := &file_rabbitmq_proto_msgTypes[50]
+	mi := &file_rabbitmq_proto_msgTypes[49]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4216,7 +4089,7 @@ func (x *EncyclopediaItemAnswer_Equipment) String() string {
 func (*EncyclopediaItemAnswer_Equipment) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Equipment) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[50]
+	mi := &file_rabbitmq_proto_msgTypes[49]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4229,7 +4102,7 @@ func (x *EncyclopediaItemAnswer_Equipment) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemAnswer_Equipment.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Equipment) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 0}
 }
 
 func (x *EncyclopediaItemAnswer_Equipment) GetId() string {
@@ -4338,7 +4211,7 @@ type EncyclopediaItemAnswer_Set struct {
 
 func (x *EncyclopediaItemAnswer_Set) Reset() {
 	*x = EncyclopediaItemAnswer_Set{}
-	mi := &file_rabbitmq_proto_msgTypes[51]
+	mi := &file_rabbitmq_proto_msgTypes[50]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4350,7 +4223,7 @@ func (x *EncyclopediaItemAnswer_Set) String() string {
 func (*EncyclopediaItemAnswer_Set) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Set) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[51]
+	mi := &file_rabbitmq_proto_msgTypes[50]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4363,7 +4236,7 @@ func (x *EncyclopediaItemAnswer_Set) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemAnswer_Set.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Set) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 1}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 1}
 }
 
 func (x *EncyclopediaItemAnswer_Set) GetId() string {
@@ -4425,7 +4298,7 @@ type EncyclopediaItemAnswer_Effect struct {
 
 func (x *EncyclopediaItemAnswer_Effect) Reset() {
 	*x = EncyclopediaItemAnswer_Effect{}
-	mi := &file_rabbitmq_proto_msgTypes[52]
+	mi := &file_rabbitmq_proto_msgTypes[51]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4437,7 +4310,7 @@ func (x *EncyclopediaItemAnswer_Effect) String() string {
 func (*EncyclopediaItemAnswer_Effect) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Effect) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[52]
+	mi := &file_rabbitmq_proto_msgTypes[51]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4450,7 +4323,7 @@ func (x *EncyclopediaItemAnswer_Effect) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemAnswer_Effect.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Effect) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 2}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 2}
 }
 
 func (x *EncyclopediaItemAnswer_Effect) GetId() string {
@@ -4478,7 +4351,7 @@ type EncyclopediaItemAnswer_Conditions struct {
 
 func (x *EncyclopediaItemAnswer_Conditions) Reset() {
 	*x = EncyclopediaItemAnswer_Conditions{}
-	mi := &file_rabbitmq_proto_msgTypes[53]
+	mi := &file_rabbitmq_proto_msgTypes[52]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4490,7 +4363,7 @@ func (x *EncyclopediaItemAnswer_Conditions) String() string {
 func (*EncyclopediaItemAnswer_Conditions) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Conditions) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[53]
+	mi := &file_rabbitmq_proto_msgTypes[52]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4503,7 +4376,7 @@ func (x *EncyclopediaItemAnswer_Conditions) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use EncyclopediaItemAnswer_Conditions.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Conditions) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 3}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 3}
 }
 
 func (x *EncyclopediaItemAnswer_Conditions) GetRelation() EncyclopediaItemAnswer_Conditions_Relation {
@@ -4536,7 +4409,7 @@ type EncyclopediaItemAnswer_Recipe struct {
 
 func (x *EncyclopediaItemAnswer_Recipe) Reset() {
 	*x = EncyclopediaItemAnswer_Recipe{}
-	mi := &file_rabbitmq_proto_msgTypes[54]
+	mi := &file_rabbitmq_proto_msgTypes[53]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4548,7 +4421,7 @@ func (x *EncyclopediaItemAnswer_Recipe) String() string {
 func (*EncyclopediaItemAnswer_Recipe) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Recipe) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[54]
+	mi := &file_rabbitmq_proto_msgTypes[53]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4561,7 +4434,7 @@ func (x *EncyclopediaItemAnswer_Recipe) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemAnswer_Recipe.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Recipe) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 4}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 4}
 }
 
 func (x *EncyclopediaItemAnswer_Recipe) GetIngredients() []*EncyclopediaItemAnswer_Recipe_Ingredient {
@@ -4586,7 +4459,7 @@ type EncyclopediaItemAnswer_Equipment_Characteristics struct {
 
 func (x *EncyclopediaItemAnswer_Equipment_Characteristics) Reset() {
 	*x = EncyclopediaItemAnswer_Equipment_Characteristics{}
-	mi := &file_rabbitmq_proto_msgTypes[55]
+	mi := &file_rabbitmq_proto_msgTypes[54]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4598,7 +4471,7 @@ func (x *EncyclopediaItemAnswer_Equipment_Characteristics) String() string {
 func (*EncyclopediaItemAnswer_Equipment_Characteristics) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Equipment_Characteristics) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[55]
+	mi := &file_rabbitmq_proto_msgTypes[54]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4611,7 +4484,7 @@ func (x *EncyclopediaItemAnswer_Equipment_Characteristics) ProtoReflect() protor
 
 // Deprecated: Use EncyclopediaItemAnswer_Equipment_Characteristics.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Equipment_Characteristics) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 0, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 0, 0}
 }
 
 func (x *EncyclopediaItemAnswer_Equipment_Characteristics) GetCost() int64 {
@@ -4674,7 +4547,7 @@ type EncyclopediaItemAnswer_Equipment_Type struct {
 
 func (x *EncyclopediaItemAnswer_Equipment_Type) Reset() {
 	*x = EncyclopediaItemAnswer_Equipment_Type{}
-	mi := &file_rabbitmq_proto_msgTypes[56]
+	mi := &file_rabbitmq_proto_msgTypes[55]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4686,7 +4559,7 @@ func (x *EncyclopediaItemAnswer_Equipment_Type) String() string {
 func (*EncyclopediaItemAnswer_Equipment_Type) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Equipment_Type) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[56]
+	mi := &file_rabbitmq_proto_msgTypes[55]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4699,7 +4572,7 @@ func (x *EncyclopediaItemAnswer_Equipment_Type) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use EncyclopediaItemAnswer_Equipment_Type.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Equipment_Type) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 0, 1}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 0, 1}
 }
 
 func (x *EncyclopediaItemAnswer_Equipment_Type) GetItemType() ItemType {
@@ -4733,7 +4606,7 @@ type EncyclopediaItemAnswer_Equipment_SetFamily struct {
 
 func (x *EncyclopediaItemAnswer_Equipment_SetFamily) Reset() {
 	*x = EncyclopediaItemAnswer_Equipment_SetFamily{}
-	mi := &file_rabbitmq_proto_msgTypes[57]
+	mi := &file_rabbitmq_proto_msgTypes[56]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4745,7 +4618,7 @@ func (x *EncyclopediaItemAnswer_Equipment_SetFamily) String() string {
 func (*EncyclopediaItemAnswer_Equipment_SetFamily) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Equipment_SetFamily) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[57]
+	mi := &file_rabbitmq_proto_msgTypes[56]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4758,7 +4631,7 @@ func (x *EncyclopediaItemAnswer_Equipment_SetFamily) ProtoReflect() protoreflect
 
 // Deprecated: Use EncyclopediaItemAnswer_Equipment_SetFamily.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Equipment_SetFamily) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 0, 2}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 0, 2}
 }
 
 func (x *EncyclopediaItemAnswer_Equipment_SetFamily) GetId() string {
@@ -4787,7 +4660,7 @@ type EncyclopediaItemAnswer_Set_Equipment struct {
 
 func (x *EncyclopediaItemAnswer_Set_Equipment) Reset() {
 	*x = EncyclopediaItemAnswer_Set_Equipment{}
-	mi := &file_rabbitmq_proto_msgTypes[58]
+	mi := &file_rabbitmq_proto_msgTypes[57]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4799,7 +4672,7 @@ func (x *EncyclopediaItemAnswer_Set_Equipment) String() string {
 func (*EncyclopediaItemAnswer_Set_Equipment) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Set_Equipment) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[58]
+	mi := &file_rabbitmq_proto_msgTypes[57]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4812,7 +4685,7 @@ func (x *EncyclopediaItemAnswer_Set_Equipment) ProtoReflect() protoreflect.Messa
 
 // Deprecated: Use EncyclopediaItemAnswer_Set_Equipment.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Set_Equipment) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 1, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 1, 0}
 }
 
 func (x *EncyclopediaItemAnswer_Set_Equipment) GetId() string {
@@ -4853,7 +4726,7 @@ type EncyclopediaItemAnswer_Set_Bonus struct {
 
 func (x *EncyclopediaItemAnswer_Set_Bonus) Reset() {
 	*x = EncyclopediaItemAnswer_Set_Bonus{}
-	mi := &file_rabbitmq_proto_msgTypes[59]
+	mi := &file_rabbitmq_proto_msgTypes[58]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4865,7 +4738,7 @@ func (x *EncyclopediaItemAnswer_Set_Bonus) String() string {
 func (*EncyclopediaItemAnswer_Set_Bonus) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Set_Bonus) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[59]
+	mi := &file_rabbitmq_proto_msgTypes[58]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4878,7 +4751,7 @@ func (x *EncyclopediaItemAnswer_Set_Bonus) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EncyclopediaItemAnswer_Set_Bonus.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Set_Bonus) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 1, 1}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 1, 1}
 }
 
 func (x *EncyclopediaItemAnswer_Set_Bonus) GetItemNumber() int64 {
@@ -4906,7 +4779,7 @@ type EncyclopediaItemAnswer_Conditions_Condition struct {
 
 func (x *EncyclopediaItemAnswer_Conditions_Condition) Reset() {
 	*x = EncyclopediaItemAnswer_Conditions_Condition{}
-	mi := &file_rabbitmq_proto_msgTypes[60]
+	mi := &file_rabbitmq_proto_msgTypes[59]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4918,7 +4791,7 @@ func (x *EncyclopediaItemAnswer_Conditions_Condition) String() string {
 func (*EncyclopediaItemAnswer_Conditions_Condition) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Conditions_Condition) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[60]
+	mi := &file_rabbitmq_proto_msgTypes[59]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4931,7 +4804,7 @@ func (x *EncyclopediaItemAnswer_Conditions_Condition) ProtoReflect() protoreflec
 
 // Deprecated: Use EncyclopediaItemAnswer_Conditions_Condition.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Conditions_Condition) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 3, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 3, 0}
 }
 
 func (x *EncyclopediaItemAnswer_Conditions_Condition) GetOperator() string {
@@ -4965,7 +4838,7 @@ type EncyclopediaItemAnswer_Conditions_Condition_Element struct {
 
 func (x *EncyclopediaItemAnswer_Conditions_Condition_Element) Reset() {
 	*x = EncyclopediaItemAnswer_Conditions_Condition_Element{}
-	mi := &file_rabbitmq_proto_msgTypes[61]
+	mi := &file_rabbitmq_proto_msgTypes[60]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -4977,7 +4850,7 @@ func (x *EncyclopediaItemAnswer_Conditions_Condition_Element) String() string {
 func (*EncyclopediaItemAnswer_Conditions_Condition_Element) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Conditions_Condition_Element) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[61]
+	mi := &file_rabbitmq_proto_msgTypes[60]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4990,7 +4863,7 @@ func (x *EncyclopediaItemAnswer_Conditions_Condition_Element) ProtoReflect() pro
 
 // Deprecated: Use EncyclopediaItemAnswer_Conditions_Condition_Element.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Conditions_Condition_Element) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 3, 0, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 3, 0, 0}
 }
 
 func (x *EncyclopediaItemAnswer_Conditions_Condition_Element) GetId() string {
@@ -5019,7 +4892,7 @@ type EncyclopediaItemAnswer_Recipe_Ingredient struct {
 
 func (x *EncyclopediaItemAnswer_Recipe_Ingredient) Reset() {
 	*x = EncyclopediaItemAnswer_Recipe_Ingredient{}
-	mi := &file_rabbitmq_proto_msgTypes[62]
+	mi := &file_rabbitmq_proto_msgTypes[61]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5031,7 +4904,7 @@ func (x *EncyclopediaItemAnswer_Recipe_Ingredient) String() string {
 func (*EncyclopediaItemAnswer_Recipe_Ingredient) ProtoMessage() {}
 
 func (x *EncyclopediaItemAnswer_Recipe_Ingredient) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[62]
+	mi := &file_rabbitmq_proto_msgTypes[61]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5044,7 +4917,7 @@ func (x *EncyclopediaItemAnswer_Recipe_Ingredient) ProtoReflect() protoreflect.M
 
 // Deprecated: Use EncyclopediaItemAnswer_Recipe_Ingredient.ProtoReflect.Descriptor instead.
 func (*EncyclopediaItemAnswer_Recipe_Ingredient) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{27, 4, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{26, 4, 0}
 }
 
 func (x *EncyclopediaItemAnswer_Recipe_Ingredient) GetId() string {
@@ -5085,7 +4958,7 @@ type JobGetBookAnswer_Craftsman struct {
 
 func (x *JobGetBookAnswer_Craftsman) Reset() {
 	*x = JobGetBookAnswer_Craftsman{}
-	mi := &file_rabbitmq_proto_msgTypes[63]
+	mi := &file_rabbitmq_proto_msgTypes[62]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5097,7 +4970,7 @@ func (x *JobGetBookAnswer_Craftsman) String() string {
 func (*JobGetBookAnswer_Craftsman) ProtoMessage() {}
 
 func (x *JobGetBookAnswer_Craftsman) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[63]
+	mi := &file_rabbitmq_proto_msgTypes[62]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5110,7 +4983,7 @@ func (x *JobGetBookAnswer_Craftsman) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobGetBookAnswer_Craftsman.ProtoReflect.Descriptor instead.
 func (*JobGetBookAnswer_Craftsman) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{29, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{28, 0}
 }
 
 func (x *JobGetBookAnswer_Craftsman) GetUserId() string {
@@ -5137,7 +5010,7 @@ type JobGetUserAnswer_JobExperience struct {
 
 func (x *JobGetUserAnswer_JobExperience) Reset() {
 	*x = JobGetUserAnswer_JobExperience{}
-	mi := &file_rabbitmq_proto_msgTypes[64]
+	mi := &file_rabbitmq_proto_msgTypes[63]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5149,7 +5022,7 @@ func (x *JobGetUserAnswer_JobExperience) String() string {
 func (*JobGetUserAnswer_JobExperience) ProtoMessage() {}
 
 func (x *JobGetUserAnswer_JobExperience) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[64]
+	mi := &file_rabbitmq_proto_msgTypes[63]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5162,7 +5035,7 @@ func (x *JobGetUserAnswer_JobExperience) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JobGetUserAnswer_JobExperience.ProtoReflect.Descriptor instead.
 func (*JobGetUserAnswer_JobExperience) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{31, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{30, 0}
 }
 
 func (x *JobGetUserAnswer_JobExperience) GetJobId() string {
@@ -5189,7 +5062,7 @@ type NewsAlmanaxMessage_I18NAlmanax struct {
 
 func (x *NewsAlmanaxMessage_I18NAlmanax) Reset() {
 	*x = NewsAlmanaxMessage_I18NAlmanax{}
-	mi := &file_rabbitmq_proto_msgTypes[65]
+	mi := &file_rabbitmq_proto_msgTypes[64]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5201,7 +5074,7 @@ func (x *NewsAlmanaxMessage_I18NAlmanax) String() string {
 func (*NewsAlmanaxMessage_I18NAlmanax) ProtoMessage() {}
 
 func (x *NewsAlmanaxMessage_I18NAlmanax) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[65]
+	mi := &file_rabbitmq_proto_msgTypes[64]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5214,7 +5087,7 @@ func (x *NewsAlmanaxMessage_I18NAlmanax) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NewsAlmanaxMessage_I18NAlmanax.ProtoReflect.Descriptor instead.
 func (*NewsAlmanaxMessage_I18NAlmanax) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{34, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{33, 0}
 }
 
 func (x *NewsAlmanaxMessage_I18NAlmanax) GetAlmanax() *Almanax {
@@ -5248,7 +5121,7 @@ type PortalPositionAnswer_PortalPosition struct {
 
 func (x *PortalPositionAnswer_PortalPosition) Reset() {
 	*x = PortalPositionAnswer_PortalPosition{}
-	mi := &file_rabbitmq_proto_msgTypes[66]
+	mi := &file_rabbitmq_proto_msgTypes[65]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5260,7 +5133,7 @@ func (x *PortalPositionAnswer_PortalPosition) String() string {
 func (*PortalPositionAnswer_PortalPosition) ProtoMessage() {}
 
 func (x *PortalPositionAnswer_PortalPosition) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[66]
+	mi := &file_rabbitmq_proto_msgTypes[65]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5273,7 +5146,7 @@ func (x *PortalPositionAnswer_PortalPosition) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use PortalPositionAnswer_PortalPosition.ProtoReflect.Descriptor instead.
 func (*PortalPositionAnswer_PortalPosition) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{41, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{40, 0}
 }
 
 func (x *PortalPositionAnswer_PortalPosition) GetServerId() string {
@@ -5352,7 +5225,7 @@ type PortalPositionAnswer_PortalPosition_Position struct {
 
 func (x *PortalPositionAnswer_PortalPosition_Position) Reset() {
 	*x = PortalPositionAnswer_PortalPosition_Position{}
-	mi := &file_rabbitmq_proto_msgTypes[67]
+	mi := &file_rabbitmq_proto_msgTypes[66]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5364,7 +5237,7 @@ func (x *PortalPositionAnswer_PortalPosition_Position) String() string {
 func (*PortalPositionAnswer_PortalPosition_Position) ProtoMessage() {}
 
 func (x *PortalPositionAnswer_PortalPosition_Position) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[67]
+	mi := &file_rabbitmq_proto_msgTypes[66]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5377,7 +5250,7 @@ func (x *PortalPositionAnswer_PortalPosition_Position) ProtoReflect() protorefle
 
 // Deprecated: Use PortalPositionAnswer_PortalPosition_Position.ProtoReflect.Descriptor instead.
 func (*PortalPositionAnswer_PortalPosition_Position) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{41, 0, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{40, 0, 0}
 }
 
 func (x *PortalPositionAnswer_PortalPosition_Position) GetX() int64 {
@@ -5428,7 +5301,7 @@ type PortalPositionAnswer_PortalPosition_Position_Transport struct {
 
 func (x *PortalPositionAnswer_PortalPosition_Position_Transport) Reset() {
 	*x = PortalPositionAnswer_PortalPosition_Position_Transport{}
-	mi := &file_rabbitmq_proto_msgTypes[68]
+	mi := &file_rabbitmq_proto_msgTypes[67]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -5440,7 +5313,7 @@ func (x *PortalPositionAnswer_PortalPosition_Position_Transport) String() string
 func (*PortalPositionAnswer_PortalPosition_Position_Transport) ProtoMessage() {}
 
 func (x *PortalPositionAnswer_PortalPosition_Position_Transport) ProtoReflect() protoreflect.Message {
-	mi := &file_rabbitmq_proto_msgTypes[68]
+	mi := &file_rabbitmq_proto_msgTypes[67]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5453,7 +5326,7 @@ func (x *PortalPositionAnswer_PortalPosition_Position_Transport) ProtoReflect() 
 
 // Deprecated: Use PortalPositionAnswer_PortalPosition_Position_Transport.ProtoReflect.Descriptor instead.
 func (*PortalPositionAnswer_PortalPosition_Position_Transport) Descriptor() ([]byte, []int) {
-	return file_rabbitmq_proto_rawDescGZIP(), []int{41, 0, 0, 0}
+	return file_rabbitmq_proto_rawDescGZIP(), []int{40, 0, 0, 0}
 }
 
 func (x *PortalPositionAnswer_PortalPosition_Position_Transport) GetAreaId() string {
@@ -5495,7 +5368,7 @@ var File_rabbitmq_proto protoreflect.FileDescriptor
 
 const file_rabbitmq_proto_rawDesc = "" +
 	"\n" +
-	"\x0erabbitmq.proto\x12\x04amqp\x1a\x1fgoogle/protobuf/timestamp.proto\"\x86%\n" +
+	"\x0erabbitmq.proto\x12\x04amqp\x1a\x1fgoogle/protobuf/timestamp.proto\"\xbc$\n" +
 	"\x0fRabbitMQMessage\x12.\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x1a.amqp.RabbitMQMessage.TypeR\x04type\x12*\n" +
 	"\blanguage\x18\x02 \x01(\x0e2\x0e.amqp.LanguageR\blanguage\x124\n" +
@@ -5513,11 +5386,10 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x14competitionMapAnswer\x18\xc9\x01 \x01(\v2\x1a.amqp.CompetitionMapAnswerR\x14competitionMapAnswer\x12X\n" +
 	"\x17configurationGetRequest\x18\xac\x02 \x01(\v2\x1d.amqp.ConfigurationGetRequestR\x17configurationGetRequest\x12U\n" +
 	"\x16configurationGetAnswer\x18\xad\x02 \x01(\v2\x1c.amqp.ConfigurationGetAnswerR\x16configurationGetAnswer\x12j\n" +
-	"\x1dconfigurationSetServerRequest\x18\xae\x02 \x01(\v2#.amqp.ConfigurationSetServerRequestR\x1dconfigurationSetServerRequest\x12m\n" +
-	"\x1econfigurationSetAlmanaxRequest\x18\xaf\x02 \x01(\v2$.amqp.ConfigurationSetAlmanaxRequestR\x1econfigurationSetAlmanaxRequest\x12a\n" +
-	"\x1aconfigurationSetRssRequest\x18\xb0\x02 \x01(\v2 .amqp.ConfigurationSetRssRequestR\x1aconfigurationSetRssRequest\x12m\n" +
-	"\x1econfigurationSetTwitterRequest\x18\xb1\x02 \x01(\v2$.amqp.ConfigurationSetTwitterRequestR\x1econfigurationSetTwitterRequest\x12U\n" +
-	"\x16configurationSetAnswer\x18\xde\x02 \x01(\v2\x1c.amqp.ConfigurationSetAnswerR\x16configurationSetAnswer\x12a\n" +
+	"\x1dconfigurationSetServerRequest\x18\xae\x02 \x01(\v2#.amqp.ConfigurationSetServerRequestR\x1dconfigurationSetServerRequest\x12g\n" +
+	"\x1cconfigurationSetServerAnswer\x18\xaf\x02 \x01(\v2\".amqp.ConfigurationSetServerAnswerR\x1cconfigurationSetServerAnswer\x12|\n" +
+	"#configurationSetNotificationRequest\x18\xb0\x02 \x01(\v2).amqp.ConfigurationSetNotificationRequestR#configurationSetNotificationRequest\x12y\n" +
+	"\"configurationSetNotificationAnswer\x18\xb1\x02 \x01(\v2(.amqp.ConfigurationSetNotificationAnswerR\"configurationSetNotificationAnswer\x12a\n" +
 	"\x1aencyclopediaAlmanaxRequest\x18\x90\x03 \x01(\v2 .amqp.EncyclopediaAlmanaxRequestR\x1aencyclopediaAlmanaxRequest\x12^\n" +
 	"\x19encyclopediaAlmanaxAnswer\x18\x91\x03 \x01(\v2\x1f.amqp.EncyclopediaAlmanaxAnswerR\x19encyclopediaAlmanaxAnswer\x12y\n" +
 	"\"encyclopediaAlmanaxResourceRequest\x18\x92\x03 \x01(\v2(.amqp.EncyclopediaAlmanaxResourceRequestR\"encyclopediaAlmanaxResourceRequest\x12v\n" +
@@ -5541,7 +5413,7 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x0enewsSetMessage\x18\xdc\x04 \x01(\v2\x14.amqp.NewsSetMessageR\x0enewsSetMessage\x12I\n" +
 	"\x12newsTwitterMessage\x18\xdd\x04 \x01(\v2\x18.amqp.NewsTwitterMessageR\x12newsTwitterMessage\x12R\n" +
 	"\x15portalPositionRequest\x18\xbc\x05 \x01(\v2\x1b.amqp.PortalPositionRequestR\x15portalPositionRequest\x12O\n" +
-	"\x14portalPositionAnswer\x18\xbd\x05 \x01(\v2\x1a.amqp.PortalPositionAnswerR\x14portalPositionAnswer\"\xb0\t\n" +
+	"\x14portalPositionAnswer\x18\xbd\x05 \x01(\v2\x1a.amqp.PortalPositionAnswerR\x14portalPositionAnswer\"\x9c\t\n" +
 	"\x04Type\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\x11\n" +
 	"\rABOUT_REQUEST\x10d\x12\x1b\n" +
@@ -5555,11 +5427,10 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x16COMPETITION_MAP_ANSWER\x10\xad\x02\x12\x1e\n" +
 	"\x19CONFIGURATION_GET_REQUEST\x10\x90\x03\x12\x1d\n" +
 	"\x18CONFIGURATION_GET_ANSWER\x10\x91\x03\x12%\n" +
-	" CONFIGURATION_SET_SERVER_REQUEST\x10\x92\x03\x12&\n" +
-	"!CONFIGURATION_SET_ALMANAX_REQUEST\x10\x93\x03\x12\"\n" +
-	"\x1dCONFIGURATION_SET_RSS_REQUEST\x10\x94\x03\x12&\n" +
-	"!CONFIGURATION_SET_TWITTER_REQUEST\x10\x95\x03\x12\x1d\n" +
-	"\x18CONFIGURATION_SET_ANSWER\x10\xc2\x03\x12!\n" +
+	" CONFIGURATION_SET_SERVER_REQUEST\x10\x92\x03\x12$\n" +
+	"\x1fCONFIGURATION_SET_SERVER_ANSWER\x10\x93\x03\x12+\n" +
+	"&CONFIGURATION_SET_NOTIFICATION_REQUEST\x10\x94\x03\x12*\n" +
+	"%CONFIGURATION_SET_NOTIFICATION_ANSWER\x10\x95\x03\x12!\n" +
 	"\x1cENCYCLOPEDIA_ALMANAX_REQUEST\x10\xf4\x03\x12 \n" +
 	"\x1bENCYCLOPEDIA_ALMANAX_ANSWER\x10\xf5\x03\x12*\n" +
 	"%ENCYCLOPEDIA_ALMANAX_RESOURCE_REQUEST\x10\xf6\x03\x12)\n" +
@@ -5651,7 +5522,7 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x0emapTacticalURL\x18\x03 \x01(\tR\x0emapTacticalURL\x12$\n" +
 	"\x06source\x18\x04 \x01(\v2\f.amqp.SourceR\x06source\"3\n" +
 	"\x17ConfigurationGetRequest\x12\x18\n" +
-	"\aguildId\x18\x01 \x01(\tR\aguildId\"\xdc\x04\n" +
+	"\aguildId\x18\x01 \x01(\tR\aguildId\"\xf1\x03\n" +
 	"\x16ConfigurationGetAnswer\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1a\n" +
 	"\bserverId\x18\x02 \x01(\tR\bserverId\x12R\n" +
@@ -5659,41 +5530,25 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x10notifiedChannels\x18\x04 \x03(\v2,.amqp.ConfigurationGetAnswer.NotifiedChannelR\x10notifiedChannels\x1aI\n" +
 	"\rServerChannel\x12\x1c\n" +
 	"\tchannelId\x18\x01 \x01(\tR\tchannelId\x12\x1a\n" +
-	"\bserverId\x18\x02 \x01(\tR\bserverId\x1a\x92\x02\n" +
+	"\bserverId\x18\x02 \x01(\tR\bserverId\x1a\xa7\x01\n" +
 	"\x0fNotifiedChannel\x12\x1c\n" +
 	"\tchannelId\x18\x01 \x01(\tR\tchannelId\x12\x1c\n" +
 	"\twebhookId\x18\x02 \x01(\tR\twebhookId\x12\x14\n" +
-	"\x05label\x18\x03 \x01(\tR\x05label\x12i\n" +
-	"\x10notificationType\x18\x04 \x01(\x0e2=.amqp.ConfigurationGetAnswer.NotifiedChannel.NotificationTypeR\x10notificationType\"B\n" +
-	"\x10NotificationType\x12\v\n" +
-	"\aUNKNOWN\x10\x00\x12\v\n" +
-	"\aALMANAX\x10\x01\x12\a\n" +
-	"\x03RSS\x10\x02\x12\v\n" +
-	"\aTWITTER\x10\x03\"s\n" +
+	"\x05label\x18\x03 \x01(\tR\x05label\x12B\n" +
+	"\x10notificationType\x18\x04 \x01(\x0e2\x16.amqp.NotificationTypeR\x10notificationType\"s\n" +
 	"\x1dConfigurationSetServerRequest\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
 	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1a\n" +
-	"\bserverId\x18\x03 \x01(\tR\bserverId\"\x90\x01\n" +
-	"\x1eConfigurationSetAlmanaxRequest\x12\x18\n" +
+	"\bserverId\x18\x03 \x01(\tR\bserverId\"\x1e\n" +
+	"\x1cConfigurationSetServerAnswer\"\xef\x01\n" +
+	"#ConfigurationSetNotificationRequest\x12\x18\n" +
 	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
 	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1c\n" +
-	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x18\n" +
-	"\aenabled\x18\x04 \x01(\bR\aenabled\"\xa4\x01\n" +
-	"\x1aConfigurationSetRssRequest\x12\x18\n" +
-	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
-	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1c\n" +
-	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x16\n" +
-	"\x06feedId\x18\x04 \x01(\tR\x06feedId\x12\x18\n" +
-	"\aenabled\x18\x05 \x01(\bR\aenabled\"\xae\x01\n" +
-	"\x1eConfigurationSetTwitterRequest\x12\x18\n" +
-	"\aguildId\x18\x01 \x01(\tR\aguildId\x12\x1c\n" +
-	"\tchannelId\x18\x02 \x01(\tR\tchannelId\x12\x1c\n" +
-	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x1c\n" +
-	"\ttwitterId\x18\x04 \x01(\tR\ttwitterId\x12\x18\n" +
-	"\aenabled\x18\x05 \x01(\bR\aenabled\"\xac\x01\n" +
-	"\x16ConfigurationSetAnswer\x12$\n" +
-	"\rnewsChannelId\x18\x01 \x01(\tR\rnewsChannelId\x12(\n" +
-	"\x0ftargetChannelId\x18\x02 \x01(\tR\x0ftargetChannelId\x12\x1c\n" +
+	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12\x14\n" +
+	"\x05label\x18\x04 \x01(\tR\x05label\x12B\n" +
+	"\x10notificationType\x18\x05 \x01(\x0e2\x16.amqp.NotificationTypeR\x10notificationType\x12\x18\n" +
+	"\aenabled\x18\x06 \x01(\bR\aenabled\"h\n" +
+	"\"ConfigurationSetNotificationAnswer\x12\x1c\n" +
 	"\twebhookId\x18\x03 \x01(\tR\twebhookId\x12$\n" +
 	"\rremoveWebhook\x18\x04 \x01(\bR\rremoveWebhook\"L\n" +
 	"\x1aEncyclopediaAlmanaxRequest\x12.\n" +
@@ -5992,7 +5847,12 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"MOUNT_TYPE\x10\x04\x12\x13\n" +
 	"\x0fQUEST_ITEM_TYPE\x10\x05\x12\x11\n" +
 	"\rRESOURCE_TYPE\x10\x06\x12\f\n" +
-	"\bSET_TYPE\x10\aB\bZ\x06.;amqpb\x06proto3"
+	"\bSET_TYPE\x10\a*B\n" +
+	"\x10NotificationType\x12\v\n" +
+	"\aUNKNOWN\x10\x00\x12\v\n" +
+	"\aALMANAX\x10\x01\x12\a\n" +
+	"\x03RSS\x10\x02\x12\v\n" +
+	"\aTWITTER\x10\x03B\bZ\x06.;amqpb\x06proto3"
 
 var (
 	file_rabbitmq_proto_rawDescOnce sync.Once
@@ -6007,15 +5867,15 @@ func file_rabbitmq_proto_rawDescGZIP() []byte {
 }
 
 var file_rabbitmq_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
-var file_rabbitmq_proto_msgTypes = make([]protoimpl.MessageInfo, 69)
+var file_rabbitmq_proto_msgTypes = make([]protoimpl.MessageInfo, 68)
 var file_rabbitmq_proto_goTypes = []any{
 	(Game)(0),                   // 0: amqp.Game
 	(Language)(0),               // 1: amqp.Language
 	(EquipmentType)(0),          // 2: amqp.EquipmentType
 	(ItemType)(0),               // 3: amqp.ItemType
-	(RabbitMQMessage_Type)(0),   // 4: amqp.RabbitMQMessage.Type
-	(RabbitMQMessage_Status)(0), // 5: amqp.RabbitMQMessage.Status
-	(ConfigurationGetAnswer_NotifiedChannel_NotificationType)(0),   // 6: amqp.ConfigurationGetAnswer.NotifiedChannel.NotificationType
+	(NotificationType)(0),       // 4: amqp.NotificationType
+	(RabbitMQMessage_Type)(0),   // 5: amqp.RabbitMQMessage.Type
+	(RabbitMQMessage_Status)(0), // 6: amqp.RabbitMQMessage.Status
 	(EncyclopediaAlmanaxEffectRequest_RequestType)(0),              // 7: amqp.EncyclopediaAlmanaxEffectRequest.RequestType
 	(EncyclopediaListRequest_Type)(0),                              // 8: amqp.EncyclopediaListRequest.Type
 	(EncyclopediaItemAnswer_Conditions_Relation)(0),                // 9: amqp.EncyclopediaItemAnswer.Conditions.Relation
@@ -6034,67 +5894,66 @@ var file_rabbitmq_proto_goTypes = []any{
 	(*ConfigurationGetRequest)(nil),                                // 22: amqp.ConfigurationGetRequest
 	(*ConfigurationGetAnswer)(nil),                                 // 23: amqp.ConfigurationGetAnswer
 	(*ConfigurationSetServerRequest)(nil),                          // 24: amqp.ConfigurationSetServerRequest
-	(*ConfigurationSetAlmanaxRequest)(nil),                         // 25: amqp.ConfigurationSetAlmanaxRequest
-	(*ConfigurationSetRssRequest)(nil),                             // 26: amqp.ConfigurationSetRssRequest
-	(*ConfigurationSetTwitterRequest)(nil),                         // 27: amqp.ConfigurationSetTwitterRequest
-	(*ConfigurationSetAnswer)(nil),                                 // 28: amqp.ConfigurationSetAnswer
-	(*EncyclopediaAlmanaxRequest)(nil),                             // 29: amqp.EncyclopediaAlmanaxRequest
-	(*EncyclopediaAlmanaxAnswer)(nil),                              // 30: amqp.EncyclopediaAlmanaxAnswer
-	(*EncyclopediaAlmanaxEffectRequest)(nil),                       // 31: amqp.EncyclopediaAlmanaxEffectRequest
-	(*EncyclopediaAlmanaxEffectAnswer)(nil),                        // 32: amqp.EncyclopediaAlmanaxEffectAnswer
-	(*EncyclopediaAlmanaxResourceRequest)(nil),                     // 33: amqp.EncyclopediaAlmanaxResourceRequest
-	(*EncyclopediaAlmanaxResourceAnswer)(nil),                      // 34: amqp.EncyclopediaAlmanaxResourceAnswer
-	(*EncyclopediaListRequest)(nil),                                // 35: amqp.EncyclopediaListRequest
-	(*EncyclopediaListAnswer)(nil),                                 // 36: amqp.EncyclopediaListAnswer
-	(*EncyclopediaItemRequest)(nil),                                // 37: amqp.EncyclopediaItemRequest
-	(*EncyclopediaItemAnswer)(nil),                                 // 38: amqp.EncyclopediaItemAnswer
-	(*JobGetBookRequest)(nil),                                      // 39: amqp.JobGetBookRequest
-	(*JobGetBookAnswer)(nil),                                       // 40: amqp.JobGetBookAnswer
-	(*JobGetUserRequest)(nil),                                      // 41: amqp.JobGetUserRequest
-	(*JobGetUserAnswer)(nil),                                       // 42: amqp.JobGetUserAnswer
-	(*JobSetRequest)(nil),                                          // 43: amqp.JobSetRequest
-	(*JobSetAnswer)(nil),                                           // 44: amqp.JobSetAnswer
-	(*NewsAlmanaxMessage)(nil),                                     // 45: amqp.NewsAlmanaxMessage
-	(*NewsTwitterMessage)(nil),                                     // 46: amqp.NewsTwitterMessage
-	(*NewsRSSMessage)(nil),                                         // 47: amqp.NewsRSSMessage
-	(*NewsGameMessage)(nil),                                        // 48: amqp.NewsGameMessage
-	(*NewsGuildMessage)(nil),                                       // 49: amqp.NewsGuildMessage
-	(*NewsSetMessage)(nil),                                         // 50: amqp.NewsSetMessage
-	(*PortalPositionRequest)(nil),                                  // 51: amqp.PortalPositionRequest
-	(*PortalPositionAnswer)(nil),                                   // 52: amqp.PortalPositionAnswer
-	(*Almanax_Tribute)(nil),                                        // 53: amqp.Almanax.Tribute
-	(*Almanax_Tribute_Item)(nil),                                   // 54: amqp.Almanax.Tribute.Item
-	(*AlignGetBookAnswer_Believer)(nil),                            // 55: amqp.AlignGetBookAnswer.Believer
-	(*AlignGetUserAnswer_AlignExperience)(nil),                     // 56: amqp.AlignGetUserAnswer.AlignExperience
-	(*ConfigurationGetAnswer_ServerChannel)(nil),                   // 57: amqp.ConfigurationGetAnswer.ServerChannel
-	(*ConfigurationGetAnswer_NotifiedChannel)(nil),                 // 58: amqp.ConfigurationGetAnswer.NotifiedChannel
-	(*EncyclopediaAlmanaxResourceAnswer_Tribute)(nil),              // 59: amqp.EncyclopediaAlmanaxResourceAnswer.Tribute
-	(*EncyclopediaListAnswer_Item)(nil),                            // 60: amqp.EncyclopediaListAnswer.Item
-	(*EncyclopediaItemAnswer_Equipment)(nil),                       // 61: amqp.EncyclopediaItemAnswer.Equipment
-	(*EncyclopediaItemAnswer_Set)(nil),                             // 62: amqp.EncyclopediaItemAnswer.Set
-	(*EncyclopediaItemAnswer_Effect)(nil),                          // 63: amqp.EncyclopediaItemAnswer.Effect
-	(*EncyclopediaItemAnswer_Conditions)(nil),                      // 64: amqp.EncyclopediaItemAnswer.Conditions
-	(*EncyclopediaItemAnswer_Recipe)(nil),                          // 65: amqp.EncyclopediaItemAnswer.Recipe
-	(*EncyclopediaItemAnswer_Equipment_Characteristics)(nil),       // 66: amqp.EncyclopediaItemAnswer.Equipment.Characteristics
-	(*EncyclopediaItemAnswer_Equipment_Type)(nil),                  // 67: amqp.EncyclopediaItemAnswer.Equipment.Type
-	(*EncyclopediaItemAnswer_Equipment_SetFamily)(nil),             // 68: amqp.EncyclopediaItemAnswer.Equipment.SetFamily
-	(*EncyclopediaItemAnswer_Set_Equipment)(nil),                   // 69: amqp.EncyclopediaItemAnswer.Set.Equipment
-	(*EncyclopediaItemAnswer_Set_Bonus)(nil),                       // 70: amqp.EncyclopediaItemAnswer.Set.Bonus
-	(*EncyclopediaItemAnswer_Conditions_Condition)(nil),            // 71: amqp.EncyclopediaItemAnswer.Conditions.Condition
-	(*EncyclopediaItemAnswer_Conditions_Condition_Element)(nil),    // 72: amqp.EncyclopediaItemAnswer.Conditions.Condition.Element
-	(*EncyclopediaItemAnswer_Recipe_Ingredient)(nil),               // 73: amqp.EncyclopediaItemAnswer.Recipe.Ingredient
-	(*JobGetBookAnswer_Craftsman)(nil),                             // 74: amqp.JobGetBookAnswer.Craftsman
-	(*JobGetUserAnswer_JobExperience)(nil),                         // 75: amqp.JobGetUserAnswer.JobExperience
-	(*NewsAlmanaxMessage_I18NAlmanax)(nil),                         // 76: amqp.NewsAlmanaxMessage.I18nAlmanax
-	(*PortalPositionAnswer_PortalPosition)(nil),                    // 77: amqp.PortalPositionAnswer.PortalPosition
-	(*PortalPositionAnswer_PortalPosition_Position)(nil),           // 78: amqp.PortalPositionAnswer.PortalPosition.Position
-	(*PortalPositionAnswer_PortalPosition_Position_Transport)(nil), // 79: amqp.PortalPositionAnswer.PortalPosition.Position.Transport
-	(*timestamp.Timestamp)(nil),                                    // 80: google.protobuf.Timestamp
+	(*ConfigurationSetServerAnswer)(nil),                           // 25: amqp.ConfigurationSetServerAnswer
+	(*ConfigurationSetNotificationRequest)(nil),                    // 26: amqp.ConfigurationSetNotificationRequest
+	(*ConfigurationSetNotificationAnswer)(nil),                     // 27: amqp.ConfigurationSetNotificationAnswer
+	(*EncyclopediaAlmanaxRequest)(nil),                             // 28: amqp.EncyclopediaAlmanaxRequest
+	(*EncyclopediaAlmanaxAnswer)(nil),                              // 29: amqp.EncyclopediaAlmanaxAnswer
+	(*EncyclopediaAlmanaxEffectRequest)(nil),                       // 30: amqp.EncyclopediaAlmanaxEffectRequest
+	(*EncyclopediaAlmanaxEffectAnswer)(nil),                        // 31: amqp.EncyclopediaAlmanaxEffectAnswer
+	(*EncyclopediaAlmanaxResourceRequest)(nil),                     // 32: amqp.EncyclopediaAlmanaxResourceRequest
+	(*EncyclopediaAlmanaxResourceAnswer)(nil),                      // 33: amqp.EncyclopediaAlmanaxResourceAnswer
+	(*EncyclopediaListRequest)(nil),                                // 34: amqp.EncyclopediaListRequest
+	(*EncyclopediaListAnswer)(nil),                                 // 35: amqp.EncyclopediaListAnswer
+	(*EncyclopediaItemRequest)(nil),                                // 36: amqp.EncyclopediaItemRequest
+	(*EncyclopediaItemAnswer)(nil),                                 // 37: amqp.EncyclopediaItemAnswer
+	(*JobGetBookRequest)(nil),                                      // 38: amqp.JobGetBookRequest
+	(*JobGetBookAnswer)(nil),                                       // 39: amqp.JobGetBookAnswer
+	(*JobGetUserRequest)(nil),                                      // 40: amqp.JobGetUserRequest
+	(*JobGetUserAnswer)(nil),                                       // 41: amqp.JobGetUserAnswer
+	(*JobSetRequest)(nil),                                          // 42: amqp.JobSetRequest
+	(*JobSetAnswer)(nil),                                           // 43: amqp.JobSetAnswer
+	(*NewsAlmanaxMessage)(nil),                                     // 44: amqp.NewsAlmanaxMessage
+	(*NewsTwitterMessage)(nil),                                     // 45: amqp.NewsTwitterMessage
+	(*NewsRSSMessage)(nil),                                         // 46: amqp.NewsRSSMessage
+	(*NewsGameMessage)(nil),                                        // 47: amqp.NewsGameMessage
+	(*NewsGuildMessage)(nil),                                       // 48: amqp.NewsGuildMessage
+	(*NewsSetMessage)(nil),                                         // 49: amqp.NewsSetMessage
+	(*PortalPositionRequest)(nil),                                  // 50: amqp.PortalPositionRequest
+	(*PortalPositionAnswer)(nil),                                   // 51: amqp.PortalPositionAnswer
+	(*Almanax_Tribute)(nil),                                        // 52: amqp.Almanax.Tribute
+	(*Almanax_Tribute_Item)(nil),                                   // 53: amqp.Almanax.Tribute.Item
+	(*AlignGetBookAnswer_Believer)(nil),                            // 54: amqp.AlignGetBookAnswer.Believer
+	(*AlignGetUserAnswer_AlignExperience)(nil),                     // 55: amqp.AlignGetUserAnswer.AlignExperience
+	(*ConfigurationGetAnswer_ServerChannel)(nil),                   // 56: amqp.ConfigurationGetAnswer.ServerChannel
+	(*ConfigurationGetAnswer_NotifiedChannel)(nil),                 // 57: amqp.ConfigurationGetAnswer.NotifiedChannel
+	(*EncyclopediaAlmanaxResourceAnswer_Tribute)(nil),              // 58: amqp.EncyclopediaAlmanaxResourceAnswer.Tribute
+	(*EncyclopediaListAnswer_Item)(nil),                            // 59: amqp.EncyclopediaListAnswer.Item
+	(*EncyclopediaItemAnswer_Equipment)(nil),                       // 60: amqp.EncyclopediaItemAnswer.Equipment
+	(*EncyclopediaItemAnswer_Set)(nil),                             // 61: amqp.EncyclopediaItemAnswer.Set
+	(*EncyclopediaItemAnswer_Effect)(nil),                          // 62: amqp.EncyclopediaItemAnswer.Effect
+	(*EncyclopediaItemAnswer_Conditions)(nil),                      // 63: amqp.EncyclopediaItemAnswer.Conditions
+	(*EncyclopediaItemAnswer_Recipe)(nil),                          // 64: amqp.EncyclopediaItemAnswer.Recipe
+	(*EncyclopediaItemAnswer_Equipment_Characteristics)(nil),       // 65: amqp.EncyclopediaItemAnswer.Equipment.Characteristics
+	(*EncyclopediaItemAnswer_Equipment_Type)(nil),                  // 66: amqp.EncyclopediaItemAnswer.Equipment.Type
+	(*EncyclopediaItemAnswer_Equipment_SetFamily)(nil),             // 67: amqp.EncyclopediaItemAnswer.Equipment.SetFamily
+	(*EncyclopediaItemAnswer_Set_Equipment)(nil),                   // 68: amqp.EncyclopediaItemAnswer.Set.Equipment
+	(*EncyclopediaItemAnswer_Set_Bonus)(nil),                       // 69: amqp.EncyclopediaItemAnswer.Set.Bonus
+	(*EncyclopediaItemAnswer_Conditions_Condition)(nil),            // 70: amqp.EncyclopediaItemAnswer.Conditions.Condition
+	(*EncyclopediaItemAnswer_Conditions_Condition_Element)(nil),    // 71: amqp.EncyclopediaItemAnswer.Conditions.Condition.Element
+	(*EncyclopediaItemAnswer_Recipe_Ingredient)(nil),               // 72: amqp.EncyclopediaItemAnswer.Recipe.Ingredient
+	(*JobGetBookAnswer_Craftsman)(nil),                             // 73: amqp.JobGetBookAnswer.Craftsman
+	(*JobGetUserAnswer_JobExperience)(nil),                         // 74: amqp.JobGetUserAnswer.JobExperience
+	(*NewsAlmanaxMessage_I18NAlmanax)(nil),                         // 75: amqp.NewsAlmanaxMessage.I18nAlmanax
+	(*PortalPositionAnswer_PortalPosition)(nil),                    // 76: amqp.PortalPositionAnswer.PortalPosition
+	(*PortalPositionAnswer_PortalPosition_Position)(nil),           // 77: amqp.PortalPositionAnswer.PortalPosition.Position
+	(*PortalPositionAnswer_PortalPosition_Position_Transport)(nil), // 78: amqp.PortalPositionAnswer.PortalPosition.Position.Transport
+	(*timestamp.Timestamp)(nil),                                    // 79: google.protobuf.Timestamp
 }
 var file_rabbitmq_proto_depIdxs = []int32{
-	4,   // 0: amqp.RabbitMQMessage.type:type_name -> amqp.RabbitMQMessage.Type
+	5,   // 0: amqp.RabbitMQMessage.type:type_name -> amqp.RabbitMQMessage.Type
 	1,   // 1: amqp.RabbitMQMessage.language:type_name -> amqp.Language
-	5,   // 2: amqp.RabbitMQMessage.status:type_name -> amqp.RabbitMQMessage.Status
+	6,   // 2: amqp.RabbitMQMessage.status:type_name -> amqp.RabbitMQMessage.Status
 	0,   // 3: amqp.RabbitMQMessage.game:type_name -> amqp.Game
 	14,  // 4: amqp.RabbitMQMessage.alignGetBookRequest:type_name -> amqp.AlignGetBookRequest
 	15,  // 5: amqp.RabbitMQMessage.alignGetBookAnswer:type_name -> amqp.AlignGetBookAnswer
@@ -6107,96 +5966,96 @@ var file_rabbitmq_proto_depIdxs = []int32{
 	22,  // 12: amqp.RabbitMQMessage.configurationGetRequest:type_name -> amqp.ConfigurationGetRequest
 	23,  // 13: amqp.RabbitMQMessage.configurationGetAnswer:type_name -> amqp.ConfigurationGetAnswer
 	24,  // 14: amqp.RabbitMQMessage.configurationSetServerRequest:type_name -> amqp.ConfigurationSetServerRequest
-	25,  // 15: amqp.RabbitMQMessage.configurationSetAlmanaxRequest:type_name -> amqp.ConfigurationSetAlmanaxRequest
-	26,  // 16: amqp.RabbitMQMessage.configurationSetRssRequest:type_name -> amqp.ConfigurationSetRssRequest
-	27,  // 17: amqp.RabbitMQMessage.configurationSetTwitterRequest:type_name -> amqp.ConfigurationSetTwitterRequest
-	28,  // 18: amqp.RabbitMQMessage.configurationSetAnswer:type_name -> amqp.ConfigurationSetAnswer
-	29,  // 19: amqp.RabbitMQMessage.encyclopediaAlmanaxRequest:type_name -> amqp.EncyclopediaAlmanaxRequest
-	30,  // 20: amqp.RabbitMQMessage.encyclopediaAlmanaxAnswer:type_name -> amqp.EncyclopediaAlmanaxAnswer
-	33,  // 21: amqp.RabbitMQMessage.encyclopediaAlmanaxResourceRequest:type_name -> amqp.EncyclopediaAlmanaxResourceRequest
-	34,  // 22: amqp.RabbitMQMessage.encyclopediaAlmanaxResourceAnswer:type_name -> amqp.EncyclopediaAlmanaxResourceAnswer
-	31,  // 23: amqp.RabbitMQMessage.encyclopediaAlmanaxEffectRequest:type_name -> amqp.EncyclopediaAlmanaxEffectRequest
-	32,  // 24: amqp.RabbitMQMessage.encyclopediaAlmanaxEffectAnswer:type_name -> amqp.EncyclopediaAlmanaxEffectAnswer
-	35,  // 25: amqp.RabbitMQMessage.encyclopediaListRequest:type_name -> amqp.EncyclopediaListRequest
-	36,  // 26: amqp.RabbitMQMessage.encyclopediaListAnswer:type_name -> amqp.EncyclopediaListAnswer
-	37,  // 27: amqp.RabbitMQMessage.encyclopediaItemRequest:type_name -> amqp.EncyclopediaItemRequest
-	38,  // 28: amqp.RabbitMQMessage.encyclopediaItemAnswer:type_name -> amqp.EncyclopediaItemAnswer
-	39,  // 29: amqp.RabbitMQMessage.jobGetBookRequest:type_name -> amqp.JobGetBookRequest
-	40,  // 30: amqp.RabbitMQMessage.jobGetBookAnswer:type_name -> amqp.JobGetBookAnswer
-	41,  // 31: amqp.RabbitMQMessage.jobGetUserRequest:type_name -> amqp.JobGetUserRequest
-	42,  // 32: amqp.RabbitMQMessage.jobGetUserAnswer:type_name -> amqp.JobGetUserAnswer
-	43,  // 33: amqp.RabbitMQMessage.jobSetRequest:type_name -> amqp.JobSetRequest
-	44,  // 34: amqp.RabbitMQMessage.jobSetAnswer:type_name -> amqp.JobSetAnswer
-	45,  // 35: amqp.RabbitMQMessage.newsAlmanaxMessage:type_name -> amqp.NewsAlmanaxMessage
-	48,  // 36: amqp.RabbitMQMessage.newsGameMessage:type_name -> amqp.NewsGameMessage
-	49,  // 37: amqp.RabbitMQMessage.newsGuildMessage:type_name -> amqp.NewsGuildMessage
-	47,  // 38: amqp.RabbitMQMessage.newsRSSMessage:type_name -> amqp.NewsRSSMessage
-	50,  // 39: amqp.RabbitMQMessage.newsSetMessage:type_name -> amqp.NewsSetMessage
-	46,  // 40: amqp.RabbitMQMessage.newsTwitterMessage:type_name -> amqp.NewsTwitterMessage
-	51,  // 41: amqp.RabbitMQMessage.portalPositionRequest:type_name -> amqp.PortalPositionRequest
-	52,  // 42: amqp.RabbitMQMessage.portalPositionAnswer:type_name -> amqp.PortalPositionAnswer
-	53,  // 43: amqp.Almanax.tribute:type_name -> amqp.Almanax.Tribute
-	80,  // 44: amqp.Almanax.date:type_name -> google.protobuf.Timestamp
-	55,  // 45: amqp.AlignGetBookAnswer.believers:type_name -> amqp.AlignGetBookAnswer.Believer
-	56,  // 46: amqp.AlignGetUserAnswer.beliefs:type_name -> amqp.AlignGetUserAnswer.AlignExperience
-	13,  // 47: amqp.CompetitionMapAnswer.source:type_name -> amqp.Source
-	57,  // 48: amqp.ConfigurationGetAnswer.serverChannels:type_name -> amqp.ConfigurationGetAnswer.ServerChannel
-	58,  // 49: amqp.ConfigurationGetAnswer.notifiedChannels:type_name -> amqp.ConfigurationGetAnswer.NotifiedChannel
-	80,  // 50: amqp.EncyclopediaAlmanaxRequest.date:type_name -> google.protobuf.Timestamp
+	25,  // 15: amqp.RabbitMQMessage.configurationSetServerAnswer:type_name -> amqp.ConfigurationSetServerAnswer
+	26,  // 16: amqp.RabbitMQMessage.configurationSetNotificationRequest:type_name -> amqp.ConfigurationSetNotificationRequest
+	27,  // 17: amqp.RabbitMQMessage.configurationSetNotificationAnswer:type_name -> amqp.ConfigurationSetNotificationAnswer
+	28,  // 18: amqp.RabbitMQMessage.encyclopediaAlmanaxRequest:type_name -> amqp.EncyclopediaAlmanaxRequest
+	29,  // 19: amqp.RabbitMQMessage.encyclopediaAlmanaxAnswer:type_name -> amqp.EncyclopediaAlmanaxAnswer
+	32,  // 20: amqp.RabbitMQMessage.encyclopediaAlmanaxResourceRequest:type_name -> amqp.EncyclopediaAlmanaxResourceRequest
+	33,  // 21: amqp.RabbitMQMessage.encyclopediaAlmanaxResourceAnswer:type_name -> amqp.EncyclopediaAlmanaxResourceAnswer
+	30,  // 22: amqp.RabbitMQMessage.encyclopediaAlmanaxEffectRequest:type_name -> amqp.EncyclopediaAlmanaxEffectRequest
+	31,  // 23: amqp.RabbitMQMessage.encyclopediaAlmanaxEffectAnswer:type_name -> amqp.EncyclopediaAlmanaxEffectAnswer
+	34,  // 24: amqp.RabbitMQMessage.encyclopediaListRequest:type_name -> amqp.EncyclopediaListRequest
+	35,  // 25: amqp.RabbitMQMessage.encyclopediaListAnswer:type_name -> amqp.EncyclopediaListAnswer
+	36,  // 26: amqp.RabbitMQMessage.encyclopediaItemRequest:type_name -> amqp.EncyclopediaItemRequest
+	37,  // 27: amqp.RabbitMQMessage.encyclopediaItemAnswer:type_name -> amqp.EncyclopediaItemAnswer
+	38,  // 28: amqp.RabbitMQMessage.jobGetBookRequest:type_name -> amqp.JobGetBookRequest
+	39,  // 29: amqp.RabbitMQMessage.jobGetBookAnswer:type_name -> amqp.JobGetBookAnswer
+	40,  // 30: amqp.RabbitMQMessage.jobGetUserRequest:type_name -> amqp.JobGetUserRequest
+	41,  // 31: amqp.RabbitMQMessage.jobGetUserAnswer:type_name -> amqp.JobGetUserAnswer
+	42,  // 32: amqp.RabbitMQMessage.jobSetRequest:type_name -> amqp.JobSetRequest
+	43,  // 33: amqp.RabbitMQMessage.jobSetAnswer:type_name -> amqp.JobSetAnswer
+	44,  // 34: amqp.RabbitMQMessage.newsAlmanaxMessage:type_name -> amqp.NewsAlmanaxMessage
+	47,  // 35: amqp.RabbitMQMessage.newsGameMessage:type_name -> amqp.NewsGameMessage
+	48,  // 36: amqp.RabbitMQMessage.newsGuildMessage:type_name -> amqp.NewsGuildMessage
+	46,  // 37: amqp.RabbitMQMessage.newsRSSMessage:type_name -> amqp.NewsRSSMessage
+	49,  // 38: amqp.RabbitMQMessage.newsSetMessage:type_name -> amqp.NewsSetMessage
+	45,  // 39: amqp.RabbitMQMessage.newsTwitterMessage:type_name -> amqp.NewsTwitterMessage
+	50,  // 40: amqp.RabbitMQMessage.portalPositionRequest:type_name -> amqp.PortalPositionRequest
+	51,  // 41: amqp.RabbitMQMessage.portalPositionAnswer:type_name -> amqp.PortalPositionAnswer
+	52,  // 42: amqp.Almanax.tribute:type_name -> amqp.Almanax.Tribute
+	79,  // 43: amqp.Almanax.date:type_name -> google.protobuf.Timestamp
+	54,  // 44: amqp.AlignGetBookAnswer.believers:type_name -> amqp.AlignGetBookAnswer.Believer
+	55,  // 45: amqp.AlignGetUserAnswer.beliefs:type_name -> amqp.AlignGetUserAnswer.AlignExperience
+	13,  // 46: amqp.CompetitionMapAnswer.source:type_name -> amqp.Source
+	56,  // 47: amqp.ConfigurationGetAnswer.serverChannels:type_name -> amqp.ConfigurationGetAnswer.ServerChannel
+	57,  // 48: amqp.ConfigurationGetAnswer.notifiedChannels:type_name -> amqp.ConfigurationGetAnswer.NotifiedChannel
+	4,   // 49: amqp.ConfigurationSetNotificationRequest.notificationType:type_name -> amqp.NotificationType
+	79,  // 50: amqp.EncyclopediaAlmanaxRequest.date:type_name -> google.protobuf.Timestamp
 	12,  // 51: amqp.EncyclopediaAlmanaxAnswer.almanax:type_name -> amqp.Almanax
 	13,  // 52: amqp.EncyclopediaAlmanaxAnswer.source:type_name -> amqp.Source
-	80,  // 53: amqp.EncyclopediaAlmanaxEffectRequest.date:type_name -> google.protobuf.Timestamp
+	79,  // 53: amqp.EncyclopediaAlmanaxEffectRequest.date:type_name -> google.protobuf.Timestamp
 	7,   // 54: amqp.EncyclopediaAlmanaxEffectRequest.type:type_name -> amqp.EncyclopediaAlmanaxEffectRequest.RequestType
 	12,  // 55: amqp.EncyclopediaAlmanaxEffectAnswer.almanaxes:type_name -> amqp.Almanax
 	13,  // 56: amqp.EncyclopediaAlmanaxEffectAnswer.source:type_name -> amqp.Source
-	59,  // 57: amqp.EncyclopediaAlmanaxResourceAnswer.tributes:type_name -> amqp.EncyclopediaAlmanaxResourceAnswer.Tribute
+	58,  // 57: amqp.EncyclopediaAlmanaxResourceAnswer.tributes:type_name -> amqp.EncyclopediaAlmanaxResourceAnswer.Tribute
 	13,  // 58: amqp.EncyclopediaAlmanaxResourceAnswer.source:type_name -> amqp.Source
 	8,   // 59: amqp.EncyclopediaListRequest.type:type_name -> amqp.EncyclopediaListRequest.Type
-	60,  // 60: amqp.EncyclopediaListAnswer.items:type_name -> amqp.EncyclopediaListAnswer.Item
+	59,  // 60: amqp.EncyclopediaListAnswer.items:type_name -> amqp.EncyclopediaListAnswer.Item
 	3,   // 61: amqp.EncyclopediaItemRequest.type:type_name -> amqp.ItemType
 	3,   // 62: amqp.EncyclopediaItemAnswer.type:type_name -> amqp.ItemType
-	61,  // 63: amqp.EncyclopediaItemAnswer.equipment:type_name -> amqp.EncyclopediaItemAnswer.Equipment
-	62,  // 64: amqp.EncyclopediaItemAnswer.set:type_name -> amqp.EncyclopediaItemAnswer.Set
+	60,  // 63: amqp.EncyclopediaItemAnswer.equipment:type_name -> amqp.EncyclopediaItemAnswer.Equipment
+	61,  // 64: amqp.EncyclopediaItemAnswer.set:type_name -> amqp.EncyclopediaItemAnswer.Set
 	13,  // 65: amqp.EncyclopediaItemAnswer.source:type_name -> amqp.Source
-	74,  // 66: amqp.JobGetBookAnswer.craftsmen:type_name -> amqp.JobGetBookAnswer.Craftsman
-	75,  // 67: amqp.JobGetUserAnswer.jobs:type_name -> amqp.JobGetUserAnswer.JobExperience
-	76,  // 68: amqp.NewsAlmanaxMessage.almanaxes:type_name -> amqp.NewsAlmanaxMessage.I18nAlmanax
+	73,  // 66: amqp.JobGetBookAnswer.craftsmen:type_name -> amqp.JobGetBookAnswer.Craftsman
+	74,  // 67: amqp.JobGetUserAnswer.jobs:type_name -> amqp.JobGetUserAnswer.JobExperience
+	75,  // 68: amqp.NewsAlmanaxMessage.almanaxes:type_name -> amqp.NewsAlmanaxMessage.I18nAlmanax
 	13,  // 69: amqp.NewsAlmanaxMessage.source:type_name -> amqp.Source
-	80,  // 70: amqp.NewsTwitterMessage.date:type_name -> google.protobuf.Timestamp
-	80,  // 71: amqp.NewsRSSMessage.date:type_name -> google.protobuf.Timestamp
+	79,  // 70: amqp.NewsTwitterMessage.date:type_name -> google.protobuf.Timestamp
+	79,  // 71: amqp.NewsRSSMessage.date:type_name -> google.protobuf.Timestamp
 	10,  // 72: amqp.NewsGuildMessage.event:type_name -> amqp.NewsGuildMessage.Event
-	77,  // 73: amqp.PortalPositionAnswer.positions:type_name -> amqp.PortalPositionAnswer.PortalPosition
-	54,  // 74: amqp.Almanax.Tribute.item:type_name -> amqp.Almanax.Tribute.Item
+	76,  // 73: amqp.PortalPositionAnswer.positions:type_name -> amqp.PortalPositionAnswer.PortalPosition
+	53,  // 74: amqp.Almanax.Tribute.item:type_name -> amqp.Almanax.Tribute.Item
 	3,   // 75: amqp.Almanax.Tribute.Item.type:type_name -> amqp.ItemType
-	6,   // 76: amqp.ConfigurationGetAnswer.NotifiedChannel.notificationType:type_name -> amqp.ConfigurationGetAnswer.NotifiedChannel.NotificationType
+	4,   // 76: amqp.ConfigurationGetAnswer.NotifiedChannel.notificationType:type_name -> amqp.NotificationType
 	3,   // 77: amqp.EncyclopediaAlmanaxResourceAnswer.Tribute.itemType:type_name -> amqp.ItemType
-	67,  // 78: amqp.EncyclopediaItemAnswer.Equipment.type:type_name -> amqp.EncyclopediaItemAnswer.Equipment.Type
-	68,  // 79: amqp.EncyclopediaItemAnswer.Equipment.set:type_name -> amqp.EncyclopediaItemAnswer.Equipment.SetFamily
-	66,  // 80: amqp.EncyclopediaItemAnswer.Equipment.characteristics:type_name -> amqp.EncyclopediaItemAnswer.Equipment.Characteristics
-	63,  // 81: amqp.EncyclopediaItemAnswer.Equipment.weaponEffects:type_name -> amqp.EncyclopediaItemAnswer.Effect
-	63,  // 82: amqp.EncyclopediaItemAnswer.Equipment.effects:type_name -> amqp.EncyclopediaItemAnswer.Effect
-	64,  // 83: amqp.EncyclopediaItemAnswer.Equipment.conditions:type_name -> amqp.EncyclopediaItemAnswer.Conditions
-	65,  // 84: amqp.EncyclopediaItemAnswer.Equipment.recipe:type_name -> amqp.EncyclopediaItemAnswer.Recipe
-	69,  // 85: amqp.EncyclopediaItemAnswer.Set.equipments:type_name -> amqp.EncyclopediaItemAnswer.Set.Equipment
-	70,  // 86: amqp.EncyclopediaItemAnswer.Set.bonuses:type_name -> amqp.EncyclopediaItemAnswer.Set.Bonus
+	66,  // 78: amqp.EncyclopediaItemAnswer.Equipment.type:type_name -> amqp.EncyclopediaItemAnswer.Equipment.Type
+	67,  // 79: amqp.EncyclopediaItemAnswer.Equipment.set:type_name -> amqp.EncyclopediaItemAnswer.Equipment.SetFamily
+	65,  // 80: amqp.EncyclopediaItemAnswer.Equipment.characteristics:type_name -> amqp.EncyclopediaItemAnswer.Equipment.Characteristics
+	62,  // 81: amqp.EncyclopediaItemAnswer.Equipment.weaponEffects:type_name -> amqp.EncyclopediaItemAnswer.Effect
+	62,  // 82: amqp.EncyclopediaItemAnswer.Equipment.effects:type_name -> amqp.EncyclopediaItemAnswer.Effect
+	63,  // 83: amqp.EncyclopediaItemAnswer.Equipment.conditions:type_name -> amqp.EncyclopediaItemAnswer.Conditions
+	64,  // 84: amqp.EncyclopediaItemAnswer.Equipment.recipe:type_name -> amqp.EncyclopediaItemAnswer.Recipe
+	68,  // 85: amqp.EncyclopediaItemAnswer.Set.equipments:type_name -> amqp.EncyclopediaItemAnswer.Set.Equipment
+	69,  // 86: amqp.EncyclopediaItemAnswer.Set.bonuses:type_name -> amqp.EncyclopediaItemAnswer.Set.Bonus
 	9,   // 87: amqp.EncyclopediaItemAnswer.Conditions.relation:type_name -> amqp.EncyclopediaItemAnswer.Conditions.Relation
-	64,  // 88: amqp.EncyclopediaItemAnswer.Conditions.children:type_name -> amqp.EncyclopediaItemAnswer.Conditions
-	71,  // 89: amqp.EncyclopediaItemAnswer.Conditions.condition:type_name -> amqp.EncyclopediaItemAnswer.Conditions.Condition
-	73,  // 90: amqp.EncyclopediaItemAnswer.Recipe.ingredients:type_name -> amqp.EncyclopediaItemAnswer.Recipe.Ingredient
+	63,  // 88: amqp.EncyclopediaItemAnswer.Conditions.children:type_name -> amqp.EncyclopediaItemAnswer.Conditions
+	70,  // 89: amqp.EncyclopediaItemAnswer.Conditions.condition:type_name -> amqp.EncyclopediaItemAnswer.Conditions.Condition
+	72,  // 90: amqp.EncyclopediaItemAnswer.Recipe.ingredients:type_name -> amqp.EncyclopediaItemAnswer.Recipe.Ingredient
 	3,   // 91: amqp.EncyclopediaItemAnswer.Equipment.Type.itemType:type_name -> amqp.ItemType
 	2,   // 92: amqp.EncyclopediaItemAnswer.Equipment.Type.equipmentType:type_name -> amqp.EquipmentType
 	2,   // 93: amqp.EncyclopediaItemAnswer.Set.Equipment.type:type_name -> amqp.EquipmentType
-	63,  // 94: amqp.EncyclopediaItemAnswer.Set.Bonus.effects:type_name -> amqp.EncyclopediaItemAnswer.Effect
-	72,  // 95: amqp.EncyclopediaItemAnswer.Conditions.Condition.element:type_name -> amqp.EncyclopediaItemAnswer.Conditions.Condition.Element
+	62,  // 94: amqp.EncyclopediaItemAnswer.Set.Bonus.effects:type_name -> amqp.EncyclopediaItemAnswer.Effect
+	71,  // 95: amqp.EncyclopediaItemAnswer.Conditions.Condition.element:type_name -> amqp.EncyclopediaItemAnswer.Conditions.Condition.Element
 	3,   // 96: amqp.EncyclopediaItemAnswer.Recipe.Ingredient.type:type_name -> amqp.ItemType
 	12,  // 97: amqp.NewsAlmanaxMessage.I18nAlmanax.almanax:type_name -> amqp.Almanax
 	1,   // 98: amqp.NewsAlmanaxMessage.I18nAlmanax.locale:type_name -> amqp.Language
-	78,  // 99: amqp.PortalPositionAnswer.PortalPosition.position:type_name -> amqp.PortalPositionAnswer.PortalPosition.Position
-	80,  // 100: amqp.PortalPositionAnswer.PortalPosition.createdAt:type_name -> google.protobuf.Timestamp
-	80,  // 101: amqp.PortalPositionAnswer.PortalPosition.updatedAt:type_name -> google.protobuf.Timestamp
+	77,  // 99: amqp.PortalPositionAnswer.PortalPosition.position:type_name -> amqp.PortalPositionAnswer.PortalPosition.Position
+	79,  // 100: amqp.PortalPositionAnswer.PortalPosition.createdAt:type_name -> google.protobuf.Timestamp
+	79,  // 101: amqp.PortalPositionAnswer.PortalPosition.updatedAt:type_name -> google.protobuf.Timestamp
 	13,  // 102: amqp.PortalPositionAnswer.PortalPosition.source:type_name -> amqp.Source
-	79,  // 103: amqp.PortalPositionAnswer.PortalPosition.Position.transport:type_name -> amqp.PortalPositionAnswer.PortalPosition.Position.Transport
-	79,  // 104: amqp.PortalPositionAnswer.PortalPosition.Position.conditionalTransport:type_name -> amqp.PortalPositionAnswer.PortalPosition.Position.Transport
+	78,  // 103: amqp.PortalPositionAnswer.PortalPosition.Position.transport:type_name -> amqp.PortalPositionAnswer.PortalPosition.Position.Transport
+	78,  // 104: amqp.PortalPositionAnswer.PortalPosition.Position.conditionalTransport:type_name -> amqp.PortalPositionAnswer.PortalPosition.Position.Transport
 	105, // [105:105] is the sub-list for method output_type
 	105, // [105:105] is the sub-list for method input_type
 	105, // [105:105] is the sub-list for extension type_name
@@ -6215,7 +6074,7 @@ func file_rabbitmq_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_rabbitmq_proto_rawDesc), len(file_rabbitmq_proto_rawDesc)),
 			NumEnums:      11,
-			NumMessages:   69,
+			NumMessages:   68,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
