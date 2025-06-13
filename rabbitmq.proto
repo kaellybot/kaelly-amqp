@@ -381,12 +381,13 @@ message EncyclopediaAlmanaxEffectRequest
 
 message EncyclopediaAlmanaxEffectAnswer
 {
-    string           query     = 1;
-    int64            page      = 2;
-    int64            pages     = 3;
-    int64            total     = 4;
-    repeated Almanax almanaxes = 5;
-    Source           source    = 6;
+    string           query      = 1;
+    string           effectName = 2;
+    int64            page       = 3;
+    int64            pages      = 4;
+    int64            total      = 5;
+    repeated Almanax almanaxes  = 6;
+    Source           source     = 7;
 }
 
 message EncyclopediaAlmanaxResourceRequest
@@ -443,9 +444,10 @@ message EncyclopediaItemRequest
 message EncyclopediaItemAnswer
 {
     ItemType   type       = 1;
-    Equipment  equipment  = 2;
-    Set        set        = 3;
-    Source     source     = 4;
+    string     query      = 2;
+    Equipment  equipment  = 3;
+    Set        set        = 4;
+    Source     source     = 5;
 
     message Equipment
     {

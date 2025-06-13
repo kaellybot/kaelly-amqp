@@ -2327,11 +2327,12 @@ func (x *EncyclopediaAlmanaxEffectRequest) GetSize() int64 {
 type EncyclopediaAlmanaxEffectAnswer struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Query         string                 `protobuf:"bytes,1,opt,name=query,proto3" json:"query,omitempty"`
-	Page          int64                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
-	Pages         int64                  `protobuf:"varint,3,opt,name=pages,proto3" json:"pages,omitempty"`
-	Total         int64                  `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
-	Almanaxes     []*Almanax             `protobuf:"bytes,5,rep,name=almanaxes,proto3" json:"almanaxes,omitempty"`
-	Source        *Source                `protobuf:"bytes,6,opt,name=source,proto3" json:"source,omitempty"`
+	EffectName    string                 `protobuf:"bytes,2,opt,name=effectName,proto3" json:"effectName,omitempty"`
+	Page          int64                  `protobuf:"varint,3,opt,name=page,proto3" json:"page,omitempty"`
+	Pages         int64                  `protobuf:"varint,4,opt,name=pages,proto3" json:"pages,omitempty"`
+	Total         int64                  `protobuf:"varint,5,opt,name=total,proto3" json:"total,omitempty"`
+	Almanaxes     []*Almanax             `protobuf:"bytes,6,rep,name=almanaxes,proto3" json:"almanaxes,omitempty"`
+	Source        *Source                `protobuf:"bytes,7,opt,name=source,proto3" json:"source,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2369,6 +2370,13 @@ func (*EncyclopediaAlmanaxEffectAnswer) Descriptor() ([]byte, []int) {
 func (x *EncyclopediaAlmanaxEffectAnswer) GetQuery() string {
 	if x != nil {
 		return x.Query
+	}
+	return ""
+}
+
+func (x *EncyclopediaAlmanaxEffectAnswer) GetEffectName() string {
+	if x != nil {
+		return x.EffectName
 	}
 	return ""
 }
@@ -2671,9 +2679,10 @@ func (x *EncyclopediaItemRequest) GetType() ItemType {
 type EncyclopediaItemAnswer struct {
 	state         protoimpl.MessageState            `protogen:"open.v1"`
 	Type          ItemType                          `protobuf:"varint,1,opt,name=type,proto3,enum=amqp.ItemType" json:"type,omitempty"`
-	Equipment     *EncyclopediaItemAnswer_Equipment `protobuf:"bytes,2,opt,name=equipment,proto3" json:"equipment,omitempty"`
-	Set           *EncyclopediaItemAnswer_Set       `protobuf:"bytes,3,opt,name=set,proto3" json:"set,omitempty"`
-	Source        *Source                           `protobuf:"bytes,4,opt,name=source,proto3" json:"source,omitempty"`
+	Query         string                            `protobuf:"bytes,2,opt,name=query,proto3" json:"query,omitempty"`
+	Equipment     *EncyclopediaItemAnswer_Equipment `protobuf:"bytes,3,opt,name=equipment,proto3" json:"equipment,omitempty"`
+	Set           *EncyclopediaItemAnswer_Set       `protobuf:"bytes,4,opt,name=set,proto3" json:"set,omitempty"`
+	Source        *Source                           `protobuf:"bytes,5,opt,name=source,proto3" json:"source,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2713,6 +2722,13 @@ func (x *EncyclopediaItemAnswer) GetType() ItemType {
 		return x.Type
 	}
 	return ItemType_ANY_ITEM_TYPE
+}
+
+func (x *EncyclopediaItemAnswer) GetQuery() string {
+	if x != nil {
+		return x.Query
+	}
+	return ""
 }
 
 func (x *EncyclopediaItemAnswer) GetEquipment() *EncyclopediaItemAnswer_Equipment {
@@ -5564,14 +5580,17 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x04size\x18\x05 \x01(\x03R\x04size\"\"\n" +
 	"\vRequestType\x12\t\n" +
 	"\x05QUERY\x10\x00\x12\b\n" +
-	"\x04DATE\x10\x01\"\xca\x01\n" +
+	"\x04DATE\x10\x01\"\xea\x01\n" +
 	"\x1fEncyclopediaAlmanaxEffectAnswer\x12\x14\n" +
-	"\x05query\x18\x01 \x01(\tR\x05query\x12\x12\n" +
-	"\x04page\x18\x02 \x01(\x03R\x04page\x12\x14\n" +
-	"\x05pages\x18\x03 \x01(\x03R\x05pages\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x03R\x05total\x12+\n" +
-	"\talmanaxes\x18\x05 \x03(\v2\r.amqp.AlmanaxR\talmanaxes\x12$\n" +
-	"\x06source\x18\x06 \x01(\v2\f.amqp.SourceR\x06source\"@\n" +
+	"\x05query\x18\x01 \x01(\tR\x05query\x12\x1e\n" +
+	"\n" +
+	"effectName\x18\x02 \x01(\tR\n" +
+	"effectName\x12\x12\n" +
+	"\x04page\x18\x03 \x01(\x03R\x04page\x12\x14\n" +
+	"\x05pages\x18\x04 \x01(\x03R\x05pages\x12\x14\n" +
+	"\x05total\x18\x05 \x01(\x03R\x05total\x12+\n" +
+	"\talmanaxes\x18\x06 \x03(\v2\r.amqp.AlmanaxR\talmanaxes\x12$\n" +
+	"\x06source\x18\a \x01(\v2\f.amqp.SourceR\x06source\"@\n" +
 	"\"EncyclopediaAlmanaxResourceRequest\x12\x1a\n" +
 	"\bduration\x18\x01 \x01(\x03R\bduration\"\xa1\x02\n" +
 	"!EncyclopediaAlmanaxResourceAnswer\x12K\n" +
@@ -5598,12 +5617,13 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x17EncyclopediaItemRequest\x12\x14\n" +
 	"\x05query\x18\x01 \x01(\tR\x05query\x12\x12\n" +
 	"\x04isID\x18\x02 \x01(\bR\x04isID\x12\"\n" +
-	"\x04type\x18\x03 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\"\xcf\x13\n" +
+	"\x04type\x18\x03 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\"\xe5\x13\n" +
 	"\x16EncyclopediaItemAnswer\x12\"\n" +
-	"\x04type\x18\x01 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\x12D\n" +
-	"\tequipment\x18\x02 \x01(\v2&.amqp.EncyclopediaItemAnswer.EquipmentR\tequipment\x122\n" +
-	"\x03set\x18\x03 \x01(\v2 .amqp.EncyclopediaItemAnswer.SetR\x03set\x12$\n" +
-	"\x06source\x18\x04 \x01(\v2\f.amqp.SourceR\x06source\x1a\xb7\b\n" +
+	"\x04type\x18\x01 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\x12\x14\n" +
+	"\x05query\x18\x02 \x01(\tR\x05query\x12D\n" +
+	"\tequipment\x18\x03 \x01(\v2&.amqp.EncyclopediaItemAnswer.EquipmentR\tequipment\x122\n" +
+	"\x03set\x18\x04 \x01(\v2 .amqp.EncyclopediaItemAnswer.SetR\x03set\x12$\n" +
+	"\x06source\x18\x05 \x01(\v2\f.amqp.SourceR\x06source\x1a\xb7\b\n" +
 	"\tEquipment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
