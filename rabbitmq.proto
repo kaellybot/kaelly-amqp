@@ -455,15 +455,15 @@ message EncyclopediaItemAnswer
         string          name            =  2;
         string          description     =  3;
         Type            type            =  4;
-        string          icon            =  5;
-        int64           level           =  6;
-        int64           pods            =  7;
-        SetFamily       set             =  8;
-        Characteristics characteristics =  9;
-        repeated Effect weaponEffects   = 10;
-        repeated Effect effects         = 11;
-        Conditions      conditions      = 12;
-        Recipe          recipe          = 13;
+        string          icon            =  6;
+        int64           level           =  7;
+        int64           pods            =  8;
+        SetFamily       set             =  9;
+        Characteristics characteristics = 10;
+        repeated Effect weaponEffects   = 11;
+        repeated Effect effects         = 12;
+        Conditions      conditions      = 13;
+        Recipe          recipe          = 14;
        
         message Characteristics {
             int64           cost           = 1;
@@ -472,14 +472,13 @@ message EncyclopediaItemAnswer
             int64           maxCastPerTurn = 4;
             int64           criticalRate   = 5;
             int64           criticalBonus  = 6;
-            repeated string areas          = 7; //TODO
-            // TODO LDV ?
+            repeated string areaEffectIds  = 7;
         }
 
         message Type {
-            ItemType      itemType       = 1;
-            EquipmentType equipmentType  = 2;
-            string        equipmentLabel = 3;
+            ItemType        itemType       = 1;
+            EquipmentType   equipmentType  = 2;
+            string          equipmentLabel = 3;
         }
 
         message SetFamily
