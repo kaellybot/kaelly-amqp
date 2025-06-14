@@ -4078,15 +4078,16 @@ type EncyclopediaItemAnswer_Equipment struct {
 	Name            string                                            `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description     string                                            `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
 	Type            *EncyclopediaItemAnswer_Equipment_Type            `protobuf:"bytes,4,opt,name=type,proto3" json:"type,omitempty"`
-	Icon            string                                            `protobuf:"bytes,5,opt,name=icon,proto3" json:"icon,omitempty"`
-	Level           int64                                             `protobuf:"varint,6,opt,name=level,proto3" json:"level,omitempty"`
-	Pods            int64                                             `protobuf:"varint,7,opt,name=pods,proto3" json:"pods,omitempty"`
-	Set             *EncyclopediaItemAnswer_Equipment_SetFamily       `protobuf:"bytes,8,opt,name=set,proto3" json:"set,omitempty"`
-	Characteristics *EncyclopediaItemAnswer_Equipment_Characteristics `protobuf:"bytes,9,opt,name=characteristics,proto3" json:"characteristics,omitempty"`
-	WeaponEffects   []*EncyclopediaItemAnswer_Effect                  `protobuf:"bytes,10,rep,name=weaponEffects,proto3" json:"weaponEffects,omitempty"`
-	Effects         []*EncyclopediaItemAnswer_Effect                  `protobuf:"bytes,11,rep,name=effects,proto3" json:"effects,omitempty"`
-	Conditions      *EncyclopediaItemAnswer_Conditions                `protobuf:"bytes,12,opt,name=conditions,proto3" json:"conditions,omitempty"`
-	Recipe          *EncyclopediaItemAnswer_Recipe                    `protobuf:"bytes,13,opt,name=recipe,proto3" json:"recipe,omitempty"`
+	AreaEffectIds   []string                                          `protobuf:"bytes,5,rep,name=areaEffectIds,proto3" json:"areaEffectIds,omitempty"`
+	Icon            string                                            `protobuf:"bytes,6,opt,name=icon,proto3" json:"icon,omitempty"`
+	Level           int64                                             `protobuf:"varint,7,opt,name=level,proto3" json:"level,omitempty"`
+	Pods            int64                                             `protobuf:"varint,8,opt,name=pods,proto3" json:"pods,omitempty"`
+	Set             *EncyclopediaItemAnswer_Equipment_SetFamily       `protobuf:"bytes,9,opt,name=set,proto3" json:"set,omitempty"`
+	Characteristics *EncyclopediaItemAnswer_Equipment_Characteristics `protobuf:"bytes,10,opt,name=characteristics,proto3" json:"characteristics,omitempty"`
+	WeaponEffects   []*EncyclopediaItemAnswer_Effect                  `protobuf:"bytes,11,rep,name=weaponEffects,proto3" json:"weaponEffects,omitempty"`
+	Effects         []*EncyclopediaItemAnswer_Effect                  `protobuf:"bytes,12,rep,name=effects,proto3" json:"effects,omitempty"`
+	Conditions      *EncyclopediaItemAnswer_Conditions                `protobuf:"bytes,13,opt,name=conditions,proto3" json:"conditions,omitempty"`
+	Recipe          *EncyclopediaItemAnswer_Recipe                    `protobuf:"bytes,14,opt,name=recipe,proto3" json:"recipe,omitempty"`
 	unknownFields   protoimpl.UnknownFields
 	sizeCache       protoimpl.SizeCache
 }
@@ -4145,6 +4146,13 @@ func (x *EncyclopediaItemAnswer_Equipment) GetDescription() string {
 func (x *EncyclopediaItemAnswer_Equipment) GetType() *EncyclopediaItemAnswer_Equipment_Type {
 	if x != nil {
 		return x.Type
+	}
+	return nil
+}
+
+func (x *EncyclopediaItemAnswer_Equipment) GetAreaEffectIds() []string {
+	if x != nil {
+		return x.AreaEffectIds
 	}
 	return nil
 }
@@ -5617,30 +5625,31 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\x17EncyclopediaItemRequest\x12\x14\n" +
 	"\x05query\x18\x01 \x01(\tR\x05query\x12\x12\n" +
 	"\x04isID\x18\x02 \x01(\bR\x04isID\x12\"\n" +
-	"\x04type\x18\x03 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\"\xe5\x13\n" +
+	"\x04type\x18\x03 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\"\x8b\x14\n" +
 	"\x16EncyclopediaItemAnswer\x12\"\n" +
 	"\x04type\x18\x01 \x01(\x0e2\x0e.amqp.ItemTypeR\x04type\x12\x14\n" +
 	"\x05query\x18\x02 \x01(\tR\x05query\x12D\n" +
 	"\tequipment\x18\x03 \x01(\v2&.amqp.EncyclopediaItemAnswer.EquipmentR\tequipment\x122\n" +
 	"\x03set\x18\x04 \x01(\v2 .amqp.EncyclopediaItemAnswer.SetR\x03set\x12$\n" +
-	"\x06source\x18\x05 \x01(\v2\f.amqp.SourceR\x06source\x1a\xb7\b\n" +
+	"\x06source\x18\x05 \x01(\v2\f.amqp.SourceR\x06source\x1a\xdd\b\n" +
 	"\tEquipment\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12 \n" +
 	"\vdescription\x18\x03 \x01(\tR\vdescription\x12?\n" +
-	"\x04type\x18\x04 \x01(\v2+.amqp.EncyclopediaItemAnswer.Equipment.TypeR\x04type\x12\x12\n" +
-	"\x04icon\x18\x05 \x01(\tR\x04icon\x12\x14\n" +
-	"\x05level\x18\x06 \x01(\x03R\x05level\x12\x12\n" +
-	"\x04pods\x18\a \x01(\x03R\x04pods\x12B\n" +
-	"\x03set\x18\b \x01(\v20.amqp.EncyclopediaItemAnswer.Equipment.SetFamilyR\x03set\x12`\n" +
-	"\x0fcharacteristics\x18\t \x01(\v26.amqp.EncyclopediaItemAnswer.Equipment.CharacteristicsR\x0fcharacteristics\x12I\n" +
-	"\rweaponEffects\x18\n" +
-	" \x03(\v2#.amqp.EncyclopediaItemAnswer.EffectR\rweaponEffects\x12=\n" +
-	"\aeffects\x18\v \x03(\v2#.amqp.EncyclopediaItemAnswer.EffectR\aeffects\x12G\n" +
+	"\x04type\x18\x04 \x01(\v2+.amqp.EncyclopediaItemAnswer.Equipment.TypeR\x04type\x12$\n" +
+	"\rareaEffectIds\x18\x05 \x03(\tR\rareaEffectIds\x12\x12\n" +
+	"\x04icon\x18\x06 \x01(\tR\x04icon\x12\x14\n" +
+	"\x05level\x18\a \x01(\x03R\x05level\x12\x12\n" +
+	"\x04pods\x18\b \x01(\x03R\x04pods\x12B\n" +
+	"\x03set\x18\t \x01(\v20.amqp.EncyclopediaItemAnswer.Equipment.SetFamilyR\x03set\x12`\n" +
+	"\x0fcharacteristics\x18\n" +
+	" \x01(\v26.amqp.EncyclopediaItemAnswer.Equipment.CharacteristicsR\x0fcharacteristics\x12I\n" +
+	"\rweaponEffects\x18\v \x03(\v2#.amqp.EncyclopediaItemAnswer.EffectR\rweaponEffects\x12=\n" +
+	"\aeffects\x18\f \x03(\v2#.amqp.EncyclopediaItemAnswer.EffectR\aeffects\x12G\n" +
 	"\n" +
-	"conditions\x18\f \x01(\v2'.amqp.EncyclopediaItemAnswer.ConditionsR\n" +
+	"conditions\x18\r \x01(\v2'.amqp.EncyclopediaItemAnswer.ConditionsR\n" +
 	"conditions\x12;\n" +
-	"\x06recipe\x18\r \x01(\v2#.amqp.EncyclopediaItemAnswer.RecipeR\x06recipe\x1a\xe5\x01\n" +
+	"\x06recipe\x18\x0e \x01(\v2#.amqp.EncyclopediaItemAnswer.RecipeR\x06recipe\x1a\xe5\x01\n" +
 	"\x0fCharacteristics\x12\x12\n" +
 	"\x04cost\x18\x01 \x01(\x03R\x04cost\x12\x1a\n" +
 	"\bminRange\x18\x02 \x01(\x03R\bminRange\x12\x1a\n" +
