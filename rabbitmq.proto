@@ -56,9 +56,6 @@ message RabbitMQMessage
     NewsSetMessage                      newsSetMessage                      = 604;
     NewsTwitterMessage                  newsTwitterMessage                  = 605;
 
-    PortalPositionRequest               portalPositionRequest               = 700;
-    PortalPositionAnswer                portalPositionAnswer                = 701;
-
     enum Type
     {
         UNKNOWN                                =   0;
@@ -108,9 +105,6 @@ message RabbitMQMessage
         NEWS_RSS                               = 803;
         NEWS_SET                               = 804;
         NEWS_TWITTER                           = 805;
-
-        PORTAL_POSITION_REQUEST                = 900;
-        PORTAL_POSITION_ANSWER                 = 901;
     }
 
     enum Status 
@@ -671,43 +665,4 @@ message NewsGuildMessage
 message NewsSetMessage
 {
 	repeated string setIds = 1;
-}
-
-message PortalPositionRequest
-{
-    string serverId    = 1;
-    string dimensionId = 2;
-}
-
-message PortalPositionAnswer
-{
-    repeated PortalPosition positions = 1;
-
-    message PortalPosition {
-        string                    serverId      = 1;
-        string                    dimensionId   = 2;
-        int64                     remainingUses = 3;
-        Position                  position      = 4;
-        string                    createdBy     = 5;
-        string                    updatedBy     = 6;
-        google.protobuf.Timestamp createdAt     = 7;
-        google.protobuf.Timestamp updatedAt     = 8;
-        Source                    source        = 9;
-
-        message Position {
-            int64 x                        = 1;
-            int64 y                        = 2;
-            bool isInCanopy                = 3;
-            Transport transport            = 4;
-            Transport conditionalTransport = 5;
-
-            message Transport {
-                string areaId    = 1;
-                string subAreaId = 2;
-                string typeId    = 3;
-                int64 x          = 4;
-                int64 y          = 5;
-            }
-        }
-    }
 }
