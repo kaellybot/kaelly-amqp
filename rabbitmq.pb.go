@@ -3440,7 +3440,9 @@ func (x *NewsGuildMessage) GetEvent() NewsGuildMessage_Event {
 
 type NewsSetMessage struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	SetIds        []string               `protobuf:"bytes,1,rep,name=setIds,proto3" json:"setIds,omitempty"`
+	CreatedSetIds []string               `protobuf:"bytes,1,rep,name=createdSetIds,proto3" json:"createdSetIds,omitempty"`
+	UpdatedSetIds []string               `protobuf:"bytes,2,rep,name=updatedSetIds,proto3" json:"updatedSetIds,omitempty"`
+	DeletedSetIds []string               `protobuf:"bytes,3,rep,name=deletedSetIds,proto3" json:"deletedSetIds,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -3475,9 +3477,23 @@ func (*NewsSetMessage) Descriptor() ([]byte, []int) {
 	return file_rabbitmq_proto_rawDescGZIP(), []int{38}
 }
 
-func (x *NewsSetMessage) GetSetIds() []string {
+func (x *NewsSetMessage) GetCreatedSetIds() []string {
 	if x != nil {
-		return x.SetIds
+		return x.CreatedSetIds
+	}
+	return nil
+}
+
+func (x *NewsSetMessage) GetUpdatedSetIds() []string {
+	if x != nil {
+		return x.UpdatedSetIds
+	}
+	return nil
+}
+
+func (x *NewsSetMessage) GetDeletedSetIds() []string {
+	if x != nil {
+		return x.DeletedSetIds
 	}
 	return nil
 }
@@ -5389,9 +5405,11 @@ const file_rabbitmq_proto_rawDesc = "" +
 	"\n" +
 	"\x06CREATE\x10\x01\x12\n" +
 	"\n" +
-	"\x06DELETE\x10\x02\"(\n" +
-	"\x0eNewsSetMessage\x12\x16\n" +
-	"\x06setIds\x18\x01 \x03(\tR\x06setIds*F\n" +
+	"\x06DELETE\x10\x02\"\x82\x01\n" +
+	"\x0eNewsSetMessage\x12$\n" +
+	"\rcreatedSetIds\x18\x01 \x03(\tR\rcreatedSetIds\x12$\n" +
+	"\rupdatedSetIds\x18\x02 \x03(\tR\rupdatedSetIds\x12$\n" +
+	"\rdeletedSetIds\x18\x03 \x03(\tR\rdeletedSetIds*F\n" +
 	"\x04Game\x12\f\n" +
 	"\bANY_GAME\x10\x00\x12\x0e\n" +
 	"\n" +

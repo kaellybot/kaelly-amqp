@@ -652,7 +652,7 @@ message NewsGuildMessage
     string id          = 1;
     string name        = 2;
     int64  memberCount = 3;
-	Event event        = 4;
+	Event  event       = 4;
 
     enum Event
     {
@@ -664,5 +664,7 @@ message NewsGuildMessage
 
 message NewsSetMessage
 {
-	repeated string setIds = 1;
+	repeated string createdSetIds = 1;
+    repeated string updatedSetIds = 2;
+    repeated string deletedSetIds = 3;
 }
