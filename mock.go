@@ -4,6 +4,8 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+var _ MessageBroker = (*Mock)(nil)
+
 type Mock struct {
 	RunFunc  func() error
 	EmitFunc func(msg *RabbitMQMessage, exchange Exchange, routingKey,
@@ -11,7 +13,7 @@ type Mock struct {
 	RequestFunc func(msg *RabbitMQMessage, exchange Exchange, routingKey,
 		correlationID, replyTo string) error
 	ReplyFunc       func(msg *RabbitMQMessage, correlationID, replyTo string) error
-	ConsumeFunc     func(queueName, routingKey string, consumer MessageConsumer)
+	ConsumeFunc     func(queueName string, consumer MessageConsumer)
 	IsConnectedFunc func() bool
 	ShutdownFunc    func()
 }
@@ -54,9 +56,9 @@ func (mock *Mock) Reply(msg *RabbitMQMessage, correlationID, replyTo string) err
 	return nil
 }
 
-func (mock *Mock) Consume(queueName, routingKey string, consumer MessageConsumer) {
+func (mock *Mock) Consume(queueName string, consumer MessageConsumer) {
 	if mock.ConsumeFunc != nil {
-		mock.ConsumeFunc(queueName, routingKey, consumer)
+		mock.ConsumeFunc(queueName, consumer)
 		return
 	}
 

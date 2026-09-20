@@ -9,4 +9,6 @@ const (
 	logProto         = "amqpProto"
 	logContent       = "amqpContent"
 	logPanic         = "amqpPanic"
+	logType          = "amqpType"
+	logGame          = "amqpGame"
 )

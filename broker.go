@@ -25,8 +25,9 @@ Parameters:
 
 Options:
 - opts: A variadic list of functional options that allow optional configuration of the client
-instance, such as retry delay and connection status callbacks. Use provided helper functions
-like `WithRetryDelay` and `WithIsConnectedCallback` to set these options.
+instance, such as retry delay, connection status callbacks and the handler called for
+refused incoming messages. Use provided helper functions like `WithRetryDelay`,
+`WithIsConnectedCallback` and `WithRejectedHandler` to set these options.
 
 Returns:
 - A pointer to an `Impl` struct, representing the configured AMQP client instance,
@@ -49,6 +50,7 @@ func New(clientID, address string, opts ...Option) MessageBroker {
 			bindings:            make([]Binding, 0),
 			retryDelay:          defaultRetryDelay,
 			isConnectedCallback: func(_ bool) {},
+			rejectedHandler:     func(_ Context, _ *RabbitMQMessage, _ error) {},
 		},
 		eventsChannels:      make(map[string](chan connectionEvent)),
 		mainEventsChan:      make(chan connectionEvent, 1),
@@ -344,6 +346,16 @@ func (broker *messageBroker) callIsConnectedCallback(status bool) {
 
 func (broker *messageBroker) publish(msg *RabbitMQMessage, exchange Exchange,
 	routingKey, correlationID, replyTo string) error {
+	if !msg.IsGameSet() {
+		log.Error().Err(ErrGameNotSet).
+			Str(logType, msg.GetType().String()).
+			Str(logExchange, string(exchange)).
+			Str(logRoutingKey, routingKey).
+			Str(logCorrelationID, correlationID).
+			Msgf("Publication ignored since message game is not set")
+		return ErrGameNotSet
+	}
+
 	if !broker.IsConnected() {
 		return ErrMustBeConnected
 	}
@@ -355,6 +367,8 @@ func (broker *messageBroker) publish(msg *RabbitMQMessage, exchange Exchange,
 	}
 
 	log.Debug().
+		Str(logType, msg.GetType().String()).
+		Str(logGame, msg.GetGame().String()).
 		Str(logExchange, string(exchange)).
 		Str(logCorrelationID, correlationID).
 		Str(logRoutingKey, routingKey).
@@ -445,6 +459,16 @@ func (broker *messageBroker) listenToMessages(eventChan chan connectionEvent,
 				break
 			}
 
+			if !message.IsGameSet() {
+				log.Error().Err(ErrGameNotSet).
+					Str(logType, message.GetType().String()).
+					Str(logCorrelationID, ctx.CorrelationID).
+					Str(logReplyTo, ctx.ReplyTo).
+					Msgf("Message discarded since its game is not set")
+				go broker.callRejectedHandler(ctx, &message, ErrGameNotSet)
+				break
+			}
+
 			go broker.callConsumer(ctx, consumer, &message)
 		}
 	}
@@ -457,6 +481,15 @@ func (broker *messageBroker) callConsumer(ctx Context, consumer MessageConsumer,
 		}
 	}()
 	consumer(ctx, message)
+}
+
+func (broker *messageBroker) callRejectedHandler(ctx Context, message *RabbitMQMessage, err error) {
+	defer func() {
+		if panicErr := recover(); panicErr != nil {
+			log.Error().Interface(logPanic, panicErr).Msgf("Rejected handler panicked. Continuing...")
+		}
+	}()
+	broker.cfg.rejectedHandler(ctx, message, err)
 }
 
 func (broker *messageBroker) declareEventChannel() (string, chan connectionEvent) {
