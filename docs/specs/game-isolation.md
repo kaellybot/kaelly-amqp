@@ -64,6 +64,9 @@ Wire compatibility has been checked:
 - v1.0.4 → v1.0.5 only changes `NewsSetMessage`.
 - None of the v1.0.0 services uses those messages. Upgrading them is safe; each one still needs to build and pass its tests after the upgrade.
 
+`v1.0.6` was tagged on 2026-09-17 for the Go 1.27 upgrade alone: no proto, wire or API change, and no
+service is on it yet. Game isolation therefore ships as **v1.1.0**, which is also breaking (§4.1).
+
 ## 3. Contract rules
 
 These rules apply to every service. Section 4 lists what each project has to change to meet them.
@@ -79,14 +82,14 @@ These rules apply to every service. Section 4 lists what each project has to cha
 | **R7** | In-memory stores and caches holding per-game data are keyed by game. |
 | **R8** | Each bot uses its own AMQP client ID, so each has its own `<clientID>.answers` queue. The current name `KaellyBot-<shard>` must stay unchanged, because these queues are durable. |
 | **R9** | Logs for request handling include the game (`constants.LogGame`). |
-| **R10** | Reference data can differ per game: `jobs`, `cities`, `orders`, `servers`, their `*_labels`, feeds, twitter accounts, almanax news. Every lookup of reference data (DB query, preload, in-memory store, foreign key) is scoped to one game. `jobs`, `cities`, `orders`, `servers` and `twitter_accounts` are identified by **`(id, game)`**: the same ID may exist in several games with different data. |
+| **R10** | Reference data can differ per game: `jobs`, `cities`, `orders`, `servers`, their `*_labels`, feeds, twitter accounts, almanax news. Every lookup of reference data (DB query, preload, in-memory store, foreign key) is scoped to one game. `jobs`, `cities`, `orders`, `servers` and `twitter_accounts` are identified by **`(id, game)`**. For `jobs`, `cities`, `orders` and `servers` the same ID may exist in several games with different data; a Twitter account belongs to one game (Q7), and its key carries the game so the webhook foreign key stays game-aware. |
 | **R11** | **One Discord application per game** (plus one dev application per game). Every Discord resource is resolved from the game of the message or data being handled, never from the service's own identity:<br>• bot token and session<br>• application/client ID<br>• application emojis<br>• commands<br>• news channels (the reporting channel is shared, but each report is sent by its game's bot)<br>• branding (name, avatar, footer)<br>A service handling several games (e.g. the notifier) picks these per message. A single-game service (e.g. kaelly-discord) picks them from its configured `GAME`. |
 
 ## 4. Changes per project
 
 Each item has an ID so it can be referenced in commits and PRs.
 
-### 4.1 kaelly-amqp — release v1.0.6
+### 4.1 kaelly-amqp — release v1.1.0
 
 - **AMQP-1** — Add helpers in a new file (not in the generated `rabbitmq.pb.go`):
 
@@ -108,18 +111,17 @@ Each item has an ID so it can be referenced in commits and PRs.
   - Service-level R4 checks remain for unsupported games.
 - **AMQP-4** — README: document R1–R11, and that the client ID determines the reply queue name (`broker.go:145`, `:372`).
 - **AMQP-5** — Tests for the helpers and for both guards (publish and consume), using the existing `Mock` where possible.
-- **Acceptance:** tag v1.0.6. No change to `rabbitmq.proto` field numbers.
+- **Acceptance:** tag v1.1.0. No change to `rabbitmq.proto` field numbers. The release is **breaking**: `Mock.Consume` did not match the `MessageBroker` interface, so `*Mock` could not be used as a broker at all. It is now `Consume(queueName string, consumer MessageConsumer)`; services setting `ConsumeFunc` must drop the `routingKey` parameter.
 
 ### 4.2 kaelly-discord
 
-- **DISC-1** — Make the game configurable:
-  - Add a viper key `GAME`, default `DOFUS_GAME`, parsed with `amqp.Game_value`.
-  - `constants.GetGame()` (`models/constants/games.go:15`) returns Name and Icon from a per-game table.
-  - Startup fails on `ANY_GAME` or an unknown value.
-- **DISC-2** — Make the client ID configurable:
-  - Add a viper key `RABBITMQ_CLIENT_NAME`, default `KaellyBot`.
-  - `GetRabbitMQClientID()` (`models/constants/broker.go:22`) uses it instead of `constants.Name`.
-  - Result: the default queue stays `KaellyBot-<shard>.answers`, unchanged.
+> kaelly-discord has moved on since the 2026-09-17 audit. Re-check every item below against the
+> current code — file paths, line numbers and the exact shape of the fix — before implementing it.
+
+- ~~**DISC-1**~~ — **Dropped.** kaellytouch-discord is a **fork** of kaelly-discord, not the same binary configured differently, so `constants.GetGame()` stays hardcoded and each fork returns its own game. Nothing to do here.
+- ~~**DISC-2**~~ — **Dropped**, for the same reason: the fork changes `constants.Name` to `KaellyTouch` and `GetRabbitMQClientID()` is left alone.
+  - **Invariant that still holds, whatever the mechanism:** the two bots must never share a client ID. `GetRabbitMQClientID()` is what names the reply queue (`<clientID>.answers`, `broker.go:146` / `:372`); two bots sharing it would bind to the same queue and RabbitMQ would deliver each reply to whichever one grabbed it first, so commands would answer in the wrong Discord at random.
+  - **kaelly-discord keeps `KaellyBot-<shard>`, unchanged** (R8): the queue is durable.
 - **DISC-3** — Filter guild queries by game (`repositories/guilds/guilds.go`):
   - Add `Game` to `entities.Guild` (`models/entities/guilds.go`) as part of the primary key.
   - `Exists(guildID)` → `Exists(guildID, game)`. Used by `services/discord/discord.go:101,131`. Without this fix, a guild already registered by the other bot suppresses the create/delete news, and the configurator never creates this bot's guild row.
@@ -142,9 +144,9 @@ Each item has an ID so it can be referenced in commits and PRs.
   - `entities.TwitterAccount` (`models/entities/twitters.go`): `Game` becomes part of the primary key.
   - `repositories/twitters/twitters.go:15`: add `Where("game = ?", constants.GetGame().AMQPGame)`.
 - **DISC-5** — Confirm that `emojis`, `weapons` and `characteristics` are game-agnostic (§5). No change if confirmed.
-- **DISC-6** — Upgrade to kaelly-amqp v1.0.6.
+- **DISC-6** — Upgrade to kaelly-amqp v1.1.0.
 - **DISC-7** — Test: iterate over every `models/mappers.Map*Request` plus `MapGuildCreateNews` and `MapGuildDeleteNews`, and assert `IsGameSet()`.
-- **Acceptance:** with default config, the published messages and the queue names are byte-identical to today, except for the new guards.
+- **Acceptance:** the published messages and the queue names are byte-identical to today, except for the new guards.
 
 ### 4.3 Kaelly-books
 
@@ -158,7 +160,7 @@ Each item has an ID so it can be referenced in commits and PRs.
   - The `Server` associations of `JobBook` and `AlignmentBook` (`books.go:12,24`) become `foreignKey:ServerID,Game;references:ID,Game`, matching M1-A (§5.3).
   - The book queries already filter on `server_id` **and** `game` (`repositories/{jobs,alignments}`); no change is needed there.
 - **BOOK-4** — Log the game (R9). Also fix the copy-pasted log line in `services/alignments/user.go:21`.
-- **BOOK-5** — Upgrade to v1.0.6, which also brings the v1.0.0 → v1.0.6 upgrade (§2.2).
+- **BOOK-5** — Upgrade to v1.1.0, which also brings the v1.0.0 → v1.1.0 upgrade (§2.2).
 - **Acceptance:** replies carry the request's game. The same user/server/job with game 1 and game 2 gives two independent books.
 
 ### 4.4 Kaelly-competition
@@ -167,7 +169,7 @@ Each item has an ID so it can be referenced in commits and PRs.
 - **COMP-2** — `services/competitions/competitions.go:100`: pass `message.Game` down to `maps.Service.GetMapRequest`, which gets a new `game` parameter.
 - **COMP-3** — Supported games: `DOFUS_GAME` only for now. `DOFUS_TOUCH` gets a `FAILED` reply. KTArena maps are Dofus-only (`models/constants/ktarena.go`).
   - kaellytouch-discord shows `/map` as "not supported yet" (Q2). This reply is the backend safety net.
-- **COMP-4** — Upgrade to v1.0.6.
+- **COMP-4** — Upgrade to v1.1.0.
 
 ### 4.5 kaelly-configurator
 
@@ -205,7 +207,7 @@ Each item has an ID so it can be referenced in commits and PRs.
     - Use `OnDelete:RESTRICT`. Deleting a server then requires clearing `guilds.server_id` first, in the same migration or script.
   - `ChannelServer.Server` (`chanservers.go:11`) becomes `foreignKey:ServerID,Game;references:ID,Game`.
 - **CONF-5** — Validation: reject `ANY_GAME` in `consumeRequests` and `guildNews` (R4).
-- **CONF-6** — Upgrade to v1.0.6.
+- **CONF-6** — Upgrade to v1.1.0.
 - **Acceptance:** with a guild configured for both games:
   - `CONFIGURATION_GET` for game 1 returns only game-1 rows.
   - Deleting guild (id, 2) leaves every game-1 row intact.
@@ -218,9 +220,9 @@ Each item has an ID so it can be referenced in commits and PRs.
 - **ENC-2** — Validation in `consume` (`encyclopedias.go:83`): supported games are `DOFUS_GAME` only. Any other game gets a `FAILED` reply carrying that game, and no dofusdude call is made.
   - kaellytouch-discord shows `/item`, `/set` and `/almanax` as "not supported yet" (Q2). This reply is the backend safety net.
 - **ENC-3** — Game → source mapping:
-  - Replace `constants.DofusDudeGame` with `func DofusDudeGame(game amqp.Game) (string, bool)`, where `DOFUS_GAME` maps to `"dofus3"`.
-  - Every `sources.Service` method (`services/sources/types.go`, `dofusdude.go`) takes `game`.
-  - Almanax calls (`dofusdude.go:462, 487, 535`) currently take no game. They must refuse anything other than `DOFUS_GAME`.
+  - Replace `constants.DofusDudeGame` with `func DofusDudeGame(game amqp.Game) (string, bool)`, where `DOFUS_GAME` maps to `"dofus3"`. The Dofus path itself stays a constant, `DofusDudeDofusGame`.
+  - **Decided:** the 20 `sources.Service` methods keep their signatures and stay pinned to Dofus, with a comment saying why. dofusdude publishes Dofus data only, so a `game` parameter there could never hold another value; ENC-2 refuses every other game at `consume`, before any source call. `DofusDudeGame(game)` is used where the game is genuinely variable: the version check, which loops over `GetSupportedGames()`.
+  - `constants.GetSupportedGames()` is the single list driving the version check, the set sync and the request guard. It holds `DOFUS_GAME` alone today.
 - **ENC-4** — Caches: add the game to `buildListKey` / `buildItemKey` (`services/sources/stores.go:40-46`). Existing Redis entries without a game segment simply expire. Changing the key format means cache misses right after deployment; this is expected.
 - **ENC-5** — Sets:
   - `repositories/sets/sets.go` `GetSets`, the `Sync` update (`:30`) and the delete (`:38`) filter by game.
@@ -231,7 +233,10 @@ Each item has an ID so it can be referenced in commits and PRs.
   - `MapAlmanaxNews`, `MapGameNews` and `MapSetNews` (`models/mappers/news.go`) take `game`.
   - `GameEventHandler` becomes `func(game amqp.Game, version string)`.
   - `checkGameVersion` (`services/sources/games.go:18`), the daily almanax, the set sync and the almanax reconcile are driven by a list of supported games, which today is `[DOFUS_GAME]`.
-- **ENC-7** — `entities.Almanax` has no `game` column. Document it as Dofus-only. Adding a game column is deferred until Touch almanax exists.
+- **ENC-7** — `entities.Almanax` gets a `game` column as part of its primary key (migration M4, §5.5). Dofus Touch has its own almanax, with different effects on the same day, so the date alone does not identify a row. Only Dofus rows are populated today, because dofusdude is the sole source and publishes no Touch almanax:
+  - `repositories/almanaxes`: `GetAlmanaxes(game)` filters on the game; `Save` keeps the row's game.
+  - `services/almanaxes`: the in-memory store is keyed by `(game, dofusDudeEffectID)`, and `GetDatesByAlmanaxEffect(effectID, game)` takes the game.
+  - The daily almanax and the reconcile run for the games that have a dofusdude source, i.e. Dofus alone.
 - **ENC-8** — Log the game (R9).
 - **Acceptance:**
   - For game 1, replies and news are identical to today's except that `game` is now set.
@@ -248,11 +253,12 @@ Each news channel belongs to one bot. Only the author of a message can crosspost
   | Key | Game | Required | Note |
   | --- | --- | --- | --- |
   | `DISCORD_TOKEN` | DOFUS_GAME | yes | existing, unchanged |
-  | `DISCORD_TOKEN_DOFUS_TOUCH` | DOFUS_TOUCH | no | new |
+  | `DISCORD_TOKEN_DOFUS_TOUCH` | DOFUS_TOUCH | **yes** | new |
   | `REPORTING_CHANNEL_ID` | all games | yes | existing, unchanged; one channel shared by every bot |
 
-  - A game with no token is **disabled**: its news is logged at `warn` and dropped. It is never posted with another game's token.
-  - Startup logs which games are enabled.
+  - **Decided:** every game served by a bot has a **required** token. Startup fails, naming the missing key, rather than starting with a game whose news would be silently undelivered. A game no bot serves (Retro) has no token key, and its news is logged at `warn` and dropped; it is never posted with another game's token.
+  - Startup logs which games are served and by which bot.
+  - **Rollout consequence:** the Touch Discord application must exist and its token must be in the notifier's secrets **before** the notifier is deployed (§6 phase A step 4), not only at phase C.
 - **NOTI-2** — Discord service (`services/discord/`):
   - `Impl` holds `sessions map[amqp.Game]*discordgo.Session`, built from NOTI-1.
   - `AnnounceMessage(correlationID string, game amqp.Game, newsChannelID string, msg)` and `SendMessage(correlationID string, game amqp.Game, channelID, content string)` pick the session for `game`. When no session exists, they log and return.
@@ -266,58 +272,59 @@ Each news channel belongs to one bot. Only the author of a message can crosspost
   | NEWS_RSS | `feed_sources(type, locale, game)` | ✅ already |
   | NEWS_TWITTER | `twitter_accounts(id, game)` | ❌ → `GetTwitterAccount(id, game)` (`services/news/news.go:61`); entity primary key becomes `(id, game)` |
   | NEWS_SET, NEWS_GAME | shared reporting channel | ❌ → sent with the session of `message.Game`; text names the game |
-  | NEWS_GUILD | shared reporting channel | ❌ → sent with the session of `message.Game`; text names the bot/game (`models/mappers/guilds.go`) |
+  | NEWS_GUILD | shared reporting channel | ❌ → sent with the session of `message.Game`. **Decided:** the text is left unchanged. The report is posted by its game's bot, so the Discord message author already identifies which bot gained or lost the guild; naming it in the text too would be redundant. |
 
   - `services/news/news.go` loads `almanax_news`, `feed_sources` and `twitter_accounts` for **all** games at startup (no game filter), since the notifier serves every game. Lookups always filter on game.
 - **NOTI-4** — Content per game:
-  - Branding (`constants.ExternalName`, `AvatarURL`, footer in `utils/discord/discord.go`) is chosen from the game.
+  - Branding is chosen from the game: `AnkamaGame` gains `BotName` and `BotAvatarURL`, and `BuildDefaultFooter(game, lg, date)` uses them. The service-wide `constants.ExternalName` and `constants.AvatarURL` are removed, so no code path can brand a message with a fixed identity.
+  - Touch uses `BotName = "KaellyTouch"` and `BotAvatarURL = <cdn>/kaellytouch/id/face.webp`. The asset is published (§6.1 M-3).
   - Emojis: see NOTI-6.
 - **NOTI-5** — Validation: `ANY_GAME` news is dropped by the AMQP-3 guard (error log). SET and GAME text must no longer fall back to "Ankama".
 - **NOTI-6** — Emojis are per application: see §4.11 (EMO-3).
 - **NOTI-7** — Deployment:
-  - Add `secrets.DISCORD_TOKEN_DOFUS_TOUCH` to `.github/workflows/ci.yml` (optional, empty allowed).
+  - Add `secrets.DISCORD_TOKEN_DOFUS_TOUCH` to `.github/workflows/ci.yml` and to the chart's `values.yaml`. It must be set before the notifier is deployed.
   - Both bots must have Send Messages / Manage Messages rights in their own news channels.
   - **Both bots must be members of the reporting channel's guild**, with Send Messages rights.
 - **Acceptance:**
-  - With only today's variables set, behaviour is byte-identical to today.
+  - With both tokens set, behaviour for game 1 is byte-identical to today.
   - With both tokens set:
     - a game-1 almanax is posted and crossposted by KaellyBot in the game-1 channel;
     - a game-2 almanax is posted and crossposted by KaellyTouch in the game-2 channel;
     - a game-2 tweet whose account row is game 1 is dropped.
-  - With only `DISCORD_TOKEN` set, game-2 news is logged and not posted.
+  - With `DISCORD_TOKEN_DOFUS_TOUCH` missing, startup fails and names the missing key.
   - Tests use a Discord service mock that records `(game, channelID)` for each call.
 
 ### 4.8 Kaelly-metrics
 
 - **METR-1** — No functional change. `ANY_GAME` requests are dropped by the AMQP-3 guard before reaching metrics; add a counter for them if the library exposes a hook.
-- **METR-2** — Upgrade to v1.0.6.
-- Note: the `shard` tag is taken from `ReplyTo`. After DISC-2, a second bot shows up with its own prefix.
+- **METR-2** — Upgrade to v1.1.0.
+- Note: the `shard` tag is taken from `ReplyTo`. Once the Touch fork runs with its own client ID, a second bot shows up under its own prefix.
 
 ### 4.9 kaelly-rss / kaelly-twitter
 
 - **RSS-1 / TWIT-1** — At load time, skip rows with `game = 0` and log at `error` (R1). AMQP-2 would refuse to publish them anyway.
 - **TWIT-4** — Twitter accounts keyed by `(id, game)`:
   - `entities.TwitterAccount` (`models/entities/twitter.go`): `Game` becomes part of the primary key. `Save` (`repositories/twitteraccounts/twitteraccounts.go:19`) then updates only the `(id, game)` row.
-  - The same account can now appear on several rows (one per game). `DispatchNewTweets` (`services/twitter/twitter.go:30`) groups rows by `id`:
-    - it fetches tweets **once** per account, to avoid doubling Twitter calls and rate-limit hits;
-    - then, for each row, it publishes the tweets newer than **that row's** `last_update`, with that row's `game` and `locale`, and saves that row.
-  - The correlation ID must stay unique per message: `tweet.ID` becomes `tweet.ID + "-" + game` (`twitter.go:124`).
+  - **Decided (Q7):** an account is relative to one game, so an ID appears on one row only. `DispatchNewTweets` keeps one fetch per row, and `tweet.ID` stays a unique correlation ID. The key is still `(id, game)` so that the `webhook_twitters` foreign key carries the game (CONF-3) and a guild cannot follow another game's account.
 - **RSS-2** — Unrelated fixes found during the audit:
   - `services/feeds/feeds.go:75`: log `errPublish`.
   - `services/feeds/feeds.go:85`: use `feedItem.PublishedParsed`, with a nil guard.
 - **TWIT-2** — Unrelated fix: `services/twitter/twitter.go:74`: log `errPublish`.
-- **RSS-3 / TWIT-3** — Upgrade to v1.0.6.
+- **RSS-3 / TWIT-3** — Upgrade to v1.1.0.
 
 ### 4.10 Kaelly-commands / Kaelly-registrar — not required for isolation
 
-These two projects use neither AMQP nor the shared database: they only register slash commands on one Discord application. **Nothing here is needed to isolate the games**, and nothing changes for KaellyBot. The items below are prerequisites for **launching kaellytouch-discord**, listed so they are not forgotten.
+These two projects use neither AMQP nor the shared database: they only register slash commands on one Discord application. **Nothing here is needed to isolate the games**, and nothing changes for KaellyBot.
 
-- **CMD-1** — `GetCommands()` (`commands.go:5`) → `GetCommands(game amqp.Game)`. The game name inserted in descriptions comes from the game instead of the hard-coded `GetGame()` (`models/constants/games.go:4`). Release a new version.
-- **DISC-TOUCH-1** — kaelly-discord reads the command IDs (`ABOUT_ID`, `ALIGN_ID`, `ALMANAX_ID`, `CONFIG_ID`, `HELP_ID`, `ITEM_ID`, `JOB_ID`, `MAP_ID`, `SET_ID`; `models/constants/config.go:33-56`) from its configuration. These IDs belong to one Discord application, so the Touch deployment must use the IDs returned by the Touch registrar. Configuration only; no code change.
-- **REG-1** — Registrar:
-  - Add a `GAME` env var, default `DOFUS_GAME`, passed to `GetCommands`.
-  - One deployment (values file) per bot, each with its own `CLIENT_ID` / `TOKEN`.
-- **Acceptance:** with defaults, the registered command payload is identical to today's.
+**Decided: the Touch bot is a fork, and so are its commands library and its registrar.** The three Discord-surface projects — kaelly-discord, Kaelly-commands, Kaelly-registrar — are forked together, each fork hardcoding its own game. **There is therefore nothing to change in the existing repositories**; the items below became fork-time tasks.
+
+Why fork rather than parameterise the registrar: the registrar's only job is `ApplicationCommandBulkOverwrite(CLIENT_ID, …)`, which **replaces an application's entire command set**. A values file where a `GAME` variable disagreed with `CLIENT_ID` would silently overwrite the wrong bot's commands, and nothing would fail — the mistake would surface as users reporting odd command descriptions. A fork makes that configuration mistake unrepresentable: each registrar can only produce its own game's commands.
+
+- ~~**CMD-1**~~ — **Dropped.** In the Touch fork of Kaelly-commands, `GetGame()` (`models/constants/games.go:3`) returns the Touch name; the 19 `i18n.Vars{"game": constants.GetGame()}` call sites are untouched. `GetCommands()` keeps its signature. Nothing to do in the Dofus repo.
+- ~~**REG-1**~~ — **Dropped.** The Touch fork of Kaelly-registrar imports the Touch commands fork and keeps its existing `CLIENT_ID` / `TOKEN` configuration. No `GAME` variable. Nothing to do in the Dofus repo.
+- **DISC-TOUCH-1** — kaelly-discord reads the command IDs (`ABOUT_ID`, `ALIGN_ID`, `ALMANAX_ID`, `CONFIG_ID`, `HELP_ID`, `ITEM_ID`, `JOB_ID`, `MAP_ID`, `SET_ID`; `models/constants/config.go`) from its configuration. These IDs belong to one Discord application, so the Touch fork must use the IDs returned by the Touch registrar. Configuration only; no code change.
+- **Known trade-off:** Kaelly-commands is also the shared vocabulary — kaelly-discord imports it for ~100 name constants (`ConfigCommandName`, `JobJobOptionName`, …), used 300+ times, and never calls `GetCommands()`. Forking duplicates that vocabulary, so the two bots' command and option names can drift. Each fork stays internally consistent (its bot and its commands library move together), so drift makes the bots differ rather than breaking either one; it is not caught at compile time, so a shared change must be applied to both forks deliberately.
+- **Acceptance:** the command payload registered for DOFUS is identical to today's; the Dofus repositories are unchanged.
 
 ### 4.11 Emojis (kaelly-discord, Kaelly-notifier)
 
@@ -355,10 +362,7 @@ Today:
   - render its unicode `name`, or nothing if `name` is empty;
   - log once at `warn`.
   - Never render another application's snowflake. Today `mapEmojiString` (notifier `services/emojis/emojis.go`) checks `emoji.ID`, not the snowflake; it must check the snowflake.
-- **EMO-5** — Filling Touch snowflakes:
-  - Upload the emojis to the KaellyTouch applications (prod and dev).
-  - Insert rows `(emoji_id, emoji_type, 2, 1|0, snowflake)`.
-  - Restart kaelly-discord (Touch) and the notifier.
+- **Out of scope** — filling the Touch snowflakes (uploading the emojis to the KaellyTouch applications and inserting `(emoji_id, emoji_type, 2, 1|0, snowflake)` rows) is Touch **data population**, like inserting Touch servers or jobs in §5.2. It belongs to launching the Touch bot, not to isolating the games. EMO-1 to EMO-4 make those rows *possible* and make their absence harmless (EMO-4); nothing here needs them to exist.
 - **Acceptance:**
   - After M2 + EMO-2/3, KaellyBot renders exactly the same emojis as today, in both prod and dev.
   - A game-2 message never contains a game-1 snowflake. Test: same emoji ID with different snowflakes per game.
@@ -381,6 +385,7 @@ Today:
 | twitter_accounts | **no → must become `(id, game)`** | twitter (TWIT-4), notifier (NOTI-3), discord (DISC-4), configurator (CONF-3) |
 | almanax_news | yes | notifier, discord |
 | sets | yes | encyclopedia (ENC-5) |
+| almanaxes | **no → must gain `game`** (M4, ENC-7) | encyclopedia |
 | game_versions | yes (id = game) | encyclopedia |
 
 **Tables without a `game` column.** These are shared by design; confirm or change:
@@ -389,7 +394,6 @@ Today:
 - `weapon_area_effects`, `characteristics`
 - `feed_types`
 - `weapon_exceptions`, `equipment_types`
-- `almanaxes` (Dofus-only, see ENC-7)
 
 ### 5.1 Production schema (snapshot 2026-09-17)
 
@@ -431,7 +435,7 @@ Insertion order (the FKs require it):
 2. **`jobs` / `cities` / `orders`** with `game = 2` (the same ID as Dofus is allowed), then their `*_labels` with the same `(id, game)`. These tables are already keyed per game, so no migration is needed.
 3. **`servers`:** only **after M1-A**, with `game = 2`, then `server_labels` with `game = 2`. Before M1-A, inserting a Touch server whose ID exists for Dofus fails on the primary key.
 4. **`feed_sources`, `almanax_news`:** insert with `game = 2`.
-5. **`twitter_accounts`:** only **after M1-B**. The same Twitter ID may be inserted for game 2, with its own `news_channel_id` and `locale`, and with **`last_update = NOW()`**, otherwise the Touch bot republishes the whole history.
+5. **`twitter_accounts`:** only **after M1-B**. Touch gets its own accounts, with their own `news_channel_id` and `locale`, and with **`last_update = NOW()`**, otherwise the Touch bot republishes the whole history. An account is relative to one game (Q7), so a Dofus account is not duplicated for Touch.
 6. **Restart** the services that cache reference data at startup: kaelly-discord and Kaelly-notifier.
 
 Check after inserting (must return 0 rows):
@@ -563,7 +567,26 @@ INSERT INTO emoji_snowflakes (emoji_id, emoji_type, game, production, snowflake)
 - Unicode emojis (empty snowflake) get no row and fall back to `name` through EMO-4. Check how kaelly-discord renders them today and keep the same output for game 1.
 - `emojis` metadata (`id`, `type`, `name`, `discord_name`, `debug_name`) stays shared across games. Only the snowflakes differ.
 
-**Data checks to run before deploying services built on kaelly-amqp v1.0.6** (every query must return 0, since rows with game 0 would be refused):
+### 5.5 Migration M4 — `almanaxes` keyed by `(month, day, game)`
+
+```sql
+-- Pre-check: must return 0.
+SELECT COUNT(*) FROM almanaxes WHERE month IS NULL OR day IS NULL;
+
+ALTER TABLE `almanaxes`
+  ADD COLUMN `game` INT NOT NULL DEFAULT 1 AFTER `day`,
+  DROP PRIMARY KEY,
+  ADD PRIMARY KEY (`month`, `day`, `game`);
+
+-- Existing rows are Dofus; drop the default so new rows must state their game.
+ALTER TABLE `almanaxes` ALTER COLUMN `game` DROP DEFAULT;
+```
+
+- No foreign key references `almanaxes`, so the key change is self-contained.
+- `DEFAULT 1` backfills the existing rows as Dofus in the same statement, then is dropped.
+- Transparent for the running services while Dofus is the only game with rows: ENC-7's queries filter on `game = 1`, which every existing row now carries.
+
+**Data checks to run before deploying services built on kaelly-amqp v1.1.0** (every query must return 0, since rows with game 0 would be refused):
 
 ```sql
 SELECT 'guilds', COUNT(*) FROM guilds WHERE game = 0
@@ -581,15 +604,92 @@ UNION ALL SELECT 'sets', COUNT(*) FROM sets WHERE game = 0;
 
 ## 6. Rollout
 
-Messages without a game are refused as soon as a service runs kaelly-amqp v1.0.6. **The deploy order therefore matters:** a service must only start refusing once every service that sends it messages already sets the game.
+**Decided: every pod is stopped for the migration window.** That collapses most of the ordering below:
 
-Today, kaelly-discord, kaelly-rss and kaelly-twitter already set the game on what they publish; the backends' replies do not.
+- The migrations run as **one script**, [`migration-game-isolation.sql`](migration-game-isolation.sql), which merges M1-A, M1-B, M4, M2 and M3 with its own pre- and post-checks. M3 no longer has to wait for readers to migrate, because there are none running.
+- Every service is deployed at its game-aware version **before the pods start again**, so the phase A deploy order (producers, then consumers, then kaelly-discord) no longer applies: nothing is running to publish an untagged message.
+- **The emoji code must exist before the window opens.** The script drops `emojis.snowflake` and `snowflake_dev`; a service still reading them will not come back up.
+- Messages already sitting in durable queues from before the stop are untagged and will be refused on restart with an `error` log. They are stale interactions whose callers are long gone; that is expected, not a failure.
+
+The ordering below is kept for reference, and still describes the dependencies if the migration is ever done without a full stop. Messages without a game are refused as soon as a service runs kaelly-amqp v1.1.0: a service must only start refusing once every service that sends it messages already sets the game. Today, kaelly-discord, kaelly-rss and kaelly-twitter already set the game on what they publish; the backends' replies do not.
+
+### 6.1 Manual prerequisites (neither code nor SQL)
+
+These are done by hand, outside any deployment. Each one blocks the step named in "Needed before".
+
+| ID | Task | Needed before |
+| --- | --- | --- |
+| ~~**M-1**~~ | ~~Create the **KaellyTouch Discord application** (prod).~~ **Done.** The dev application is still to create (Q9), before running the notifier with `PRODUCTION=false`. | — |
+| ~~**M-2**~~ | ~~Put its bot token in the notifier's secrets as `DISCORD_TOKEN_DOFUS_TOUCH`.~~ **Done**, in the secrets and in CI. The same token goes into the Touch bot fork's own secrets at phase C. | — |
+| ~~**M-3**~~ | ~~Publish the KaellyTouch avatar to Kaelly-cdn at **`kaellytouch/id/face.webp`**.~~ **Done.** The asset is published and matches the path referenced by `constants.GetGames()` (NOTI-4). | — |
+| **M-4** | Invite both bots to the reporting channel's guild, with Send Messages rights; and to their own news channels with Send Messages / Manage Messages (NOTI-7). | Phase A step 4. |
+| **M-5** | Fork kaelly-discord, Kaelly-commands and Kaelly-registrar for Touch (§4.10), each hardcoding `DOFUS_TOUCH`; in the commands fork, `GetGame()` returns the Touch name, and the discord fork changes `constants.Name` so its reply queue is not `KaellyBot-<shard>.answers` (§4.2). | Phase C step 1. |
+| **M-6** | Register the Touch commands with the Touch registrar, and copy the returned command IDs into the Touch bot's configuration (DISC-TOUCH-1). | Phase C step 3. |
+
+Populating Touch data — servers, jobs, cities, orders, Twitter accounts (§5.2), almanax rows and emoji snowflakes — is **out of scope**: it is launching the Touch bot, not isolating the games.
+
+### 6.2 Run book
+
+The ordered checklist for the full-stop migration. Tick as you go; the phase table
+below is the dependency reference behind it.
+
+#### Before the window
+
+| # | Task | Why it blocks |
+| --- | --- | --- |
+| 1 | ~~Create the KaellyTouch Discord application (M-1)~~ | **Done** |
+| 2 | ~~Add `DISCORD_TOKEN_DOFUS_TOUCH` to the notifier's secrets and to CI (M-2)~~ | **Done** |
+| 3 | ~~Publish the KaellyTouch avatar (M-3)~~ | **Done** |
+| 4 | Invite both bots to the reporting channel's guild (Send Messages) and to their own news channels (Send Messages / Manage Messages) — **M-4** | Fails quietly: the notifier starts fine and only fails when it posts, logging `Cannot send message in news channel` |
+| 5 | Build and publish images for all nine services: books, competition, configurator, encyclopedia, rss, twitter, metrics, notifier, discord | Nothing can be deployed mid-window otherwise |
+
+#### The window
+
+| # | Task | Note |
+| --- | --- | --- |
+| 6 | Back up the database, structure **and** data | DDL is not transactional: this is the only rollback |
+| 7 | Stop every pod | The assumption the whole script rests on |
+| 8 | Run **section 0** of [`migration-game-isolation.sql`](migration-game-isolation.sql); every count must be 0 | Fix the data and re-run before going further |
+| 9 | Run **sections 1 to 5** | M1-A, M1-B, M4, M2, M3, in that order |
+| 10 | Run **section 6**; every count must be 0, then check the `SHOW CREATE TABLE` output it lists | |
+| 11 | Deploy all nine services | **Including the emoji changes**: section 5 drops `emojis.snowflake`, so older code will not come back up |
+| 12 | Start the pods | |
+
+If a statement in step 9 fails, restore from the backup rather than re-running: the
+earlier sections are already applied, and re-running them fails on indexes that no
+longer exist.
+
+#### After the window
+
+| # | Check | What you are looking for |
+| --- | --- | --- |
+| 13 | `ANY_GAME` error logs | A burst at first is expected — messages queued before the stop are untagged and get refused. It must stop once the queues drain. |
+| 14 | `kaelly_rejected_messages_total` (metrics) | Flat after the initial drain. A rising line means a producer is still publishing without a game, and the `type` label says which. |
+| 15 | Every command on the live bot | `/job`, `/align`, `/config get`, `/item`, `/set`, `/almanax`, `/map` |
+| 16 | The notifier's startup log | Names every served game and the bot that serves it |
+| 17 | Emojis still render, prod and dev | Falling back to unicode names means the `emoji_snowflakes` copy did not land |
+
+#### Later — launching Touch (out of scope here)
+
+| # | Task |
+| --- | --- |
+| 18 | Fork the three Discord-surface projects (**M-5**) |
+| 19 | Register the Touch commands and copy the IDs into the Touch bot's configuration (**M-6**) |
+| 20 | Create the Touch **dev** application (Q9), needed before running anything with `PRODUCTION=false` |
+| 21 | Insert Touch data: servers, jobs, cities, orders, Twitter accounts, almanax rows |
+| 22 | Upload the Touch emojis and insert their `emoji_snowflakes` rows for game 2 |
+
+### 6.3 Phased alternative (reference)
+
+Kept for the dependencies it records. It is what the rollout would have to look like
+**without** a full stop, where each service starts refusing untagged messages while
+others are still running. With §6.2's window, phases A and B collapse into one pass.
 
 | Phase | Steps | Risk to kaelly-discord |
 | --- | --- | --- |
-| **A — tag and enforce** | 1. Run the §5 data checks (zero `game = 0` rows); fix rows first.<br>2. Release kaelly-amqp v1.0.6 (guards refuse `ANY_GAME`).<br>3. Deploy **producers of replies and news first**: books, competition, configurator, encyclopedia, rss, twitter. They now set the game on everything they publish.<br>4. Deploy the **consumers**: notifier, metrics.<br>5. Deploy **kaelly-discord last** (DISC-1…9, EMO-2 after M2), with default config. Its consumer guard would drop replies without a game, so every backend must already be on step 3.<br>6. Check the logs for `ANY_GAME` errors after each step. | Low if the order is respected. Step 5 before step 3 would drop every backend reply and break all commands. |
-| **B — schema** | 1. Back up the DB.<br>2. Stop books, configurator, twitter and notifier. Apply M1 (§5.3: A servers, B twitter accounts), then deploy DISC-4, DISC-8, BOOK-3, BOOK-6, CONF-3, CONF-4, CONF-7, TWIT-4 and NOTI-3.<br>3. M2 (emoji snowflakes), then deploy EMO-2/3/4; M3 later.<br>M1-A is required before inserting any Touch server, and M1-B before any Touch Twitter account (§5.2). Touch jobs, cities and orders need no migration. | Medium: schema migration. |
-| **C — second bot** | 1. Release Kaelly-commands / Kaelly-registrar with CMD-1 / REG-1.<br>2. Register the Touch commands with a Touch registrar deployment.<br>3. Deploy kaellytouch-discord with `GAME=DOFUS_TOUCH`, `RABBITMQ_CLIENT_NAME=KaellyTouch`. | Covered by the tests in §7. |
+| **A — tag and enforce** | 0. Do §6.1 M-1, M-2 and M-4: without the Touch token the notifier refuses to start.<br>1. Run the §5 data checks (zero `game = 0` rows); fix rows first.<br>2. Release kaelly-amqp v1.1.0 (guards refuse `ANY_GAME`; breaking `Mock.Consume` signature, see §4.1).<br>3. Deploy **producers of replies and news first**: books, competition, configurator, encyclopedia, rss, twitter. They now set the game on everything they publish.<br>4. Deploy the **consumers**: notifier, metrics.<br>5. Deploy **kaelly-discord last** (DISC-3…9, EMO-2 after M2). Its consumer guard would drop replies without a game, so every backend must already be on step 3.<br>6. Check the logs for `ANY_GAME` errors after each step. | Low if the order is respected. Step 5 before step 3 would drop every backend reply and break all commands. |
+| **B — schema** | 1. Back up the DB.<br>2. Stop books, configurator, twitter and notifier. Apply M1 (§5.3: A servers, B twitter accounts), then deploy DISC-4, DISC-8, BOOK-3, BOOK-6, CONF-3, CONF-4, CONF-7, TWIT-4 and NOTI-3.<br>Apply M4 (§5.5, `almanaxes`) before deploying encyclopedia with ENC-7; stop encyclopedia while it runs.<br>3. M2 (emoji snowflakes), then deploy EMO-2/3/4; M3 later.<br>M1-A is required before inserting any Touch server, and M1-B before any Touch Twitter account (§5.2). Touch jobs, cities and orders need no migration. | Medium: schema migration. |
+| **C — second bot** | 1. Fork the three Discord-surface projects (§6.1 M-5).<br>2. Register the Touch commands with the Touch registrar (M-6).<br>3. Deploy the Touch bot fork, with its own client ID so it gets its own `answers` queue. | Covered by the tests in §7. |
 
 ## 7. Verification
 
@@ -614,9 +714,9 @@ Today, kaelly-discord, kaelly-rss and kaelly-twitter already set the game on wha
 | Q2 | ~~Which features does Touch have at launch?~~ | **Decided:** books (job/align), config and notifications. `/item`, `/set`, `/almanax` and `/map` stay registered but answer "not supported yet". Encyclopedia and competition refuse game 2 as a safety net. |
 | Q3 | ~~Which token posts Touch news?~~ | **Decided:** the Touch bot's own token (NOTI-1/2). |
 | Q4 | ~~Reporting channel per game?~~ | **Decided:** one shared channel (new/removed guild, set and game reports); each report is sent by the bot of its game. |
-| Q5 | ~~Shared tables?~~ | **Decided:** `feed_types` shared. `weapon_area_effects`, `characteristics`, `equipment_types`, `weapon_exceptions` and `almanaxes` stay Dofus-only (only used by features Touch does not support yet). |
+| Q5 | ~~Shared tables?~~ | **Decided:** `feed_types` shared. `weapon_area_effects`, `characteristics`, `equipment_types` and `weapon_exceptions` stay Dofus-only (only used by features Touch does not support yet). **Revised:** `almanaxes` gains a `game` column (M4, ENC-7) — Touch has its own almanax, with different effects on the same day, even though no source publishes it yet. |
 | Q6 | ~~Application or guild emojis?~~ | **Decided:** application emojis, one application per game (R11, §4.11). |
-| Q7 | ~~Same Twitter account in several games?~~ | **Decided:** yes. `twitter_accounts` is keyed by `(id, game)` (M1, TWIT-4). |
+| Q7 | ~~Same Twitter account in several games?~~ | **Decided:** no. A Twitter account is relative to one game and stays so: the same ID is never followed under two games. `twitter_accounts` is still keyed by `(id, game)` (M1-B), which keeps the `webhook_twitters` foreign key game-aware so a guild cannot follow another game's account. No cross-game account exists, so no fan-out is needed in kaelly-twitter (TWIT-4). |
 | Q8 | ~~Refuse messages without a game?~~ | **Decided:** refuse immediately, with an `error` log (single maintainer, every module under control). Deploy order matters (§6). |
 | Q9 | ~~Dev applications?~~ | **Decided:** one dev application per game; the Touch dev app will be created later. |
 
@@ -624,7 +724,6 @@ Today, kaelly-discord, kaelly-rss and kaelly-twitter already set the game on wha
 
 - Game in routing keys (`news.rss.dofus_touch`) so consumers can bind per game.
 - Dofus Touch sources in encyclopedia (dofusdude support, almanax).
-- A game column on `almanaxes`.
 - Importing legacy KaellyTOUCH data (Kaelly-migrator): separate spec.
 - Serving Touch in encyclopedia (item, set, almanax) and competition (map).
 - kaelly-underwatch is obsolete (it monitored the legacy Discord4J KaellyTOUCH) and is not part of this work.

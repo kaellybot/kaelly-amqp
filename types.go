@@ -22,9 +22,15 @@ var (
 	ErrCommunicationIsBroken = errors.New("action cannot continue because communication is broken")
 	ErrClientNotInitialized  = errors.New("client is not ready yet")
 	ErrActionCanceledByUser  = errors.New("action has been canceled by user by a shutdown")
+	ErrGameNotSet            = errors.New("message game is not set, it must differ from ANY_GAME")
 )
 
 type MessageConsumer func(ctx Context, message *RabbitMQMessage)
+
+// RejectedHandler is called for every incoming message refused by the consumer guards,
+// before it is discarded. It lets a service react, e.g. answering the user right away
+// instead of waiting for its own request timeout.
+type RejectedHandler func(ctx Context, message *RabbitMQMessage, err error)
 
 type MessageBroker interface {
 	Run() error
