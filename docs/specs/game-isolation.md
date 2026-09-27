@@ -2,7 +2,7 @@
 
 | | |
 | --- | --- |
-| Status | Draft |
+| Status | **Done** — migrated and deployed 2026-09-27 |
 | Date | 2026-09-17 |
 | Scope | kaelly-amqp, kaelly-discord, Kaelly-books, Kaelly-competition, kaelly-configurator, Kaelly-encyclopedia, Kaelly-notifier, Kaelly-metrics, kaelly-rss, kaelly-twitter (Kaelly-registrar / Kaelly-commands: KaellyTouch prerequisites only, §4.10) |
 | Out of scope | Building kaellytouch-discord itself, adding Dofus Touch data sources, legacy KaellyTOUCH data migration, kaelly-underwatch |
@@ -395,11 +395,13 @@ Today:
 - `feed_types`
 - `weapon_exceptions`, `equipment_types`
 
-### 5.1 Production schema (snapshot 2026-09-17)
+### 5.1 Production schema before the migration
 
-Source: phpMyAdmin structure export of `kaellybot` (MySQL 8.4.3), 31 tables: [`kaellybot-schema-2026-09-17.sql`](kaellybot-schema-2026-09-17.sql). No service runs `AutoMigrate`, so **this snapshot, not the gorm tags, is the reference**. Keep the export next to the migration scripts as the rollback reference.
+The tables below describe the schema **as it was before this migration**, which is what the M1 to M4 statements were written against. The current structure export lives at [`kaellybot.sql`](kaellybot.sql) and already carries every change described here; refresh it after any future migration. No service runs `AutoMigrate`, so **that export, not the gorm tags, is the reference**.
 
-What the snapshot shows, compared with the code:
+The pre-migration snapshot is in git history at `d393923:docs/specs/kaellybot-schema-2026-09-17.sql` if the original state is ever needed.
+
+What that schema showed, compared with the code:
 
 | Relation | Production | Status |
 | --- | --- | --- |
@@ -606,7 +608,7 @@ UNION ALL SELECT 'sets', COUNT(*) FROM sets WHERE game = 0;
 
 **Decided: every pod is stopped for the migration window.** That collapses most of the ordering below:
 
-- The migrations run as **one script**, [`migration-game-isolation.sql`](migration-game-isolation.sql), which merges M1-A, M1-B, M4, M2 and M3 with its own pre- and post-checks. M3 no longer has to wait for readers to migrate, because there are none running.
+- The migrations ran as **one script** merging M1-A, M1-B, M4, M2 and M3 with its own pre- and post-checks. M3 did not have to wait for readers to migrate, because none were running. The script was applied on 2026-09-27 and then removed; it is in git history at `d393923:docs/specs/migration-game-isolation.sql` should another environment need it.
 - Every service is deployed at its game-aware version **before the pods start again**, so the phase A deploy order (producers, then consumers, then kaelly-discord) no longer applies: nothing is running to publish an untagged message.
 - **The emoji code must exist before the window opens.** The script drops `emojis.snowflake` and `snowflake_dev`; a service still reading them will not come back up.
 - Messages already sitting in durable queues from before the stop are untagged and will be refused on restart with an `error` log. They are stale interactions whose callers are long gone; that is expected, not a failure.
@@ -622,7 +624,7 @@ These are done by hand, outside any deployment. Each one blocks the step named i
 | ~~**M-1**~~ | ~~Create the **KaellyTouch Discord application** (prod).~~ **Done.** The dev application is still to create (Q9), before running the notifier with `PRODUCTION=false`. | — |
 | ~~**M-2**~~ | ~~Put its bot token in the notifier's secrets as `DISCORD_TOKEN_DOFUS_TOUCH`.~~ **Done**, in the secrets and in CI. The same token goes into the Touch bot fork's own secrets at phase C. | — |
 | ~~**M-3**~~ | ~~Publish the KaellyTouch avatar to Kaelly-cdn at **`kaellytouch/id/face.webp`**.~~ **Done.** The asset is published and matches the path referenced by `constants.GetGames()` (NOTI-4). | — |
-| **M-4** | Invite both bots to the reporting channel's guild, with Send Messages rights; and to their own news channels with Send Messages / Manage Messages (NOTI-7). | Phase A step 4. |
+| ~~**M-4**~~ | ~~Invite both bots to the reporting channel's guild, with Send Messages rights; and to their own news channels with Send Messages / Manage Messages (NOTI-7).~~ **Done.** | — |
 | **M-5** | Fork kaelly-discord, Kaelly-commands and Kaelly-registrar for Touch (§4.10), each hardcoding `DOFUS_TOUCH`; in the commands fork, `GetGame()` returns the Touch name, and the discord fork changes `constants.Name` so its reply queue is not `KaellyBot-<shard>.answers` (§4.2). | Phase C step 1. |
 | **M-6** | Register the Touch commands with the Touch registrar, and copy the returned command IDs into the Touch bot's configuration (DISC-TOUCH-1). | Phase C step 3. |
 
@@ -630,8 +632,21 @@ Populating Touch data — servers, jobs, cities, orders, Twitter accounts (§5.2
 
 ### 6.2 Run book
 
-The ordered checklist for the full-stop migration. Tick as you go; the phase table
-below is the dependency reference behind it.
+**Ran on 2026-09-27.** Steps 1 to 15 are done: the 14 shards were scaled down, the
+database exported, all six script sections ran clean, and the nine projects were
+tagged. Two things confirmed afterwards and worth keeping:
+
+- `emoji_snowflakes` copied correctly. Two Dofus emojis have no snowflake, which is
+  intentional: they were always plain unicode characters, so M2 gave them no row and
+  they render as their `name` (EMO-4).
+- The notifier loaded 28 emojis per game and reported all 28 Touch ones as having no
+  snowflake — the expected state until Touch data is inserted, and proof that it
+  falls back rather than borrowing KaellyBot's.
+
+Items 16 to 20 remain, and belong to launching Touch rather than to this spec.
+
+The checklist is kept as the record of what was done, and as the procedure if it ever
+has to be repeated on another environment.
 
 #### Before the window
 
@@ -640,22 +655,24 @@ below is the dependency reference behind it.
 | 1 | ~~Create the KaellyTouch Discord application (M-1)~~ | **Done** |
 | 2 | ~~Add `DISCORD_TOKEN_DOFUS_TOUCH` to the notifier's secrets and to CI (M-2)~~ | **Done** |
 | 3 | ~~Publish the KaellyTouch avatar (M-3)~~ | **Done** |
-| 4 | Invite both bots to the reporting channel's guild (Send Messages) and to their own news channels (Send Messages / Manage Messages) — **M-4** | Fails quietly: the notifier starts fine and only fails when it posts, logging `Cannot send message in news channel` |
-| 5 | Build and publish images for all nine services: books, competition, configurator, encyclopedia, rss, twitter, metrics, notifier, discord | Nothing can be deployed mid-window otherwise |
+| 4 | ~~Invite both bots to the reporting guild and their news channels, with the right permissions (M-4)~~ | **Done** |
+
+**Every prerequisite is done.** Images are not built by hand: tagging and releasing a
+service builds its image in CI and rolls it out through Helm, so the release *is* the
+deploy (step 10 below).
 
 #### The window
 
 | # | Task | Note |
 | --- | --- | --- |
-| 6 | Back up the database, structure **and** data | DDL is not transactional: this is the only rollback |
-| 7 | Stop every pod | The assumption the whole script rests on |
-| 8 | Run **section 0** of [`migration-game-isolation.sql`](migration-game-isolation.sql); every count must be 0 | Fix the data and re-run before going further |
-| 9 | Run **sections 1 to 5** | M1-A, M1-B, M4, M2, M3, in that order |
-| 10 | Run **section 6**; every count must be 0, then check the `SHOW CREATE TABLE` output it lists | |
-| 11 | Deploy all nine services | **Including the emoji changes**: section 5 drops `emojis.snowflake`, so older code will not come back up |
-| 12 | Start the pods | |
+| 5 | Back up the database, structure **and** data | DDL is not transactional: this is the only rollback |
+| 6 | Stop every pod: the 8 backend services, **and all 14 kaelly-discord shards** | Each shard is its own Helm release (`kaelly-discord-0` … `-13`), one replica each, so there are 22 workloads to scale down, not 9 |
+| 7 | Run **section 0** of the migration script (see §6 for where it lives now); every count must be 0 | Fix the data and re-run before going further |
+| 8 | Run **sections 1 to 5** | M1-A, M1-B, M4, M2, M3, in that order |
+| 9 | Run **section 6**; every count must be 0, then check the `SHOW CREATE TABLE` output it lists | |
+| 10 | Tag and release all nine projects: books, competition, configurator, encyclopedia, rss, twitter, metrics, notifier, discord | CI builds each image and rolls it out through Helm. kaelly-discord's workflow loops `0 .. DISCORD_SHARD_COUNT-1` and upgrades `kaelly-discord-$i` for each, so **one tag redeploys all 14 shards**; no per-shard action is needed.<br>`replicaCount` is set by the chart, so the upgrade scales each workload back to 1 by itself: the release is also what restarts everything scaled down in step 6.<br>**Nothing is tagged before step 9 finishes:** a release deploys immediately, and a service starting against a half-migrated schema — or old emoji code against a schema without `emojis.snowflake` — will not come up. |
 
-If a statement in step 9 fails, restore from the backup rather than re-running: the
+If a statement in step 8 fails, restore from the backup rather than re-running: the
 earlier sections are already applied, and re-running them fails on indexes that no
 longer exist.
 
@@ -663,21 +680,21 @@ longer exist.
 
 | # | Check | What you are looking for |
 | --- | --- | --- |
-| 13 | `ANY_GAME` error logs | A burst at first is expected — messages queued before the stop are untagged and get refused. It must stop once the queues drain. |
-| 14 | `kaelly_rejected_messages_total` (metrics) | Flat after the initial drain. A rising line means a producer is still publishing without a game, and the `type` label says which. |
-| 15 | Every command on the live bot | `/job`, `/align`, `/config get`, `/item`, `/set`, `/almanax`, `/map` |
-| 16 | The notifier's startup log | Names every served game and the bot that serves it |
-| 17 | Emojis still render, prod and dev | Falling back to unicode names means the `emoji_snowflakes` copy did not land |
+| 11 | `ANY_GAME` error logs | A burst at first is expected — messages queued before the stop are untagged and get refused. It must stop once the queues drain. |
+| 12 | `kaelly_rejected_messages_total` (metrics) | Flat after the initial drain. A rising line means a producer is still publishing without a game, and the `type` label says which. |
+| 13 | Every command on the live bot | `/job`, `/align`, `/config get`, `/item`, `/set`, `/almanax`, `/map` |
+| 14 | The notifier's startup log | Names every served game and the bot that serves it |
+| 15 | Emojis still render, prod and dev | Falling back to unicode names means the `emoji_snowflakes` copy did not land |
 
 #### Later — launching Touch (out of scope here)
 
 | # | Task |
 | --- | --- |
-| 18 | Fork the three Discord-surface projects (**M-5**) |
-| 19 | Register the Touch commands and copy the IDs into the Touch bot's configuration (**M-6**) |
-| 20 | Create the Touch **dev** application (Q9), needed before running anything with `PRODUCTION=false` |
-| 21 | Insert Touch data: servers, jobs, cities, orders, Twitter accounts, almanax rows |
-| 22 | Upload the Touch emojis and insert their `emoji_snowflakes` rows for game 2 |
+| 16 | Fork the three Discord-surface projects (**M-5**) |
+| 17 | Register the Touch commands and copy the IDs into the Touch bot's configuration (**M-6**) |
+| 18 | Create the Touch **dev** application (Q9), needed before running anything with `PRODUCTION=false` |
+| 19 | Insert Touch data: servers, jobs, cities, orders, Twitter accounts, almanax rows |
+| 20 | Upload the Touch emojis and insert their `emoji_snowflakes` rows for game 2 |
 
 ### 6.3 Phased alternative (reference)
 

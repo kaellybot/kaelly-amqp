@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : mysql:3306
--- Généré le : jeu. 17 sep. 2026 à 10:59
+-- Généré le : dim. 27 sep. 2026 à 20:38
 -- Version du serveur : 8.4.3
 -- Version de PHP : 8.2.25
 
@@ -45,6 +45,7 @@ CREATE TABLE `alignment_books` (
 CREATE TABLE `almanaxes` (
   `month` int NOT NULL,
   `day` int NOT NULL,
+  `game` int NOT NULL,
   `dofus_dude_effect_id` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -123,11 +124,23 @@ CREATE TABLE `city_labels` (
 CREATE TABLE `emojis` (
   `id` varchar(191) NOT NULL,
   `type` varchar(191) NOT NULL,
-  `snowflake_dev` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `snowflake` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `discord_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `debug_name` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `emoji_snowflakes`
+--
+
+CREATE TABLE `emoji_snowflakes` (
+  `emoji_id` varchar(191) NOT NULL,
+  `emoji_type` varchar(191) NOT NULL,
+  `game` int NOT NULL,
+  `production` tinyint(1) NOT NULL,
+  `snowflake` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -318,6 +331,7 @@ CREATE TABLE `servers` (
 CREATE TABLE `server_labels` (
   `locale` int NOT NULL,
   `server_id` varchar(191) NOT NULL,
+  `game` int NOT NULL DEFAULT '1',
   `label` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -440,15 +454,15 @@ CREATE TABLE `webhook_twitters` (
 --
 ALTER TABLE `alignment_books`
   ADD PRIMARY KEY (`user_id`,`city_id`,`order_id`,`server_id`,`game`) USING BTREE,
-  ADD KEY `fk_alignment_books_server` (`server_id`),
   ADD KEY `fk_alignment_books_city` (`city_id`,`game`) USING BTREE,
-  ADD KEY `fk_alignment_books_order` (`order_id`,`game`) USING BTREE;
+  ADD KEY `fk_alignment_books_order` (`order_id`,`game`) USING BTREE,
+  ADD KEY `fk_alignment_books_server` (`server_id`,`game`);
 
 --
 -- Index pour la table `almanaxes`
 --
 ALTER TABLE `almanaxes`
-  ADD PRIMARY KEY (`month`,`day`);
+  ADD PRIMARY KEY (`month`,`day`,`game`);
 
 --
 -- Index pour la table `almanax_news`
@@ -461,8 +475,8 @@ ALTER TABLE `almanax_news`
 --
 ALTER TABLE `channel_servers`
   ADD PRIMARY KEY (`guild_id`,`channel_id`,`game`) USING BTREE,
-  ADD KEY `fk_channel_servers_server` (`server_id`),
-  ADD KEY `fk_channel_servers_guild` (`guild_id`,`game`);
+  ADD KEY `fk_channel_servers_guild` (`guild_id`,`game`),
+  ADD KEY `fk_channel_servers_server` (`server_id`,`game`);
 
 --
 -- Index pour la table `characteristics`
@@ -490,6 +504,12 @@ ALTER TABLE `city_labels`
 --
 ALTER TABLE `emojis`
   ADD PRIMARY KEY (`id`,`type`);
+
+--
+-- Index pour la table `emoji_snowflakes`
+--
+ALTER TABLE `emoji_snowflakes`
+  ADD PRIMARY KEY (`emoji_id`,`emoji_type`,`game`,`production`);
 
 --
 -- Index pour la table `equipment_types`
@@ -534,7 +554,7 @@ ALTER TABLE `game_versions`
 --
 ALTER TABLE `guilds`
   ADD PRIMARY KEY (`id`,`game`) USING BTREE,
-  ADD KEY `fk_guilds_server` (`server_id`);
+  ADD KEY `fk_guilds_server` (`server_id`,`game`);
 
 --
 -- Index pour la table `jobs`
@@ -549,7 +569,7 @@ ALTER TABLE `jobs`
 ALTER TABLE `job_books`
   ADD PRIMARY KEY (`user_id`,`job_id`,`server_id`,`game`) USING BTREE,
   ADD KEY `fk_job_books_job` (`job_id`,`game`) USING BTREE,
-  ADD KEY `fk_job_books_server` (`server_id`) USING BTREE;
+  ADD KEY `fk_job_books_server` (`server_id`,`game`);
 
 --
 -- Index pour la table `job_labels`
@@ -580,7 +600,7 @@ ALTER TABLE `regex_characteristics`
 -- Index pour la table `servers`
 --
 ALTER TABLE `servers`
-  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD PRIMARY KEY (`id`,`game`),
   ADD UNIQUE KEY `dofus_portals_id` (`dofus_portals_id`),
   ADD KEY `fk_server_emoji` (`id`,`emoji_type`);
 
@@ -588,8 +608,7 @@ ALTER TABLE `servers`
 -- Index pour la table `server_labels`
 --
 ALTER TABLE `server_labels`
-  ADD PRIMARY KEY (`locale`,`server_id`),
-  ADD KEY `fk_servers_labels` (`server_id`);
+  ADD PRIMARY KEY (`server_id`,`game`,`locale`);
 
 --
 -- Index pour la table `sets`
@@ -601,7 +620,7 @@ ALTER TABLE `sets`
 -- Index pour la table `twitter_accounts`
 --
 ALTER TABLE `twitter_accounts`
-  ADD PRIMARY KEY (`id`) USING BTREE,
+  ADD PRIMARY KEY (`id`,`game`),
   ADD KEY `name` (`name`);
 
 --
@@ -645,7 +664,7 @@ ALTER TABLE `webhook_feeds`
 ALTER TABLE `webhook_twitters`
   ADD PRIMARY KEY (`guild_id`,`channel_id`,`twitter_id`,`game`),
   ADD UNIQUE KEY `uni_webhook_twitters_webhook_id` (`webhook_id`),
-  ADD KEY `fk_webhook_twitters_twitter_account` (`twitter_id`);
+  ADD KEY `fk_webhook_twitters_twitter_account` (`twitter_id`,`game`);
 
 --
 -- Contraintes pour les tables déchargées
@@ -657,14 +676,14 @@ ALTER TABLE `webhook_twitters`
 ALTER TABLE `alignment_books`
   ADD CONSTRAINT `fk_alignment_books_city` FOREIGN KEY (`city_id`,`game`) REFERENCES `cities` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_alignment_books_order` FOREIGN KEY (`order_id`,`game`) REFERENCES `orders` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_alignment_books_server` FOREIGN KEY (`server_id`) REFERENCES `servers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_alignment_books_server` FOREIGN KEY (`server_id`,`game`) REFERENCES `servers` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `channel_servers`
 --
 ALTER TABLE `channel_servers`
   ADD CONSTRAINT `fk_channel_servers_guild` FOREIGN KEY (`guild_id`,`game`) REFERENCES `guilds` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_channel_servers_server` FOREIGN KEY (`server_id`) REFERENCES `servers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_channel_servers_server` FOREIGN KEY (`server_id`,`game`) REFERENCES `servers` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `characteristics`
@@ -683,6 +702,12 @@ ALTER TABLE `cities`
 --
 ALTER TABLE `city_labels`
   ADD CONSTRAINT `city_labels_ibfk_1` FOREIGN KEY (`city_id`,`game`) REFERENCES `cities` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `emoji_snowflakes`
+--
+ALTER TABLE `emoji_snowflakes`
+  ADD CONSTRAINT `fk_emoji_snowflakes_emoji` FOREIGN KEY (`emoji_id`,`emoji_type`) REFERENCES `emojis` (`id`, `type`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `equipment_type_weapon_area_effects`
@@ -706,7 +731,7 @@ ALTER TABLE `feed_type_labels`
 -- Contraintes pour la table `guilds`
 --
 ALTER TABLE `guilds`
-  ADD CONSTRAINT `fk_guilds_server` FOREIGN KEY (`server_id`) REFERENCES `servers` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_guilds_server` FOREIGN KEY (`server_id`,`game`) REFERENCES `servers` (`id`, `game`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `jobs`
@@ -719,7 +744,7 @@ ALTER TABLE `jobs`
 --
 ALTER TABLE `job_books`
   ADD CONSTRAINT `fk_job_books_job` FOREIGN KEY (`job_id`,`game`) REFERENCES `jobs` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_job_books_server` FOREIGN KEY (`server_id`) REFERENCES `servers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_job_books_server` FOREIGN KEY (`server_id`,`game`) REFERENCES `servers` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `job_labels`
@@ -750,7 +775,7 @@ ALTER TABLE `servers`
 -- Contraintes pour la table `server_labels`
 --
 ALTER TABLE `server_labels`
-  ADD CONSTRAINT `fk_servers_labels` FOREIGN KEY (`server_id`) REFERENCES `servers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_servers_labels` FOREIGN KEY (`server_id`,`game`) REFERENCES `servers` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `weapon_area_effects`
@@ -780,7 +805,7 @@ ALTER TABLE `webhook_feeds`
 -- Contraintes pour la table `webhook_twitters`
 --
 ALTER TABLE `webhook_twitters`
-  ADD CONSTRAINT `fk_webhook_twitters_twitter_account` FOREIGN KEY (`twitter_id`) REFERENCES `twitter_accounts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `fk_webhook_twitters_twitter_account` FOREIGN KEY (`twitter_id`,`game`) REFERENCES `twitter_accounts` (`id`, `game`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
