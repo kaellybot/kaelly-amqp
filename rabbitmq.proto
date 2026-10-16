@@ -55,6 +55,7 @@ message RabbitMQMessage
     NewsRSSMessage                      newsRSSMessage                      = 603;
     NewsSetMessage                      newsSetMessage                      = 604;
     NewsTwitterMessage                  newsTwitterMessage                  = 605;
+    NewsImportMessage                   newsImportMessage                   = 606;
 
     enum Type
     {
@@ -105,6 +106,7 @@ message RabbitMQMessage
         NEWS_RSS                               = 803;
         NEWS_SET                               = 804;
         NEWS_TWITTER                           = 805;
+        NEWS_IMPORT                            = 806;
     }
 
     enum Status 
@@ -667,4 +669,29 @@ message NewsSetMessage
 	repeated string createdSetIds = 1;
     repeated string updatedSetIds = 2;
     repeated string deletedSetIds = 3;
+}
+
+// Sent by kaelly-gamedata when an import is not fully applied.
+message NewsImportMessage
+{
+    int64  importId = 1;
+    Source source   = 2;
+    string version  = 3;
+    Status status   = 4;
+    string reason   = 5;
+
+    enum Source
+    {
+        UNKNOWN_SOURCE = 0;
+        CLIENT         = 1;
+        KROSMOZ        = 2;
+    }
+
+    enum Status
+    {
+        UNKNOWN_STATUS = 0;
+        REJECTED       = 1;
+        FAILED         = 2;
+        PARTIAL        = 3;
+    }
 }
