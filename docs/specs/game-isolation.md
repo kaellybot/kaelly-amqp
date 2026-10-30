@@ -4,7 +4,7 @@
 | --- | --- |
 | Status | **Done** — migrated and deployed 2026-09-27 |
 | Date | 2026-09-17 |
-| Scope | kaelly-amqp, kaelly-discord, Kaelly-books, Kaelly-competition, kaelly-configurator, Kaelly-encyclopedia, Kaelly-notifier, Kaelly-metrics, kaelly-rss, kaelly-twitter (Kaelly-registrar / Kaelly-commands: KaellyTouch prerequisites only, §4.10) |
+| Scope | kaelly-amqp, kaelly-discord, Kaelly-books, Kaelly-competition, kaelly-configurator, Kaelly-encyclopedia, Kaelly-notifier, Kaelly-metrics, kaelly-rss, kaelly-twitter (Kaelly-registrar / Kaelly-commands: one command set per game, §4.10) |
 | Out of scope | Building kaellytouch-discord itself, adding Dofus Touch data sources, legacy KaellyTOUCH data migration, kaelly-underwatch |
 
 ## 1. Goal
@@ -47,8 +47,8 @@ enum Game { ANY_GAME = 0; DOFUS_GAME = 1; DOFUS_TOUCH = 2; DOFUS_RETRO = 3; }
 | Kaelly-metrics | consumer | n/a | ✅ tags points with game |
 | kaelly-rss | news | ✅ from `feed_sources.game` | ✅ |
 | kaelly-twitter | news | ✅ from `twitter_accounts.game` | ✅ |
-| Kaelly-registrar | none (Discord API) | n/a | no shared data; Touch prerequisite only (§4.10) |
-| Kaelly-commands | none (library) | n/a | no shared data; Touch prerequisite only (§4.10) |
+| Kaelly-registrar | none (Discord API) | n/a | no shared data; picks the command set from `GAME` (§4.10) |
+| Kaelly-commands | none (library) | n/a | no shared data; one command set per game (§4.10) |
 
 ### 2.2 kaelly-amqp versions
 
@@ -314,17 +314,16 @@ Each news channel belongs to one bot. Only the author of a message can crosspost
 
 ### 4.10 Kaelly-commands / Kaelly-registrar — not required for isolation
 
-These two projects use neither AMQP nor the shared database: they only register slash commands on one Discord application. **Nothing here is needed to isolate the games**, and nothing changes for KaellyBot.
+These two projects use neither AMQP nor the shared database: they only register slash commands on Discord applications. **Nothing here is needed to isolate the games**, and nothing changes for KaellyBot.
 
-**Decided: the Touch bot is a fork, and so are its commands library and its registrar.** The three Discord-surface projects — kaelly-discord, Kaelly-commands, Kaelly-registrar — are forked together, each fork hardcoding its own game. **There is therefore nothing to change in the existing repositories**; the items below became fork-time tasks.
+**Decided, then revised (2026-10): only the bot is forked, Kaelly-commands and Kaelly-registrar are shared.** Each game has its own bot repository (`kaelly-<game>-discord`: kaelly-discord for DOFUS, kaelly-retro-discord for DOFUS Retro), but a single commands library and a single registrar serve every game. The first plan forked all three projects together; it was dropped because the registrar's overwrite risk below can be guarded against, and because a forked commands library would let the bots' command and option names drift.
 
-Why fork rather than parameterise the registrar: the registrar's only job is `ApplicationCommandBulkOverwrite(CLIENT_ID, …)`, which **replaces an application's entire command set**. A values file where a `GAME` variable disagreed with `CLIENT_ID` would silently overwrite the wrong bot's commands, and nothing would fail — the mistake would surface as users reporting odd command descriptions. A fork makes that configuration mistake unrepresentable: each registrar can only produce its own game's commands.
-
-- ~~**CMD-1**~~ — **Dropped.** In the Touch fork of Kaelly-commands, `GetGame()` (`models/constants/games.go:3`) returns the Touch name; the 19 `i18n.Vars{"game": constants.GetGame()}` call sites are untouched. `GetCommands()` keeps its signature. Nothing to do in the Dofus repo.
-- ~~**REG-1**~~ — **Dropped.** The Touch fork of Kaelly-registrar imports the Touch commands fork and keeps its existing `CLIENT_ID` / `TOKEN` configuration. No `GAME` variable. Nothing to do in the Dofus repo.
-- **DISC-TOUCH-1** — kaelly-discord reads the command IDs (`ABOUT_ID`, `ALIGN_ID`, `ALMANAX_ID`, `CONFIG_ID`, `HELP_ID`, `ITEM_ID`, `JOB_ID`, `MAP_ID`, `SET_ID`; `models/constants/config.go`) from its configuration. These IDs belong to one Discord application, so the Touch fork must use the IDs returned by the Touch registrar. Configuration only; no code change.
-- **Known trade-off:** Kaelly-commands is also the shared vocabulary — kaelly-discord imports it for ~100 name constants (`ConfigCommandName`, `JobJobOptionName`, …), used 300+ times, and never calls `GetCommands()`. Forking duplicates that vocabulary, so the two bots' command and option names can drift. Each fork stays internally consistent (its bot and its commands library move together), so drift makes the bots differ rather than breaking either one; it is not caught at compile time, so a shared change must be applied to both forks deliberately.
-- **Acceptance:** the command payload registered for DOFUS is identical to today's; the Dofus repositories are unchanged.
+- **CMD-1** — **Done** (Kaelly-commands v1.1.0). One command set per game: `GetDofusCommands()`, `GetTouchCommands()` and `GetRetroCommands()` (`commands.go`). What differs between games lives in an unexported `game` struct (`games.go`): the name filling `{{ .game }}`, and the maximum alignment and job levels. Since v1.1.2 the level descriptions state that maximum through `{{ .max }}`. The bots still import the library only for its name constants and custom ID helpers, never for `Get*Commands()`.
+- **REG-1** — **Done.** Kaelly-registrar reads `GAME` (1 DOFUS, 2 Touch, 3 Retro) to pick the command set (`models/constants/games.go`). `ApplicationCommandBulkOverwrite(CLIENT_ID, …)` **replaces an application's entire command set**, so a `GAME` that disagrees with `CLIENT_ID` would silently overwrite another bot's commands: in production, `checkApplication` refuses to register unless `CLIENT_ID` is the game's own application (`ApplicationID`), and the run stops instead. With `PRODUCTION=false`, commands go to the development guild instead of the application; the registrar's `DeleteCommands` only removes global commands, so guild ones are cleared with `PUT /applications/<CLIENT_ID>/guilds/<guild>/commands` and an empty list. The registrar runs locally, once per game.
+- **REG-2** — **Done.** A registrar test walks every game's commands in every language: each description fits Discord's 1–100 characters (a game name can push a description that fits DOFUS over the limit), has no unfilled placeholder, and states its option's maximum when the option has one.
+- **DISC-TOUCH-1** — each bot reads its command IDs (`ABOUT_ID`, `ALIGN_ID`, `CONFIG_ID`, `HELP_ID`, `JOB_ID`, …; `models/constants/config.go`) from its configuration. These IDs belong to one Discord application, so each bot uses the IDs the registrar returned for its game: KaellyRetro reads them from the `RETRO_*_ID` secrets. Configuration only; no code change.
+- **Trade-off:** sharing Kaelly-commands keeps one vocabulary for every bot, so names cannot drift between games. The cost is that a change to a shared command reaches every game's registration at once; REG-2 catches a description that only breaks for one game.
+- **Acceptance:** the command payload registered for DOFUS is identical to before.
 
 ### 4.11 Emojis (kaelly-discord, Kaelly-notifier)
 
@@ -625,8 +624,8 @@ These are done by hand, outside any deployment. Each one blocks the step named i
 | ~~**M-2**~~ | ~~Put its bot token in the notifier's secrets as `DISCORD_TOKEN_DOFUS_TOUCH`.~~ **Done**, in the secrets and in CI. The same token goes into the Touch bot fork's own secrets at phase C. | — |
 | ~~**M-3**~~ | ~~Publish the KaellyTouch avatar to Kaelly-cdn at **`kaellytouch/id/face.webp`**.~~ **Done.** The asset is published and matches the path referenced by `constants.GetGames()` (NOTI-4). | — |
 | ~~**M-4**~~ | ~~Invite both bots to the reporting channel's guild, with Send Messages rights; and to their own news channels with Send Messages / Manage Messages (NOTI-7).~~ **Done.** | — |
-| **M-5** | Fork kaelly-discord, Kaelly-commands and Kaelly-registrar for Touch (§4.10), each hardcoding `DOFUS_TOUCH`; in the commands fork, `GetGame()` returns the Touch name, and the discord fork changes `constants.Name` so its reply queue is not `KaellyBot-<shard>.answers` (§4.2). | Phase C step 1. |
-| **M-6** | Register the Touch commands with the Touch registrar, and copy the returned command IDs into the Touch bot's configuration (DISC-TOUCH-1). | Phase C step 3. |
+| **M-5** | Fork kaelly-discord for Touch, hardcoding `DOFUS_TOUCH` and changing `constants.Name` so its reply queue is not `KaellyBot-<shard>.answers` (§4.2). Kaelly-commands and Kaelly-registrar are shared, not forked (§4.10). | Phase C step 1. |
+| **M-6** | Register the Touch commands with the registrar (`GAME=2`), and copy the returned command IDs into the Touch bot's configuration (DISC-TOUCH-1). | Phase C step 3. |
 
 Populating Touch data — servers, jobs, cities, orders, Twitter accounts (§5.2), almanax rows and emoji snowflakes — is **out of scope**: it is launching the Touch bot, not isolating the games.
 
@@ -690,7 +689,7 @@ longer exist.
 
 | # | Task |
 | --- | --- |
-| 16 | Fork the three Discord-surface projects (**M-5**) |
+| 16 | Fork the bot (**M-5**) |
 | 17 | Register the Touch commands and copy the IDs into the Touch bot's configuration (**M-6**) |
 | 18 | Create the Touch **dev** application (Q9), needed before running anything with `PRODUCTION=false` |
 | 19 | Insert Touch data: servers, jobs, cities, orders, Twitter accounts, almanax rows |
@@ -706,7 +705,7 @@ others are still running. With §6.2's window, phases A and B collapse into one 
 | --- | --- | --- |
 | **A — tag and enforce** | 0. Do §6.1 M-1, M-2 and M-4: without the Touch token the notifier refuses to start.<br>1. Run the §5 data checks (zero `game = 0` rows); fix rows first.<br>2. Release kaelly-amqp v1.1.0 (guards refuse `ANY_GAME`; breaking `Mock.Consume` signature, see §4.1).<br>3. Deploy **producers of replies and news first**: books, competition, configurator, encyclopedia, rss, twitter. They now set the game on everything they publish.<br>4. Deploy the **consumers**: notifier, metrics.<br>5. Deploy **kaelly-discord last** (DISC-3…9, EMO-2 after M2). Its consumer guard would drop replies without a game, so every backend must already be on step 3.<br>6. Check the logs for `ANY_GAME` errors after each step. | Low if the order is respected. Step 5 before step 3 would drop every backend reply and break all commands. |
 | **B — schema** | 1. Back up the DB.<br>2. Stop books, configurator, twitter and notifier. Apply M1 (§5.3: A servers, B twitter accounts), then deploy DISC-4, DISC-8, BOOK-3, BOOK-6, CONF-3, CONF-4, CONF-7, TWIT-4 and NOTI-3.<br>Apply M4 (§5.5, `almanaxes`) before deploying encyclopedia with ENC-7; stop encyclopedia while it runs.<br>3. M2 (emoji snowflakes), then deploy EMO-2/3/4; M3 later.<br>M1-A is required before inserting any Touch server, and M1-B before any Touch Twitter account (§5.2). Touch jobs, cities and orders need no migration. | Medium: schema migration. |
-| **C — second bot** | 1. Fork the three Discord-surface projects (§6.1 M-5).<br>2. Register the Touch commands with the Touch registrar (M-6).<br>3. Deploy the Touch bot fork, with its own client ID so it gets its own `answers` queue. | Covered by the tests in §7. |
+| **C — second bot** | 1. Fork the bot (§6.1 M-5).<br>2. Register the Touch commands with the registrar, `GAME=2` (M-6).<br>3. Deploy the Touch bot fork, with its own client ID so it gets its own `answers` queue. | Covered by the tests in §7. |
 
 ## 7. Verification
 
